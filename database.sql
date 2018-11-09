@@ -1,3 +1,5 @@
+-- Name Database "plyable"
+
 CREATE TABLE "organization" (
 	"id" SERIAL PRIMARY KEY,
 	"name" VARCHAR(50) NOT NULL,
