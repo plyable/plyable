@@ -17,7 +17,7 @@ CREATE TABLE "user" (
 	"id" SERIAL PRIMARY KEY,
 	"org_id" INT REFERENCES "organization",
 	"password" VARCHAR(1000),
-	"email" VARCHAR(30) NOT NULL,
+	"email" VARCHAR(30) UNIQUE NOT NULL,
 	"security_level" INT DEFAULT 0,
 	"temp_key" VARCHAR(1000),
 	"temp_key_timeout" TIMESTAMP
