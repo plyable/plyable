@@ -6,6 +6,7 @@ import {connect} from 'react-redux';
 class NextButton extends Component {
 
     handleClick = () => {
+        this.props.handleSubmit();
         this.props.switchCard(this.props.number);
     }
 

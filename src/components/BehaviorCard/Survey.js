@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import BehaviorCard from './BehaviorCard';
-
+import SubmitButton from './SubmitButton';
 
 class Survey extends Component {
 
@@ -38,6 +38,9 @@ class Survey extends Component {
                         current={this.state.openCard}
                         switchCard={this.switchCard}
                     />
+                    {false && <SubmitButton
+                        data={null}
+                    />}
             </div>
         )
     }
