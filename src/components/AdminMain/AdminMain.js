@@ -21,10 +21,24 @@ class AdminMain extends Component {
             <div>
                 <h1>Organization List</h1>
 
-                {this.props.reduxState.adminMainReducer.map(organization => {
-                    return <ul key={organization.id} organization={organization}>
-                        {organization.name}</ul>
-                })}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Organization</th>
+                            <th>View/Edit</th>
+                            <th>Deactivate</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {this.props.reduxState.adminMainReducer.map(organization => {
+                            return <tr key={organization.id} organization={organization}>
+                                <td>{organization.name}</td>
+                                <td><button>View/Edit</button></td>
+                                <td><button>Deactivate</button></td>
+                            </tr>
+                        })}
+                    </tbody>
+                </table>
 
 
 
