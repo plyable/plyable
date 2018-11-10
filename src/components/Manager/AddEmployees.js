@@ -12,7 +12,7 @@ class AddEmployees extends Component {
         {/* Large Input Box */}
         <textarea></textarea>
         {/* OnClick rather than submit, to allow enter for new line */}
-        <button onClick>Send Invitations</button>
+        <button>Send Invitations</button>
 
       </div>
     );
