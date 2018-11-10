@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 
 class AdminMain extends Component {
     // state = {
@@ -13,8 +14,15 @@ class AdminMain extends Component {
 
     }
 
-    handleClick = () => {
-        console.log('button working');
+    handleAddNewOrganizationClick = () => {
+        console.log('handleAddNewOrganizationClick working');
+    }
+    handleViewOrgClick = () => {
+        this.props.history.push()
+        console.log('handleViewOrgClick working');
+    }
+    handleDeactivateClick = () => {
+        console.log('handleDeactivateClick working');
     }
     render() {
         return (
@@ -33,8 +41,8 @@ class AdminMain extends Component {
                         {this.props.reduxState.adminMainReducer.map(organization => {
                             return <tr key={organization.id} organization={organization}>
                                 <td>{organization.name}</td>
-                                <td><button>View/Edit</button></td>
-                                <td><button>Deactivate</button></td>
+                                <td><button onClick={this.handleViewOrgClick}>View/Edit</button></td>
+                                <td><button onClick={this.handleDeactivateClick}>Deactivate</button></td>
                             </tr>
                         })}
                     </tbody>
@@ -42,7 +50,7 @@ class AdminMain extends Component {
 
 
 
-                < button onClick={this.handleClick}>Add New Organization</button>
+                < button onClick={this.handleAddNewOrganizationClick}>Add New Organization</button>
 
             </div >
         );

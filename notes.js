@@ -1,0 +1,14 @@
+<table>
+    <thead>
+        <tr>
+            <th>Organization</th>
+            <th>View/Edit</th>
+            <th>Deactivate</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td></td>
+        </tr>
+    </tbody>
+</table>

@@ -38,6 +38,10 @@ const Nav = (props) => (
       <Link className="nav-link" to="/addemployees">
         Add Employees
       </Link>
+
+      <Link className="nav-link" to="/survey">
+        Take Survey
+      </Link>
     </div>
   </div>
 );
