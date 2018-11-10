@@ -21,11 +21,16 @@ class AdminMain extends Component {
             <div>
                 <h1>Organization List</h1>
 
+                {this.props.reduxState.adminMainReducer.map(organization => {
+                    return <ul key={organization.id} organization={organization}>
+                        {organization.name}</ul>
+                })}
 
 
-                <button onClick={this.handleClick}>Add New Organization</button>
 
-            </div>
+                < button onClick={this.handleClick}>Add New Organization</button>
+
+            </div >
         );
     }
 }
