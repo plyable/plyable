@@ -12,7 +12,8 @@ CREATE TABLE "behavior" (
 	"id" SERIAL PRIMARY KEY,
 	"value" VARCHAR(10),
 	"definition" VARCHAR(50),
-	"context" VARCHAR(50)
+	"context" VARCHAR(50),
+	"positive" BOOLEAN
 );
 
 CREATE TABLE "user" (
