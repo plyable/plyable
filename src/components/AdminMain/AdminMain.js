@@ -2,10 +2,16 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 class AdminMain extends Component {
-    state = {
-        email: '',
-        password: '',
-    };
+    // state = {
+    //     email: '',
+    //     password: '',
+    // };
+
+    componentDidMount() {
+        this.props.dispatch({ type: 'FETCH_ORGANIZATIONS', payload: this.props.reduxState.adminMainReducer })
+        console.log(this.props.reduxState.adminMainReducer);
+
+    }
 
     handleClick = () => {
         console.log('button working');
@@ -16,6 +22,7 @@ class AdminMain extends Component {
                 <h1>Organization List</h1>
 
 
+
                 <button onClick={this.handleClick}>Add New Organization</button>
 
             </div>
@@ -23,8 +30,8 @@ class AdminMain extends Component {
     }
 }
 
-const mapStateToProps = state => ({
-    errors: state.errors,
+const mapStateToProps = reduxState => ({
+    reduxState,
 });
 
 export default connect(mapStateToProps)(AdminMain);
