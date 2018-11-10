@@ -29,6 +29,11 @@ const Nav = (props) => (
       <Link className="nav-link" to="/about">
         About
       </Link>
+
+      {/* HM: Temporary Nav Link For Manager Add Employees */}
+      <Link className="nav-link" to="/addemployees">
+        Add Employees
+      </Link>
     </div>
   </div>
 );
