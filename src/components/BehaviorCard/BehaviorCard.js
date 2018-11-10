@@ -19,7 +19,7 @@ class BehaviorCard extends Component {
         });
     }
 
-
+    //this function runs whenever the client clicks the next or prev button, and updates redux state
     handleSubmit = () => {
         this.props.dispatch({ type: 'SET_SCORE', payload: { value: this.props.card.value, score: this.state.score } });
         this.setState({
@@ -38,12 +38,13 @@ class BehaviorCard extends Component {
                 {this.props.current > 0 && <PrevButton
                     number={this.props.current - 1}
                     switchCard={this.props.switchCard}
+                    handleSubmit={this.handleSubmit}
                 />}
                 <input type="checkbox" onChange={this.handleChange(0)} checked={this.state.score === 0} />
                 <input type="checkbox" onChange={this.handleChange(1)} checked={this.state.score === 1} />
                 <input type="checkbox" onChange={this.handleChange(2)} checked={this.state.score === 2} />
                 <input type="checkbox" onChange={this.handleChange(3)} checked={this.state.score === 3} />
-                {this.state.score !== null && this.props.current < 5 && <NextButton
+                {this.state.score !== null && <NextButton
                     number={this.props.current + 1}
                     switchCard={this.props.switchCard}
                     handleSubmit={this.handleSubmit}

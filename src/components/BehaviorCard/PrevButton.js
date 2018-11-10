@@ -6,7 +6,10 @@ import {connect} from 'react-redux';
 class PrevButton extends Component {
 
     handleClick = () => {
+        this.props.handleSubmit();
+        //handleSubmit changes redux state, and changes the local state of BehaviorCard
         this.props.switchCard(this.props.number);
+        //swichCard changes the local state of Survey.
     }
 
   render() {

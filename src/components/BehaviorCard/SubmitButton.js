@@ -6,7 +6,9 @@ import {connect} from 'react-redux';
 class SubmitButton extends Component {
 
     handleClick = () => {
-        this.props.dispatch({ type: 'SEND_SURVEY_RESULTS', payload: this.props.data });
+        this.props.dispatch({ type: 'SEND_SURVEY_RESULTS', payload: null });
+        //this sends the survey results, as stored in redux state to a saga and
+        //eventually to the server
     }
 
   render() {
