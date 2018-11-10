@@ -1,1 +1,0 @@
-// Eli will make this 1 card with props 
