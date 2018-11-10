@@ -27,6 +27,15 @@ class BehaviorCard extends Component {
         })
     }
 
+    componentWillReceiveProps(newProps){
+        this.setState({
+            score: this.props.survey[newProps.card.value],
+        });
+    }
+    //the above lifecycle method makes it so that when the state of survey is changed
+    //the behavior card shown will automatically show the score saved to their response
+    //if they have already answered this query
+
     render() {
         return (
             <div>
@@ -49,10 +58,12 @@ class BehaviorCard extends Component {
                     switchCard={this.props.switchCard}
                     handleSubmit={this.handleSubmit}
                 />
-            }
+                }
             </div>
         )
     }
 }
 
-export default connect()(BehaviorCard);
+const mapStateToProps = ({ survey }) => ({ survey: survey.surveyScore });
+
+export default connect(mapStateToProps)(BehaviorCard);

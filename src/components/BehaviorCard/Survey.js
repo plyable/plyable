@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import BehaviorCard from './BehaviorCard';
 import SubmitButton from './SubmitButton';
-import PrevButton from './PrevButton';
 
 class Survey extends Component {
 
