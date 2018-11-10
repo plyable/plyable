@@ -1,6 +1,8 @@
 // Eli will make this 1 card with props 
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import NextButton from './NextButton';
+import PrevButton from './PrevButton';
 
 
 class BehaviorCard extends Component {
@@ -17,6 +19,10 @@ class BehaviorCard extends Component {
         });
     }
 
+    handleSubmit = () => {
+        this.props.dispatch({ type: 'SET_SCORE', payload: {[this.props.value]: this.state.score}});
+    }
+
   render() {
     return (
       <div>
@@ -25,10 +31,18 @@ class BehaviorCard extends Component {
         <p>Context: {this.props.card.context}</p>
         {/* These are vanilla radio buttons. On check, the local state will change to toggle one of
         those values as being on */}
+        {this.props.current > 0 && <PrevButton
+            number={this.props.current - 1}
+            switchCard={this.props.switchCard}
+        />}
         <input type="checkbox" onChange={this.handleChange(0)} checked={this.state.score===0} />
         <input type="checkbox" onChange={this.handleChange(1)} checked={this.state.score===1} />
         <input type="checkbox" onChange={this.handleChange(2)} checked={this.state.score===2} />
         <input type="checkbox" onChange={this.handleChange(3)} checked={this.state.score===3} />
+        {this.props.current < 6 && this.state.score !== null && <NextButton
+            number={this.props.current + 1}
+            switchCard={this.props.switchCard}
+        />}
       </div>
   )}
 }
