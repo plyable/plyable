@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   HashRouter as Router,
   Route,
@@ -6,7 +6,7 @@ import {
   Switch,
 } from 'react-router-dom';
 
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
 import Nav from '../Nav/Nav';
 import Footer from '../Footer/Footer';
@@ -18,12 +18,13 @@ import UserPage from '../UserPage/UserPage';
 import InfoPage from '../InfoPage/InfoPage';
 import AddEmployees from '../Manager/AddEmployees';
 import AdminOrgMain from '../AdminOrgMain/AdminOrgMain';
+import Survey from '../Survey/Survey';
 
 import './App.css';
 
 class App extends Component {
-  componentDidMount () {
-    this.props.dispatch({type: 'FETCH_USER'})
+  componentDidMount() {
+    this.props.dispatch({ type: 'FETCH_USER' })
   }
 
   render() {
@@ -47,6 +48,12 @@ class App extends Component {
               exact
               path="/addemployees"
               component={AddEmployees}
+            />
+
+            <Route
+              exact
+              path="/survey"
+              component={Survey}
             />
 
             {/* For protected routes, the view could show one of several things on the same route.
@@ -75,7 +82,8 @@ class App extends Component {
           <Footer />
         </div>
       </Router>
-  )}
+    )
+  }
 }
 
 export default connect()(App);
