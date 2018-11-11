@@ -8,7 +8,7 @@ function* avgData(action) {
         const response = yield call(axios.get, `/api/adminorg/${id}`);
         const avgList = response.data;
 
-        let chart1 = new Chart(document.getElementById('myChart1'), {
+        new Chart(document.getElementById('myChart1'), {
             type: 'line',
             data: {
                 labels: avgList.map(avg => avg.week),
@@ -18,7 +18,7 @@ function* avgData(action) {
                     backgroundColor: 'rgba(255, 99, 132, 0.2)',
                     borderColor: 'rgba(255,99,132,1)',
                     borderWidth: 1,
-                },{
+                }, {
                     label: 'Positive',
                     data: avgList.map(avg => avg.positive),
                     backgroundColor: 'rgba(54, 162, 235, 0.2)',
@@ -27,37 +27,39 @@ function* avgData(action) {
                 }]
             },
             options: {
-				responsive: true,
-				title: {
-					display: true,
+                responsive: true,
+                title: {
+                    display: true,
                     text: 'Behavior Assessment Averages',
                     fontSize: 30
-				},
+                },
                 scales: {
                     yAxes: [{
-						position: 'left',
-						display: true,
-						scaleLabel: {
-							display: true,
-							labelString: 'Request State'
+                        position: 'left',
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Request State'
                         },
-						ticks: {
+                        ticks: {
                             beginAtZero: true,
                             max: 5,
-                            callback: function(dataLabel, index) {
-                                if(dataLabel === 5) {
+                            callback: function (dataLabel, index) {
+                                if (dataLabel === 5) {
                                     return 'Consistently';
-                                } else if(dataLabel === 0){
+                                } else if (dataLabel === 0) {
                                     return 'Rarely'
                                 } else {
                                     return '';
                                 }
                             }
-						}
+                        }
                     }]
                 }
             }
         });
+
+        yield put({ type: 'GET_AVG_DATA', payload: avgList });
     } catch (error) {
         console.log(error);
     }

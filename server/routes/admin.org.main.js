@@ -48,7 +48,8 @@ router.get('/:id', (req, res) => {
                 HAVING
                     "bh2"."positive" = false
                     AND "rs2"."week" = "rs1"."week"
-            ) AS "negative"
+            ) AS "negative",
+            COUNT(distinct "rs1"."user_id") AS "count"
         FROM 
             "response" AS "rs1"
             LEFT JOIN "user" AS "us1"
