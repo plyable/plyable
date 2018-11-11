@@ -18,9 +18,6 @@ class AdminOrgMain extends Component {
                 <div style={{height: '50vh', width: '70vw'}}>
                     <canvas id="myChart1" style={{height: '100%', width: '100%'}}></canvas>
                 </div>
-                <pre>
-                    {JSON.stringify(this.props.avgData, null, 2)}
-                </pre>
             </div>
         );
     }
