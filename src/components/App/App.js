@@ -21,6 +21,7 @@ import AdminOrgMain from '../AdminOrgMain/AdminOrgMain';
 import Survey from '../Survey/Survey';
 
 import './App.css';
+import AdminMain from '../AdminMain/AdminMain';
 
 class App extends Component {
   componentDidMount() {
@@ -73,6 +74,12 @@ class App extends Component {
               component={InfoPage}
             />
             <ProtectedRoute
+              exact
+              path="/adminmain"
+              component={AdminMain}
+            />
+            <ProtectedRoute
+              exact
               path="/adminmain/:id"
               component={AdminOrgMain}
             />
