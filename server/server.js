@@ -10,6 +10,7 @@ const passport = require('./strategies/user.strategy');
 
 // Route includes
 const userRouter = require('./routes/user.router');
+const employeeRouter = require('./routes/employee.router');
 
 
 // manny start
@@ -30,6 +31,7 @@ app.use(passport.session());
 
 /* Routes */
 app.use('/api/user', userRouter);
+app.use('/api/employee', employeeRouter);
 
 
 
