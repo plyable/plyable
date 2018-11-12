@@ -19,6 +19,7 @@ import InfoPage from '../InfoPage/InfoPage';
 import AddEmployees from '../Manager/AddEmployees';
 import AdminOrgMain from '../AdminOrgMain/AdminOrgMain';
 import Survey from '../Survey/Survey';
+import Registration from '../RegisterPage/Registration';
 
 import './App.css';
 import AdminMain from '../AdminMain/AdminMain';
@@ -56,6 +57,12 @@ class App extends Component {
               exact
               path="/survey"
               component={Survey}
+            />
+
+            <Route
+              exact
+              path="/register/:key"
+              component={Registration}
             />
 
             {/* For protected routes, the view could show one of several things on the same route.
