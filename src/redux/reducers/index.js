@@ -4,9 +4,7 @@ import loginMode from './loginModeReducer';
 import user from './userReducer';
 import adminMainReducer from './adminMainReducer';
 import survey from './surveyReducer';
-
 import addEmployeeReducer from './addEmployeeReducer';
-import survey from './surveyReducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
