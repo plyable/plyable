@@ -7,11 +7,16 @@ import addEmployeeSaga from './addEmployeeSaga';
 // It bundles up all of the other sagas so our project can use them.
 // This is imported in index.js as rootSaga
 
+// manny start
+import adminOrgSaga from './adminOrgSaga';
+// manny end
+
 // some sagas trigger other sagas, as an example
 // the registration triggers a login
 // and login triggers setting the user
 export default function* rootSaga() {
   yield all([
+    adminOrgSaga(),
     loginSaga(),
     registrationSaga(),
     userSaga(),

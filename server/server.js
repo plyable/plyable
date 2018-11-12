@@ -12,6 +12,12 @@ const passport = require('./strategies/user.strategy');
 const userRouter = require('./routes/user.router');
 const employeeRouter = require('./routes/employee.router');
 
+
+// manny start
+const adminOrgRouter = require('./routes/admin.org.main');
+// manny end
+
+
 // Body parser middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -27,6 +33,11 @@ app.use(passport.session());
 app.use('/api/user', userRouter);
 app.use('/api/employee', employeeRouter);
 
+
+
+/** manny Start */
+app.use('/api/adminorg', adminOrgRouter);
+/** manny end */
 // Serve static files
 app.use(express.static('build'));
 
