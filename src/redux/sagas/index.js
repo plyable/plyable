@@ -12,10 +12,10 @@ import addEmployeeSaga from './addEmployeeSaga';
 // manny start
 import adminOrgSaga from './adminOrgSaga';
 // manny end
+//daniel start
+import addNewOrgSaga from './addNewOrgSaga';
+//daniel end
 
-// some sagas trigger other sagas, as an example
-// the registration triggers a login
-// and login triggers setting the user
 export default function* rootSaga() {
     yield all([
         adminOrgSaga(),
@@ -24,5 +24,6 @@ export default function* rootSaga() {
         userSaga(),
         adminMainSaga(),
         addEmployeeSaga(),
+        addNewOrgSaga(),
     ]);
 }

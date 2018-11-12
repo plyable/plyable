@@ -14,11 +14,18 @@ router.get('/', (req, res) => {
         });//end GET pool query
 });//end GET call server side
 
-/**
- * POST route template
- */
+//this query will make post calls from member-generated data, creating new organizations
 router.post('/', (req, res) => {
-
-});
+    const newOrganization = req.body;
+    const queryValues = [newOrganization.name];
+    pool.query(`INSERT INTO "organization" ("name")
+    VALUES ($1);`, queryValues)
+        .then((results) => {
+            res.send(results.rows);
+        }).catch((error) => {
+            console.log('Error POSTING organization to PostgreSQL', error);
+            res.sendStatus(500);
+        })//end POST pool query
+});//end POST call server side
 
 module.exports = router;
