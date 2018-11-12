@@ -10,6 +10,9 @@ import addEmployeeReducer from './addEmployeeReducer';
 // It bundles up all of the other reducers so our project can use them.
 // This is imported in index.js as rootSaga
 import avgData from './adminOrgReducer';
+//daniel start
+import addNewOrgReducer from './addNewOrgReducer';
+//daniel end
 
 const rootReducer = combineReducers({
   errors, // contains registrationMessage and loginMessage
@@ -19,6 +22,7 @@ const rootReducer = combineReducers({
   addEmployeeReducer,
   avgData,
   survey, //this will hold the results of a users weekly survey
+  addNewOrgReducer,
 });
 
 export default rootReducer;

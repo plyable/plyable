@@ -10,30 +10,29 @@ class AdminMain extends Component {
 
     componentDidMount() {
         this.props.dispatch({ type: 'FETCH_ORGANIZATIONS', payload: this.props.reduxState.adminMainReducer })
-        console.log(this.props.reduxState.adminMainReducer);
-
-    }
+    };//this will fetch all organizations from the database upon page load
 
     handleAddNewOrganizationClick = () => {
-        console.log('handleAddNewOrganizationClick working');
-    }
-    handleViewOrgClick = () => {
-        this.props.history.push()
-        console.log('handleViewOrgClick working');
-    }
+        this.props.history.push('/adminmain/createneworganization');
+    }; //this button will take the admin to a form to add a new organization
+
+    handleViewOrgClick = (id) => {
+        this.props.history.push(`/adminmain/organization/${id}`);
+    }//this button will take the admin to an organization-specific admin page
+
     handleDeactivateClick = () => {
         console.log('handleDeactivateClick working');
-    }
+    }//this button will deactivate the organization, thereby quitting the collection of data, but the data will still be viewable
+
     render() {
         return (
             <div>
                 <h1>Organization List</h1>
-
                 <table>
                     <thead>
                         <tr>
-                            <th>Organization</th>
-                            <th>View/Edit</th>
+                            <th>Organization Name</th>
+                            <th>Survey Results Page</th>
                             <th>Deactivate</th>
                         </tr>
                     </thead>
@@ -41,17 +40,14 @@ class AdminMain extends Component {
                         {this.props.reduxState.adminMainReducer.map(organization => {
                             return <tr key={organization.id} organization={organization}>
                                 <td>{organization.name}</td>
-                                <td><button onClick={this.handleViewOrgClick}>View/Edit</button></td>
+                                <td><button onClick={() => this.handleViewOrgClick(organization.id)}>View</button></td>
                                 <td><button onClick={this.handleDeactivateClick}>Deactivate</button></td>
-                            </tr>
+                            </tr> //this for each loop will map through available organizations in the database and display them 
+                            //on the DOM in a table
                         })}
                     </tbody>
                 </table>
-
-
-
                 < button onClick={this.handleAddNewOrganizationClick}>Add New Organization</button>
-
             </div >
         );
     }
@@ -61,5 +57,7 @@ const mapStateToProps = reduxState => ({
     reduxState,
 });
 
-export default connect(mapStateToProps)(AdminMain);
+const adminMainRouter = withRouter(AdminMain);
+
+export default connect(mapStateToProps)(adminMainRouter);
 
