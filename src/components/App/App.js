@@ -61,7 +61,7 @@ class App extends Component {
 
             <Route
               exact
-              path="/register/:key"
+              path="/register/"
               component={Registration}
             />
 

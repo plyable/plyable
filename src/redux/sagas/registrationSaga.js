@@ -22,8 +22,17 @@ function* registerUser(action) {
   }
 }
 
+function* registerInvited(action) {
+  try {
+    yield put({ type: 'PINGED_REGISTRATION' });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 function* registrationSaga() {
   yield takeLatest('REGISTER', registerUser);
+  yield takeLatest('FETCH_NEW_USER', registerInvited);
 }
 
 export default registrationSaga;

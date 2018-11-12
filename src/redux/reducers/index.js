@@ -5,6 +5,7 @@ import user from './userReducer';
 import adminMainReducer from './adminMainReducer';
 import survey from './surveyReducer';
 import addEmployeeReducer from './addEmployeeReducer';
+import registerModeReducer from './registerModeReducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
   avgData,
   survey, //this will hold the results of a users weekly survey
   addNewOrgReducer,
+  registerModeReducer, //this will hold back the registration page untill the api is finished loggin them in
 });
 
 export default rootReducer;
