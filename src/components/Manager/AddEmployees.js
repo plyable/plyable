@@ -1,25 +1,29 @@
 // Add Employees input box
 
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 class AddEmployees extends Component {
   state = {
     emailList: []
   }
 
+  // Button Click
   sendInvitationEmails = () => {
     console.log('emailList BEFORE:', this.state.emailList);
     let splitList = this.state.emailList.split('\n');
-    this.setState({emailList: splitList});
+    // this.setState({emailList: splitList});
+    this.props.dispatch({ type: 'ADD_EMPLOYEES', payload: splitList })
   }
 
+  // Collect the data entered into the box
   handleChange = (event) => {
     this.setState({ emailList: event.target.value })
   }
   
   render() {
-    // TEST email list splitting working
-    console.log('emailList state AFTER:', this.state.emailList);
+
+    
     return (
       <div>
         <h2>Add Employees</h2>
@@ -34,10 +38,14 @@ class AddEmployees extends Component {
 
         {/* OnClick rather than submit, to allow enter for new line */}
         <button onClick={this.sendInvitationEmails}>Send Invitations</button>
-
+        
       </div>
     );
   }
 }
 
-export default AddEmployees;
+const mapStateToProps = (reduxState) => {
+  return { reduxState };
+}
+
+export default connect(mapStateToProps)(AddEmployees);
