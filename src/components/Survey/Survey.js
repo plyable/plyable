@@ -36,6 +36,7 @@ class Survey extends Component {
         ]
         return (
             <div>
+                {this.state.openCard < 6 && <h5>{this.state.openCard + 1} of 6</h5>}
                 <h1>Survey</h1>
                 {this.state.openCard < 6 ? <BehaviorCard
                     card={dummyCards[this.state.openCard]}
