@@ -43,9 +43,9 @@ function* avgData(action) {
                         },
                         ticks: {
                             beginAtZero: true,
-                            max: 5,
+                            max: 3,
                             callback: function (dataLabel, index) {
-                                if (dataLabel === 5) {
+                                if (dataLabel === 3) {
                                     return 'Consistently';
                                 } else if (dataLabel === 0) {
                                     return 'Rarely'

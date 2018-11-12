@@ -8,57 +8,54 @@ const router = express.Router();
 router.get('/:id', (req, res) => {
     console.log('in /api/adminorg/id GET');
     const id = req.params.id;
-    console.log(id);
 
     let selectAverage = `
+        WITH "temp_avg" AS (
+            SELECT
+                "rs2"."week",
+                ROUND(AVG("rd2"."score"), 1) AS "avg",
+                "bh2"."positive"
+            FROM
+                "response" AS "rs2"
+                LEFT JOIN "response_data" AS "rd2"
+                    ON "rs2"."id" = "rd2"."response_id"
+                LEFT JOIN "user" AS "us2"
+                    ON "rs2"."user_id" = "us2"."id"
+                LEFT JOIN "behavior" AS "bh2"
+                    ON "rd2"."behavior_id" = "bh2"."id"
+            GROUP BY
+                "us2"."org_id",
+                "rs2"."week",
+                "bh2"."positive"
+            HAVING
+                "us2"."org_id" = $1
+        )
         SELECT
-            'week' || "rs1"."week" AS "week",
+            "ta"."week",
             (
                 SELECT
-                    ROUND(AVG("rs2"."score"),1) AS "avg"
-                FROM 
-                    "response" AS "rs2"
-                    LEFT JOIN "user" AS "us2"
-                        ON "rs2"."user_id" = "us2"."id"
-                    LEFT JOIN "behavior" AS "bh2"
-                        ON "rs2"."behavior_id" = "bh2"."id"
+                    "avg"
+                FROM
+                    "temp_avg"
                 WHERE
-                    "us2"."org_id" = "us1"."org_id"
-                GROUP BY
-                    "bh2"."positive",
-                    "rs2"."week"
-                HAVING
-                    "bh2"."positive" = true
-                    AND "rs2"."week" = "rs1"."week"
+                    "week" = "ta"."week"
+                    AND "positive" = true
             ) AS "positive",
             (
                 SELECT
-                    ROUND(AVG("rs2"."score"),1) AS "avg"
-                FROM 
-                    "response" AS "rs2"
-                    LEFT JOIN "user" AS "us2"
-                        ON "rs2"."user_id" = "us2"."id"
-                    LEFT JOIN "behavior" AS "bh2"
-                        ON "rs2"."behavior_id" = "bh2"."id"
+                    "avg"
+                FROM
+                    "temp_avg"
                 WHERE
-                    "us2"."org_id" = "us1"."org_id"
-                GROUP BY
-                    "bh2"."positive",
-                    "rs2"."week"
-                HAVING
-                    "bh2"."positive" = false
-                    AND "rs2"."week" = "rs1"."week"
-            ) AS "negative",
-            COUNT(distinct "rs1"."user_id") AS "count"
-        FROM 
-            "response" AS "rs1"
-            LEFT JOIN "user" AS "us1"
-                ON "rs1"."user_id" = "us1"."id"
-        WHERE
-            "us1"."org_id" = $1
+                    "week" = "ta"."week"
+                    AND "positive" = false
+            ) AS "negative"
+        FROM
+            "temp_avg" AS "ta"
         GROUP BY
-            "us1"."org_id",
-            "rs1"."week"
+            "ta"."week"
+        ORDER BY
+            "ta"."week" ASC
         ;
     `;
 
@@ -67,7 +64,7 @@ router.get('/:id', (req, res) => {
     ]).then(results => {
         res.send(results.rows);
     }).catch(error => {
-        console.log(error);
+        console.log('Error getting average data :', error);
         res.sendStatus(500);
     });
 });

@@ -29,7 +29,12 @@ CREATE TABLE "user" (
 CREATE TABLE "response" (
 	"id" SERIAL PRIMARY KEY,
 	"user_id" INT REFERENCES "user",
-	"behavior_id" INT REFERENCES "behavior",
-	"score" INT NOT NULL,
 	"week" INT NOT NULL
+);
+
+CREATE TABLE "response_data" (
+	"id" SERIAL PRIMARY KEY,
+	"behavior_id" INT REFERENCES "behavior",
+	"response_id" INT REFERENCES "response",
+	"score" INT NOT NULL
 );
