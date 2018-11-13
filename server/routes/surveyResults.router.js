@@ -6,7 +6,9 @@ const router = express.Router();
 router.post('/', (req, res) => {
     const newSurveyScore = req.body;
     pool.query(`INSERT INTO "response" ("user_id", "week")
-    VALUES ($1,$2) RETURNING "id";`, [req.user.id, 4])
+    VALUES ($1,
+            ( SELECT "current_week" FROM "organization" WHERE "id" = $2 )
+        ) RETURNING "id";`, [req.user.id, req.user.org_id])
         .then((results) => {
             let insert = `INSERT INTO "response_data" ("response_id", "behavior_id", "score") VALUES ($1,$2,$3);`;
             let array = [];
