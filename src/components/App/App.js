@@ -22,6 +22,7 @@ import Survey from '../Survey/Survey';
 
 import './App.css';
 import AdminMain from '../AdminMain/AdminMain';
+import NewOrgForm from '../AdminMain/NewOrgForm';
 
 class App extends Component {
   componentDidMount() {
@@ -82,6 +83,11 @@ class App extends Component {
               exact
               path="/adminmain/organization/:id"
               component={AdminOrgMain}
+            />
+            <ProtectedRoute
+              exact
+              path="/adminmain/createneworganization"
+              component={NewOrgForm}
             />
             {/* If none of the other routes matched, we will show a 404. */}
             <Route render={() => <h1>404</h1>} />
