@@ -80,7 +80,7 @@ class App extends Component {
             />
             <ProtectedRoute
               exact
-              path="/adminmain/:id"
+              path="/adminmain/organization/:id"
               component={AdminOrgMain}
             />
             {/* If none of the other routes matched, we will show a 404. */}
