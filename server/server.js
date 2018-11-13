@@ -1,5 +1,21 @@
 
 const express = require('express');
+const schedule = require('node-schedule');
+
+// schedule.scheduleJob('1 * * * * *', function () {
+//   console.log('Another minute, another log');
+// });
+
+const rule = new schedule.RecurrenceRule();
+rule.dayOfWeek = 0
+rule.hour = 23;
+rule.minute = 59;
+
+schedule.scheduleJob(rule, function () {
+  console.log('this is when we will update the database');
+});
+
+
 require('dotenv').config();
 
 const app = express();
