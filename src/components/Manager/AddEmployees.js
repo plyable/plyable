@@ -9,28 +9,26 @@ class AddEmployees extends Component {
   }
 
   // Button Click
-  sendInvitationEmails = () => {
-    console.log('emailList BEFORE:', this.state.emailList);
-    let splitList = this.state.emailList.split('\n');
-    // this.setState({emailList: splitList});
-    this.props.dispatch({ type: 'ADD_EMPLOYEES', payload: splitList })
+  sendInvitationEmails = async () => {
+    let splitList = this.state.emailList.split('\n'); // creates comma separate array  
+   
+    await this.props.dispatch({ type: 'ADD_EMPLOYEES', payload: splitList });  // Adds Employee Emails to the DB
   }
 
   // Collect the data entered into the box
   handleChange = (event) => {
     this.setState({ emailList: event.target.value })
   }
-  
+
   render() {
 
-    
     return (
       <div>
         <h2>Add Employees</h2>
         <h3>1 email per line</h3>
         {/* Large Input Box */}
-        <textarea 
-          value={this.state.emailList} 
+        <textarea
+          value={this.state.emailList}
           onChange={this.handleChange}
           placeholder='No Commas'
         >
@@ -38,7 +36,7 @@ class AddEmployees extends Component {
 
         {/* OnClick rather than submit, to allow enter for new line */}
         <button onClick={this.sendInvitationEmails}>Send Invitations</button>
-        
+
       </div>
     );
   }

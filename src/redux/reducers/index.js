@@ -10,7 +10,7 @@ import registerModeReducer from './registerModeReducer';
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
 // This is imported in index.js as rootSaga
-import avgData from './adminOrgReducer';
+import adminChartData from './adminOrgReducer';
 //daniel start
 import addNewOrgReducer from './addNewOrgReducer';
 //daniel end
@@ -21,7 +21,7 @@ const rootReducer = combineReducers({
   user, // will have an id and username if someone is logged in
   adminMainReducer, //contains organizations in redux state
   addEmployeeReducer,
-  avgData,
+  adminChartData,
   survey, //this will hold the results of a users weekly survey
   addNewOrgReducer,
   registerModeReducer, //this will hold back the registration page untill the api is finished loggin them in
