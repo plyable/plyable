@@ -22,6 +22,7 @@ function* registerUser(action) {
   }
 }
 
+// wip
 function* registerInvited(action) {
 
   const config = {

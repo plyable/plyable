@@ -25,6 +25,7 @@ router.post('/register', (req, res, next) => {
     .catch((err) => { next(err); });
 });
 
+// wip
 router.post('/invite', userStrategy.authenticate('invite'), (req, res) => {
   res.sendStatus(200);
 })
