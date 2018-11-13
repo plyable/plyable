@@ -17,7 +17,7 @@ function stringToParams(string) {
 
 class RegisterPage extends Component {
     state = {
-        email: '',
+        email: stringToParams(this.props.location.search).email,
         password: '',
         confirmPassword: '',
     };
@@ -31,36 +31,33 @@ class RegisterPage extends Component {
     handleSubmit = event => {
         event.preventDefault();
         if (this.state.password === this.state.confirmPassword) {
-            console.log(this.state);
+            this.props.dispatch({ type: 'REGISTER_INVITED', payload: { password: this.state.password, ...stringToParams(this.props.location.search) } });
         } else {
             console.log('your password doesn\'t match');
         }
     }
 
     componentDidMount() {
-        this.props.dispatch({ type: 'FETCH_NEW_USER', payload: stringToParams(this.props.location.search) });
     }
 
     render() {
         return (
             <div>
-                {this.props.mode === 'register' ?
-                    <form onSubmit={this.handleSubmit}>
-                        <label>Email
+                <form onSubmit={this.handleSubmit}>
+                    <label>Email
                         <input type="email" onChange={this.handleInputChangeFor('email')} value={this.state.email} required />
-                        </label>
-                        <br />
-                        <label>Password
+                    </label>
+                    <br />
+                    <label>Password
                         <input type="password" onChange={this.handleInputChangeFor('password')} value={this.state.password} required />
-                        </label>
-                        <br />
-                        <label>Confirm Password
+                    </label>
+                    <br />
+                    <label>Confirm Password
                         <input type="password" onChange={this.handleInputChangeFor('confirmPassword')} value={this.state.confirmPassword} required />
-                        </label>
-                        <br />
-                        <input type="submit" />
-                    </form>
-                    : <h4>Please Hold</h4>}
+                    </label>
+                    <br />
+                    <input type="submit" />
+                </form>
 
             </div>
         );

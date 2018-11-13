@@ -25,16 +25,14 @@ function* registerUser(action) {
 // wip
 function* registerInvited(action) {
 
-  const config = {
-    headers: { 'Content-Type': 'application/json' },
-    withCredentials: true,
-  };
-
   try {
+    const config = {
+      headers: { 'Content-Type': 'application/json' },
+      withCredentials: true,
+    };
     yield axios.post('api/user/invite', action.payload, config);
-    yield put({ type: 'REGISTRATION_ACTIVE' });
     //logs in the user and allow them to continue to set their
-    //password as something of their own choosing by dispatching 'REGISTRATION_ACTIVE'
+    //password as something of their own choosing
   } catch (error) {
     console.log(error);
   }
@@ -42,7 +40,7 @@ function* registerInvited(action) {
 
 function* registrationSaga() {
   yield takeLatest('REGISTER', registerUser);
-  yield takeLatest('FETCH_NEW_USER', registerInvited);
+  yield takeLatest('REGISTER_INVITED', registerInvited);
 }
 
 export default registrationSaga;

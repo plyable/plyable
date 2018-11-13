@@ -40,10 +40,9 @@ router.post('/', async (req, res) => {
 
       // WIP: salt and hash both strings
       let passwordToSend = encryptLib.encryptPassword(newPassword);
-      let keyToSend = encryptLib.encryptPassword(newKey);
 
       // WIP: on insert, using salted and hashed strings, add pw, temp_key, temp_key_timeout
-      pool.query(query, [req.user.org_id, passwordToSend, email, keyToSend]);
+      pool.query(query, [req.user.org_id, passwordToSend, email, newKey]);
       return {
         email: email,
 
