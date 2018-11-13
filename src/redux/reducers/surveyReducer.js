@@ -1,12 +1,11 @@
 import { combineReducers } from 'redux';
 
-const surveyScore = (state = {}, action) => {
+const surveyScore = (state = [], action) => {
   switch (action.type) {
     case 'SET_SCORE':
-      return {
-          ...state,
-          [action.payload.value]: action.payload.score,
-      };
+      return [
+        ...state, action.payload
+      ];
     default:
       return state;
   }
@@ -15,4 +14,4 @@ const surveyScore = (state = {}, action) => {
 
 export default combineReducers({
   surveyScore,
-});
+});//stores survey scores from server
