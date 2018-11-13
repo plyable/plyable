@@ -6,6 +6,8 @@ const schedule = require('node-schedule');
 //   console.log('Another minute, another log');
 // });
 
+//use .cancel to deactivate?
+
 const rule = new schedule.RecurrenceRule();
 rule.dayOfWeek = 0
 rule.hour = 23;
@@ -29,7 +31,6 @@ const userRouter = require('./routes/user.router');
 const adminMainRouter = require('./routes/adminMainRouter')
 const employeeRouter = require('./routes/employee.router');
 
-
 // manny start
 const adminOrgRouter = require('./routes/admin.org.main');
 // manny end
@@ -48,10 +49,8 @@ app.use(passport.session());
 
 /* Routes */
 app.use('/api/user', userRouter);
-app.use('/adminmain', adminMainRouter)
+app.use('/adminmain', adminMainRouter);
 app.use('/api/employee', employeeRouter);
-
-
 
 /** manny Start */
 app.use('/api/adminorg', adminOrgRouter);
