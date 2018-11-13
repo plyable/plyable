@@ -30,7 +30,7 @@ const passport = require('./strategies/user.strategy');
 const userRouter = require('./routes/user.router');
 const adminMainRouter = require('./routes/adminMainRouter')
 const employeeRouter = require('./routes/employee.router');
-
+const surveyResultsRouter = require('./routes/surveyResults.router');
 // manny start
 const adminOrgRouter = require('./routes/admin.org.main');
 // manny end
@@ -51,6 +51,7 @@ app.use(passport.session());
 app.use('/api/user', userRouter);
 app.use('/adminmain', adminMainRouter);
 app.use('/api/employee', employeeRouter);
+app.use('/api/surveyresults', surveyResultsRouter)
 
 /** manny Start */
 app.use('/api/adminorg', adminOrgRouter);
