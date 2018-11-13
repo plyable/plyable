@@ -9,6 +9,8 @@ router.get('/average/:id', (req, res) => {
     console.log('in /api/adminorg/average/id GET');
     const id = req.params.id;
 
+    console.log(res.params);
+
     let selectAverage = `
         WITH "temp_avg" AS (
             SELECT
