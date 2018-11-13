@@ -14,7 +14,7 @@ let transporter = nodemailer.createTransport({
   }
 });
 
-// WIP: generate random strings (X2)
+// generate random strings (X2)
 const randomString = () => {
   let chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
   let string_length = 8;
@@ -38,15 +38,16 @@ router.post('/', async (req, res) => {
       let newPassword = randomString();
       let newKey = randomString();
 
-      // WIP: salt and hash both strings
+      // salt and hash both strings
       let passwordToSend = encryptLib.encryptPassword(newPassword);
+      let keyToSend = encryptLib.encryptPassword(newKey);
 
-      // WIP: on insert, using salted and hashed strings, add pw, temp_key, temp_key_timeout
-      pool.query(query, [req.user.org_id, passwordToSend, email, newKey]);
+      // on insert, using salted and hashed strings, add pw, temp_key, temp_key_timeout
+      pool.query(query, [req.user.org_id, passwordToSend, email, keyToSend]);
       return {
         email: email,
 
-        // WIP: create a url with key
+        // create a url with key
         url: `http://localhost:3000/#/register/?email=${email}&key=${newKey}`,
       }
     }) // END of map
