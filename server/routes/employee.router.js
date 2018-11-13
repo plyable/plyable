@@ -48,7 +48,7 @@ router.post('/', async (req, res) => {
         email: email,
 
         // WIP: create a url with key
-        url: `http://localhost:3000/register/?email=${email}&key=${newKey}`,
+        url: `http://localhost:3000/#/register/?email=${email}&key=${newKey}`,
       }
     }) // END of map
 

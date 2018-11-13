@@ -60,7 +60,7 @@ class App extends Component {
             />
 
             <Route
-              exact
+              
               path="/register/"
               component={Registration}
             />
