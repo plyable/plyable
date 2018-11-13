@@ -49,4 +49,27 @@ passport.use('local', new LocalStrategy({
       });
   })));
 
+  passport.use('invite', new LocalStrategy({
+    passReqToCallback: true,
+    usernameField: 'email',
+  }, ((req, email, key, done) => {
+      pool.query('SELECT * FROM "user" WHERE email = $1', [email])
+        .then((result) => {
+          const user = result && result.rows && result.rows[0];
+          if (user && encryptLib.comparePassword(key, user.temp_key)) {
+            // all good! keys match!
+            done(null, user);
+          } else if (user) {
+            // not good! keys don't match!
+            done(null, false, { message: 'Incorrect credentials.' });
+          } else {
+            // not good! No user with that name
+            done(null, false);
+          }
+        }).catch((err) => {
+          console.log('error', err);
+          done(null, {});
+        });
+    })));
+
 module.exports = passport;

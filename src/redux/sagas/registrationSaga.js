@@ -23,8 +23,17 @@ function* registerUser(action) {
 }
 
 function* registerInvited(action) {
+
+  const config = {
+    headers: { 'Content-Type': 'application/json' },
+    withCredentials: true,
+  };
+
   try {
-    yield put({ type: 'PINGED_REGISTRATION' });
+    yield axios.post('api/user/invite', action.payload, config);
+    yield put({ type: 'REGISTRATION_ACTIVE' });
+    //logs in the user and allow them to continue to set their
+    //password as something of their own choosing by dispatching 'REGISTRATION_ACTIVE'
   } catch (error) {
     console.log(error);
   }
