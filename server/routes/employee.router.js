@@ -4,7 +4,7 @@ const pool = require('../modules/pool');
 
 const nodemailer = require('nodemailer');
 
-// WIP
+// Transporter to send emails
 let transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
@@ -13,21 +13,15 @@ let transporter = nodemailer.createTransport({
   }
 });
 
-
-// Add Employee Emails to DB
+// Add Employee Emails to DB & Send email invitations
 router.post('/', async (req, res) => {
-  // console.log('req.body for adding employee emails:', req.body);
   try {
-
-    // 1 add to db 
+    // 1) add to db 
     // TO DO: add temp key and timeout //
-
     const query = `INSERT INTO "user" ("org_id", "email") VALUES ($1, $2);` // Query to add all the individual emails to the database
-
-    const promises = await req.body.map(email => pool.query(query, [req.user.org_id, email])) // map over the req.body(array of emails), and post to the db
-    // console.log('Promises in employeeRouter:', promises);
-
-    // 2 send emails
+    await req.body.map(email => pool.query(query, [req.user.org_id, email])) // map over the req.body(array of emails), and post to the db
+    
+    // 2) send emails
     const mailOptions = {
         from: 'tmonkey424242@gmail.com', // sender address
         to: req.body, // list of receivers
@@ -35,8 +29,8 @@ router.post('/', async (req, res) => {
         html: '<p>It Works</p>'// plain text body
       };
 
+    // TO DO: make sure that the correct errors/success are thrown at the correct time
     transporter.sendMail(mailOptions, (error, info) => {
-      
     if (error) {
       res.sendStatus(500);
       return console.log(error);
@@ -48,7 +42,6 @@ router.post('/', async (req, res) => {
     console.log('ERROR in sending invitation emails:', error);
   }
 })
-
 
 module.exports = router;
 

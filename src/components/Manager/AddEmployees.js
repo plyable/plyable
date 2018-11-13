@@ -5,19 +5,14 @@ import { connect } from 'react-redux';
 
 class AddEmployees extends Component {
   state = {
-    // TO DO: make the variable naming clearer
     emailList: []
   }
 
   // Button Click
   sendInvitationEmails = async () => {
-    console.log('emailList BEFORE:', this.state.emailList);
-    // creates comma separate array
-    let splitList = this.state.emailList.split('\n');
-    
-    // Adds Employee Emails to the DB
-    await this.props.dispatch({ type: 'ADD_EMPLOYEES', payload: splitList })
-
+    let splitList = this.state.emailList.split('\n'); // creates comma separate array  
+   
+    await this.props.dispatch({ type: 'ADD_EMPLOYEES', payload: splitList });  // Adds Employee Emails to the DB
   }
 
   // Collect the data entered into the box

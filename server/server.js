@@ -2,7 +2,6 @@
 const express = require('express');
 require('dotenv').config();
 
-
 const app = express();
 const bodyParser = require('body-parser');
 const sessionMiddleware = require('./modules/session-middleware');
@@ -13,8 +12,6 @@ const passport = require('./strategies/user.strategy');
 const userRouter = require('./routes/user.router');
 const adminMainRouter = require('./routes/adminMainRouter')
 const employeeRouter = require('./routes/employee.router');
-
-
 
 // manny start
 const adminOrgRouter = require('./routes/admin.org.main');
@@ -34,9 +31,8 @@ app.use(passport.session());
 
 /* Routes */
 app.use('/api/user', userRouter);
-app.use('/adminmain', adminMainRouter)
+app.use('/adminmain', adminMainRouter);
 app.use('/api/employee', employeeRouter);
-
 
 /** manny Start */
 app.use('/api/adminorg', adminOrgRouter);
