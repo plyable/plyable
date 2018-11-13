@@ -26,9 +26,23 @@ router.post('/register', (req, res, next) => {
 });
 
 // wip
-router.post('/invite', userStrategy.authenticate('invite'), (req, res) => {
-  res.sendStatus(200);
-})
+router.post('/invite', (req, res) => {
+  let key = req.body.key;
+  let email = req.body.email;
+  let now = new Date();
+  //todo come back and add timestamp validation using now
+  const password = encryptLib.encryptPassword(req.body.password);
+  pool.query(`UPDATE "user" SET "password" = $1
+  WHERE "email" = $2 AND "temp_key" = $3;`,[password, email, key])
+  .then(result => {
+    console.log('updated password');
+    res.sendStatus(200);
+  })
+  .catch( error => {
+    console.log('error in invite', error);
+    res.sendStatus(500);
+  });
+});
 
 // Handles login form authenticate/login POST
 // userStrategy.authenticate('local') is middleware that we run on this route
