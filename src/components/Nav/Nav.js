@@ -10,17 +10,10 @@ const Nav = (props) => (
       <h2 className="nav-title">Prime Solo Project</h2>
     </Link>
     <div className="nav-right">
-      {
-        props.user.id && (
-          <Link className="nav-link"
-            to={props.user.security_level === 0 ? "/adminmain" : "/main"}>
-            {/* Show this link if they are logged in or not,
-            but call this link 'Home' if they are logged in,
-            and call this link 'Login / Register' if they are not */}
-            {props.user.id ? 'Main' : 'Login / Register'}
-          </Link>
-        )
-      }
+        <Link className="nav-link"
+          to={props.user.security_level === 0 ? "/adminmain" : "/main"}>
+          {props.user.id ? 'Main' : 'Login'}
+        </Link>
       {/* Show the link to the info page and the logout button if the user is logged in */}
       {props.user.id && props.user.security_level === 0 ? (
         <>
