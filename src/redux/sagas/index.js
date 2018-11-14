@@ -11,6 +11,7 @@ import addEmployeeSaga from './addEmployeeSaga';
 
 // manny start
 import adminOrgSaga from './adminOrgSaga';
+import userMainSaga from './userMainSaga';
 // manny end
 //daniel start
 import addNewOrgSaga from './addNewOrgSaga';
@@ -24,6 +25,7 @@ export default function* rootSaga() {
         registrationSaga(),
         userSaga(),
         adminMainSaga(),
+        userMainSaga(),
         addEmployeeSaga(),
         addNewOrgSaga(),
         surveySaga(),

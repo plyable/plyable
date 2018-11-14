@@ -26,6 +26,9 @@ const Nav = (props) => (
           <Link className="nav-link" to="/adminmain">
             Admin Main
           </Link>
+          <Link className="nav-link" to="/main">
+            User Main
+          </Link>
         </>
 
       )}

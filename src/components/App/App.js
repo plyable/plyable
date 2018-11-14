@@ -19,6 +19,7 @@ import InfoPage from '../InfoPage/InfoPage';
 import AddEmployees from '../Manager/AddEmployees';
 import AdminOrgMain from '../AdminOrgMain/AdminOrgMain';
 import Survey from '../Survey/Survey';
+import UserMain from '../UserMain/UserMain';
 import Registration from '../RegisterPage/Registration';
 
 import './App.css';
@@ -80,6 +81,11 @@ class App extends Component {
               exact
               path="/info"
               component={InfoPage}
+            />
+            <ProtectedRoute
+              exact
+              path="/main"
+              component={UserMain}
             />
             <ProtectedRoute
               exact
