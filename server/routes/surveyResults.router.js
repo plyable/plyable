@@ -38,7 +38,7 @@ router.post('/', (req, res) => {
                             res.sendStatus(200);
                         }).catch((error) => {
                             //remove response for that week so that a user may retake their weekly survey if the previous query failed
-                            pool.query(`DELETE FROM "response" WHERE "id" = $1;`,[results.rows[0].id]);
+                            pool.query(`DELETE FROM "response" WHERE "id" = $1;`, [results.rows[0].id]);
                             console.log('Error POSTING survey score to PostgreSQL', error);
                             res.sendStatus(500);
                         });//end POST pool query
@@ -54,3 +54,5 @@ router.post('/', (req, res) => {
 });//end POST call server side
 
 module.exports = router;
+
+
