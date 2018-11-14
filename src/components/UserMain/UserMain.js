@@ -1,10 +1,15 @@
 // Scope: Organization Page (for user)
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 class UserMain extends Component {
     componentDidMount = () => {
-        this.props.dispatch({ type: 'USER_ORG_CHART' });
+        if(this.props.user.security_level===0){
+            this.props.history.push('/adminmain');
+        } else {
+            this.props.dispatch({ type: 'USER_ORG_CHART' });
+        }
     }
 
     render() {
@@ -21,4 +26,4 @@ class UserMain extends Component {
 
 const mapStateToProps = ({ user }) => ({ user });
 
-export default connect(mapStateToProps)(UserMain);
+export default connect(mapStateToProps)(withRouter(UserMain));

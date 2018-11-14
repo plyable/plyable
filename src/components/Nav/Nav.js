@@ -10,41 +10,43 @@ const Nav = (props) => (
       <h2 className="nav-title">Prime Solo Project</h2>
     </Link>
     <div className="nav-right">
-      <Link className="nav-link" to="/home">
-        {/* Show this link if they are logged in or not,
-        but call this link 'Home' if they are logged in,
-        and call this link 'Login / Register' if they are not */}
-        {props.user.id ? 'Home' : 'Login'}
-      </Link>
+      {
+        props.user.id && (
+          <Link className="nav-link"
+            to={props.user.security_level === 0 ? "/adminmain" : "/main"}>
+            {/* Show this link if they are logged in or not,
+            but call this link 'Home' if they are logged in,
+            and call this link 'Login / Register' if they are not */}
+            {props.user.id ? 'Main' : 'Login / Register'}
+          </Link>
+        )
+      }
       {/* Show the link to the info page and the logout button if the user is logged in */}
-      {props.user.id && (
+      {props.user.id && props.user.security_level === 0 ? (
         <>
-          <Link className="nav-link" to="/info">
-            Info Page
+          {/* HM: Temporary Nav Link For Manager Add Employees */}
+          <Link className="nav-link" to="/addemployees">
+            Add Employees
           </Link>
           <LogOutButton className="nav-link" />
-          <Link className="nav-link" to="/adminmain">
-            Admin Main
-          </Link>
-          <Link className="nav-link" to="/main">
-            User Main
-          </Link>
         </>
-
+      ) : props.user.id && (
+        <>
+          <Link className="nav-link" to="/survey">
+            Take Survey
+          </Link>
+          {props.user.security_level === 1 ? (
+            <Link className="nav-link" to="/addemployees">
+              Add Employees
+            </Link>
+          ) : null}
+          <LogOutButton className="nav-link" />
+        </>
       )}
       {/* Always show this link since the about page is not protected */}
-      <Link className="nav-link" to="/about">
+      {/* <Link className="nav-link" to="/about">
         About
-      </Link>
-
-      {/* HM: Temporary Nav Link For Manager Add Employees */}
-      <Link className="nav-link" to="/addemployees">
-        Add Employees
-      </Link>
-
-      <Link className="nav-link" to="/survey">
-        Take Survey
-      </Link>
+      </Link> */}
     </div>
   </div>
 );

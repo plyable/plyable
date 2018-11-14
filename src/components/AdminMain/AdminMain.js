@@ -9,7 +9,11 @@ class AdminMain extends Component {
     // };
 
     componentDidMount() {
-        this.props.dispatch({ type: 'FETCH_ORGANIZATIONS', payload: this.props.reduxState.adminMainReducer })
+        if(this.props.reduxState.user.security_level!==0){
+            this.props.history.push('/main');
+        } else {
+            this.props.dispatch({ type: 'FETCH_ORGANIZATIONS', payload: this.props.reduxState.adminMainReducer })
+        }
     };//this will fetch all organizations from the database upon page load
 
     handleAddNewOrganizationClick = () => {
