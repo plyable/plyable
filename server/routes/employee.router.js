@@ -48,7 +48,7 @@ router.post('/', async (req, res) => {
           email: email,
 
           // create a url with key
-          url: `http://localhost:3000/#/register/?email=${email}&key=${newKey}`,
+          url: `http://localhost:3000/#/register/?email=` + encodeURIComponent(`${email}`) + `&key=` + encodeURIComponent(`${newKey}`),//encodeURI will replaces certain characters with escape characters, heightening security
         }
       }) // END of map
 
@@ -74,7 +74,7 @@ router.post('/', async (req, res) => {
       console.log('ERROR in sending emails:', error);
       res.sendStatus(500);
     } // END try 
-  } else{
+  } else {
     res.sendStatus(403);
   }
 })
