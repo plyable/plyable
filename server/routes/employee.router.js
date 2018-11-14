@@ -32,7 +32,7 @@ router.post('/', async (req, res) => {
     try {
 
       // NOTE: employee has 3 days to register from time the email is sent
-      const query = `INSERT INTO "user" ("org_id", "password", "email", "temp_key", "temp_key_timeout") VALUES ($1, $2, $3, $4, current_date + 3);` // Query to add all the individual emails to the database
+      const query = `INSERT INTO "user" ("org_id", "password", "email", "temp_key", "temp_key_timeout", "security_level") VALUES ($1, $2, $3, $4, current_date + 3, $5);`; // Query to add all the individual emails to the database
       const array = await req.body.map(email => {
 
         let newPassword = randomString();
@@ -43,7 +43,7 @@ router.post('/', async (req, res) => {
         let keyToSend = encryptLib.encryptPassword(newKey);
 
         // on insert, using salted and hashed strings, add pw, temp_key, temp_key_timeout
-        pool.query(query, [req.user.org_id, passwordToSend, email, keyToSend]);
+        pool.query(query, [req.user.org_id, passwordToSend, email, keyToSend, 2]); // this is just for employee
         return {
           email: email,
 
