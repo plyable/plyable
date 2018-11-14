@@ -1,21 +1,7 @@
 
 const express = require('express');
 const schedule = require('node-schedule');
-
-// schedule.scheduleJob('1 * * * * *', function () {
-//   console.log('Another minute, another log');
-// });
-
-//use .cancel to deactivate?
-
-const rule = new schedule.RecurrenceRule();
-rule.dayOfWeek = 0
-rule.hour = 23;
-rule.minute = 59;
-
-schedule.scheduleJob(rule, function () {
-  console.log('this is when we will update the database');
-});
+const pool = require('./modules/pool');
 
 
 require('dotenv').config();
@@ -67,4 +53,18 @@ const PORT = process.env.PORT || 5000;
 /** Listen * */
 app.listen(PORT, () => {
   console.log(`Listening on port: ${PORT}`);
+});
+
+
+//node schedule that will update the current week every Sunday evening at 11:59PM
+const rule = new schedule.RecurrenceRule();
+rule.dayOfWeek = 0
+rule.hour = 23;
+rule.minute = 59;
+schedule.scheduleJob(rule, function () {
+  pool.query(`UPDATE "organization"
+                  SET "current_week" = "current_week" + 1
+                  WHERE "collecting_data" = true;`).then((results) => {
+      console.log(results.rows); //query will update current week by one each week until it is deactivated (as long as "collecting_data" is true)
+    });
 });
