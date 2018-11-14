@@ -8,10 +8,8 @@ const router = express.Router();
 router.get('/average/:id', (req, res) => {
     console.log('in /api/adminorg/average/id GET');
     const id = req.params.id;
-
-    console.log(res.params);
-
-    let selectAverage = `
+    if (req.user && req.user.security_level < 1) {
+        let selectAverage = `
         WITH "temp_avg" AS (
             SELECT
                 "rs2"."week",
@@ -85,14 +83,17 @@ router.get('/average/:id', (req, res) => {
             "ta"."week" ASC
     `;
 
-    pool.query(selectAverage, [
-        id
-    ]).then(results => {
-        res.send(results.rows);
-    }).catch(error => {
-        console.log('Error getting average chart data :', error);
-        res.sendStatus(500);
-    });
+        pool.query(selectAverage, [
+            id
+        ]).then(results => {
+            res.send(results.rows);
+        }).catch(error => {
+            console.log('Error getting average chart data :', error);
+            res.sendStatus(500);
+        });
+    } else {
+        res.sendStatus(403);
+    }
 });
 
 router.get('/behavior', (req, res) => {
@@ -105,19 +106,19 @@ router.get('/behavior', (req, res) => {
             "behavior"
         ;
     `).then(results => {
-        res.send(results.rows);
-    }).catch(error => {
-        console.log('Error getting behaviors for admin :', error);
-        res.sendStatus(500);
-    });
+            res.send(results.rows);
+        }).catch(error => {
+            console.log('Error getting behaviors for admin :', error);
+            res.sendStatus(500);
+        });
 });
 
 router.get('/specific/all/:id', (req, res) => {
     console.log('in /api/adminorg/specific/id/behaviorId GET');
 
     const id = req.params.id;
-
-    let selectrSpecific = `
+    if (req.user && res.user.security_level < 1) {
+        let selectrSpecific = `
         SELECT
             "bh2"."value",
             "rs2"."week",
@@ -144,14 +145,17 @@ router.get('/specific/all/:id', (req, res) => {
         ;
     `;
 
-    pool.query(selectrSpecific,[
-        id,
-    ]).then(results => {
-        res.send(results.rows);
-    }).catch(error => {
-        console.log('Error getting specific chart data :', error);
-        res.sendStatus(500);
-    });
+        pool.query(selectrSpecific, [
+            id,
+        ]).then(results => {
+            res.send(results.rows);
+        }).catch(error => {
+            console.log('Error getting specific chart data :', error);
+            res.sendStatus(500);
+        });
+    } else {
+        res.sendStatus(403);
+    }
 });
 
 router.get('/specific/:id/:behaviorId', (req, res) => {
@@ -159,8 +163,8 @@ router.get('/specific/:id/:behaviorId', (req, res) => {
 
     const id = req.params.id;
     const behaviorId = req.params.behaviorId;
-
-    let selectrSpecific = `
+    if (req.user && req.user.security_level < 1) {
+        let selectrSpecific = `
         SELECT
             "rs2"."week",
             ROUND(AVG("rd2"."score"), 1) AS "avg",
@@ -194,15 +198,18 @@ router.get('/specific/:id/:behaviorId', (req, res) => {
         ;
     `;
 
-    pool.query(selectrSpecific,[
-        id,
-        behaviorId
-    ]).then(results => {
-        res.send(results.rows);
-    }).catch(error => {
-        console.log('Error getting specific chart data :', error);
-        res.sendStatus(500);
-    });
+        pool.query(selectrSpecific, [
+            id,
+            behaviorId
+        ]).then(results => {
+            res.send(results.rows);
+        }).catch(error => {
+            console.log('Error getting specific chart data :', error);
+            res.sendStatus(500);
+        });
+    } else{
+        res.sendStatus(403);
+    }
 });
 
 /**
