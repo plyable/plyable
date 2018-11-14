@@ -33,7 +33,7 @@ router.post('/', async (req, res) => {
     let org = req.user.org_id;
     let sec = 2;
     if (req.user.security_level < 1){
-      org = req.query.organization;
+      org = req.body.organization;
       sec = 1;
     }
     try {
