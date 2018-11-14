@@ -15,7 +15,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 // Handles POST request with new user data
 // The only thing different from this and every other post we've seen
 // is that the password gets encrypted before being inserted
-router.post('/register', (req, res, next) => {  
+router.post('/register', (req, res, next) => {
   const username = req.body.username;
   const password = encryptLib.encryptPassword(req.body.password);
 
@@ -23,6 +23,35 @@ router.post('/register', (req, res, next) => {
   pool.query(queryText, [username, password])
     .then(() => { res.sendStatus(201); })
     .catch((err) => { next(err); });
+});
+
+router.post('/invite', (req, res) => {
+  let key = req.body.key;
+  let email = req.body.email;
+  pool.query('SELECT "temp_key" FROM "user" WHERE "email" = $1;', [email])
+    .then(result => {
+      console.log('result.rows:', result.rows)
+      if (encryptLib.comparePassword(key, result.rows[0].temp_key)) {
+        let now = new Date();
+        const password = encryptLib.encryptPassword(req.body.password);
+
+        pool.query(`UPDATE "user" SET "password" = $1, "temp_key_timeout" = current_date - 1 
+        WHERE "email" = $2 AND "temp_key_timeout" > $3;`, [password, email, now])
+          .then(result => {
+            console.log('updated password');
+            res.sendStatus(200);
+          })
+          .catch(error => {
+            console.log('error in invite', error);
+            res.sendStatus(500);
+          });
+      } else {
+        res.sendStatus(403);
+      }
+    }).catch(error => {
+      console.log('ERROR in user.router:', error);
+      res.sendStatus(500);
+    })
 });
 
 // Handles login form authenticate/login POST

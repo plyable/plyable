@@ -3,7 +3,26 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import NextButton from './NextButton';
 import PrevButton from './PrevButton';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
 
+const styles = theme => ({
+    root: {
+        display: 'flex',
+    },
+    formControl: {
+        margin: theme.spacing.unit * 3,
+    },
+    group: {
+        // display: 'inline',
+        verticalAlign: 'top',
+        textAlign: 'center',
+    },
+});//material ui styles
 
 class BehaviorCard extends Component {
 
@@ -13,15 +32,15 @@ class BehaviorCard extends Component {
 
     //handleChange takes in a integer 0 through 3 and returns an anonymous callback
     //function that sets the local state to that integer when called
-    handleChange = newScore => event => {
+    handleChange = event => {
         this.setState({
-            score: newScore,
+            score: event.target.value,
         });
     }
 
     //this function runs whenever the client clicks the next or prev button, and updates redux state
     handleSubmit = () => {
-        this.props.dispatch({ type: 'SET_SCORE', payload: { value: this.props.card.value, score: this.state.score } });
+        this.props.dispatch({ type: 'SET_SCORE', payload: { id: this.props.card.id, value: this.props.card.value, score: this.state.score } });
         this.setState({
             score: null,
         })
@@ -45,6 +64,7 @@ class BehaviorCard extends Component {
     //cases of refresh and the final back button at the end of the survey
 
     render() {
+        const { classes } = this.props;
         return (
             <div>
                 <h3>{this.props.card.value}</h3>
@@ -57,21 +77,40 @@ class BehaviorCard extends Component {
                     switchCard={this.props.switchCard}
                     handleSubmit={this.handleSubmit}
                 />}
-                <input type="checkbox" onChange={this.handleChange(0)} checked={this.state.score === 0} />
-                <input type="checkbox" onChange={this.handleChange(1)} checked={this.state.score === 1} />
-                <input type="checkbox" onChange={this.handleChange(2)} checked={this.state.score === 2} />
-                <input type="checkbox" onChange={this.handleChange(3)} checked={this.state.score === 3} />
-                {this.state.score !== undefined && <NextButton
-                    number={this.props.current + 1}
-                    switchCard={this.props.switchCard}
-                    handleSubmit={this.handleSubmit}
-                />
-                }
+                {/* FormControl brought in from Material UI to style radio buttons*/}
+                <FormControl className={classes.formControl}>
+                    <RadioGroup
+                        aria-label="Behavior"
+                        name="behavior"
+                        className={classes.group}
+                        value={this.state.score}
+                        onChange={this.handleChange}
+                    >
+                        <FormControlLabel value="0" control={<Radio />} label="rarely" labelPlacement="end" />
+                        <FormControlLabel value="1" control={<Radio />} label="occasionally" labelPlacement="end" />
+                        <FormControlLabel value="2" control={<Radio />} label="every week" labelPlacement="end" />
+                        <FormControlLabel value="3" control={<Radio />} label="every day" labelPlacement="end" />
+                        {this.state.score !== undefined && <NextButton
+                            number={this.props.current + 1}
+                            switchCard={this.props.switchCard}
+                            handleSubmit={this.handleSubmit}
+                        />
+                        }
+                    </RadioGroup>
+                </FormControl>
             </div>
         )
     }
 }
 
+BehaviorCard.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+
+const behaviorCardStyles = withStyles(styles)(BehaviorCard);
+
 const mapStateToProps = ({ survey }) => ({ survey: survey.surveyScore });
 
-export default connect(mapStateToProps)(BehaviorCard);
+export default connect(mapStateToProps)(behaviorCardStyles);
+
+

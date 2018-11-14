@@ -22,8 +22,25 @@ function* registerUser(action) {
   }
 }
 
+// wip
+function* registerInvited(action) {
+
+  try {
+    const config = {
+      headers: { 'Content-Type': 'application/json' },
+      withCredentials: true,
+    };
+    yield axios.post('api/user/invite', action.payload, config);
+    //logs in the user and allow them to continue to set their
+    //password as something of their own choosing
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 function* registrationSaga() {
   yield takeLatest('REGISTER', registerUser);
+  yield takeLatest('REGISTER_INVITED', registerInvited);
 }
 
 export default registrationSaga;
