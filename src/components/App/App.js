@@ -20,7 +20,7 @@ import AddEmployees from '../Manager/AddEmployees';
 import AdminOrgMain from '../AdminOrgMain/AdminOrgMain';
 import Survey from '../Survey/Survey';
 import UserMain from '../UserMain/UserMain';
-import Registration from '../RegisterPage/Registration';
+import Registration from '../Registration/Registration';
 
 import './App.css';
 import AdminMain from '../AdminMain/AdminMain';

@@ -9,13 +9,13 @@ function stringToParams(string) {
         .forEach(param => {
             paramArray = param.split('=');
             if (paramArray.length > 1) {
-                objectToSend[paramArray[0]] = paramArray[1];
+                objectToSend[paramArray[0]] = decodeURIComponent(paramArray[1]); //decodes escape characters to make email human readable
             }
         });
     return objectToSend;
 }
 
-class RegisterPage extends Component {
+class Registration extends Component {
     state = {
         email: stringToParams(this.props.location.search).email,
         password: '',
@@ -65,9 +65,5 @@ class RegisterPage extends Component {
 }
 
 
-const mapStateToProps = state => ({
-    mode: state.registerModeReducer
-});
-
-export default connect(mapStateToProps)(withRouter(RegisterPage));
+export default connect()(withRouter(Registration));
 
