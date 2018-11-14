@@ -21,7 +21,7 @@ CREATE TABLE "user" (
 	"org_id" INT REFERENCES "organization",
 	"password" VARCHAR(1000),
 	"email" VARCHAR(30) UNIQUE NOT NULL,
-	"security_level" INT DEFAULT 0,
+	"security_level" INT DEFAULT 2,
 	"temp_key" VARCHAR(1000),
 	"temp_key_timeout" TIMESTAMP
 );
