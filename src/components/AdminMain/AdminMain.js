@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
 class AdminMain extends Component {
-    // state = {
-    //     email: '',
-    //     password: '',
-    // };
+    state = {
+        emails: '',
+        organization: 0,
+    };
 
     componentDidMount() {
         this.props.dispatch({ type: 'FETCH_ORGANIZATIONS', payload: this.props.reduxState.adminMainReducer })
@@ -24,8 +24,18 @@ class AdminMain extends Component {
         console.log('handleDeactivateClick working');
     }//this button will deactivate the organization, thereby quitting the collection of data, but the data will still be viewable
 
-    handleAddManagers = () => {
-        console.log('add managers working');
+    handleAddManagers = id => () => {
+        this.setState({
+            ...this.state,
+            organization: id,
+        });
+    }
+
+    handleCancel = () => {
+        this.setState({
+            emails: '',
+            organization: 0,
+        });
     }
 
     render() {
@@ -47,13 +57,17 @@ class AdminMain extends Component {
                                 <td>{organization.name}</td>
                                 <td><button onClick={() => this.handleViewOrgClick(organization.id)}>View</button></td>
                                 <td><button onClick={this.handleDeactivateClick}>Deactivate</button></td>
-                                <td><button onClick={this.handleAddManagers}>Add Managers</button></td>
+                                <td><button onClick={this.handleAddManagers(organization.id)}>Add Managers</button></td>
                             </tr> //this for each loop will map through available organizations in the database and display them 
                             //on the DOM in a table
                         })}
                     </tbody>
                 </table>
                 < button onClick={this.handleAddNewOrganizationClick}>Add New Organization</button>
+                <dialog open={this.state.organization > 0}>
+                    
+                    <button onClick={this.handleCancel}>Cancel</button>
+                </dialog>
             </div >
         );
     }
