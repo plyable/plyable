@@ -5,7 +5,7 @@ import { withRouter } from 'react-router';
 class AdminMain extends Component {
     state = {
         emailList: '',
-        organization: 0,
+        org_id: 0,
     };
 
     componentDidMount() {
@@ -31,14 +31,14 @@ class AdminMain extends Component {
     handleAddManagers = id => () => {
         this.setState({
             ...this.state,
-            organization: id,
+            org_id: id,
         });
     }
 
     handleCancel = () => {
         this.setState({
             emailList: '',
-            organization: 0,
+            org_id: 0,
         });
     }
 
@@ -81,7 +81,7 @@ class AdminMain extends Component {
                     </tbody>
                 </table>
                 < button onClick={this.handleAddNewOrganizationClick}>Add New Organization</button>
-                <dialog open={this.state.organization > 0}>
+                <dialog open={this.state.org_id > 0}>
                 <h2>Add Employees</h2>
         <h3>1 email per line</h3>
         {/* Large Input Box */}

@@ -31,10 +31,10 @@ router.post('/', async (req, res) => {
   if (req.user && req.user.security_level < 2) {
     //this part is to reuse this route for adding managers, with security_level 1 and org_id variable
     let org = req.user.org_id;
-    let sec = 2;
+    let security_to_add = 2;
     if (req.user.security_level < 1){
-      org = req.body.organization;
-      sec = 1;
+      org = req.body.org_id;
+      security_to_add = 1;
     }
     try {
 
@@ -50,7 +50,7 @@ router.post('/', async (req, res) => {
         let keyToSend = encryptLib.encryptPassword(newKey);
 
         // on insert, using salted and hashed strings, add pw, temp_key, temp_key_timeout
-        pool.query(query, [org, passwordToSend, email, keyToSend, sec]);
+        pool.query(query, [org, passwordToSend, email, keyToSend, security_to_add]);
         return {
           email: email,
 
