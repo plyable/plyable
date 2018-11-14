@@ -9,7 +9,7 @@ function stringToParams(string) {
         .forEach(param => {
             paramArray = param.split('=');
             if (paramArray.length > 1) {
-                objectToSend[paramArray[0]] = paramArray[1];
+                objectToSend[paramArray[0]] = decodeURIComponent(paramArray[1]); //decodes escape characters to make email human readable
             }
         });
     return objectToSend;
