@@ -32,7 +32,7 @@ router.post('/', async (req, res) => {
     //this part is to reuse this route for adding managers, with security_level 1 and org_id variable
     let org = req.user.org_id;
     let security_to_add = 2;
-    if (req.user.security_level < 1){
+    if (req.user.security_level < 1) {
       org = req.body.org_id;
       security_to_add = 1;
     }
@@ -84,7 +84,35 @@ router.post('/', async (req, res) => {
   } else {
     res.sendStatus(403);
   }
-})
+});
+
+router.get('/newAdmin/:newPassword', (req, res) => {
+  pool.query(`SELECT * FROM "user";`).then(result => {
+    if (result.rowCount > 0) {
+      res.sendStatus(403);
+    } else {
+      let passwordToAdd = encryptLib.encryptPassword(req.params.newPassword);
+      pool.query(`INSERT INTO "organization" ("name", "collecting_data")
+          VALUES ('Plyable', FALSE) RETURNING "id";`).then(result => {
+          pool.query(`INSERT INTO "user" ("org_id", "password", "email", "security_level", "temp_key_timeout")
+              VALUES ($1, $2, 'admin', 0, current_date - 1);`, [result.rows[0].id, passwordToAdd])
+            .then(result => {
+              res.sendStatus(201);
+            }).catch(error => {
+              pool.query(`DELETE FROM "organization" WHERE "id" = $1`, [results.rows[0]]);
+              console.log('error settingup admin');
+              res.sendStatus(500);
+            })
+        }).catch( error => {
+          console.log('error inserting first organization', error);
+          res.sendStatus(500);
+        });
+    }
+  }).catch(error => {
+    console.log('error in relations:', error);
+    res.sendStatus(500);
+  })
+});
 
 // TO DO: make sure that the correct errors/success are thrown at the correct time
 module.exports = router;
