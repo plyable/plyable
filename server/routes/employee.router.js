@@ -29,10 +29,17 @@ const randomString = () => {
 // Add Employee Emails to DB & Send email invitations with links
 router.post('/', async (req, res) => {
   if (req.user && req.user.security_level < 2) {
+    //this part is to reuse this route for adding managers, with security_level 1 and org_id variable
+    let org = req.user.org_id;
+    let sec = 2;
+    if (req.user.security_level < 1){
+      org = req.body.org_id;
+      sec = 1;
+    }
     try {
 
       // NOTE: employee has 3 days to register from time the email is sent
-      const query = `INSERT INTO "user" ("org_id", "password", "email", "temp_key", "temp_key_timeout") VALUES ($1, $2, $3, $4, current_date + 3);` // Query to add all the individual emails to the database
+      const query = `INSERT INTO "user" ("org_id", "password", "email", "temp_key", "temp_key_timeout", "security_level") VALUES ($1, $2, $3, $4, current_date + 3, $5);` // Query to add all the individual emails to the database
       const array = await req.body.map(email => {
 
         let newPassword = randomString();
@@ -43,7 +50,7 @@ router.post('/', async (req, res) => {
         let keyToSend = encryptLib.encryptPassword(newKey);
 
         // on insert, using salted and hashed strings, add pw, temp_key, temp_key_timeout
-        pool.query(query, [req.user.org_id, passwordToSend, email, keyToSend]);
+        pool.query(query, [org, passwordToSend, email, keyToSend, sec]);
         return {
           email: email,
 

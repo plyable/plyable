@@ -24,6 +24,10 @@ class AdminMain extends Component {
         console.log('handleDeactivateClick working');
     }//this button will deactivate the organization, thereby quitting the collection of data, but the data will still be viewable
 
+    handleAddManagers = () => {
+        console.log('add managers working');
+    }
+
     render() {
         return (
             <div>
@@ -34,6 +38,7 @@ class AdminMain extends Component {
                             <th>Organization Name</th>
                             <th>Survey Results Page</th>
                             <th>Deactivate</th>
+                            <th>Add Managers</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -42,6 +47,7 @@ class AdminMain extends Component {
                                 <td>{organization.name}</td>
                                 <td><button onClick={() => this.handleViewOrgClick(organization.id)}>View</button></td>
                                 <td><button onClick={this.handleDeactivateClick}>Deactivate</button></td>
+                                <td><button onClick={this.handleAddManagers}>Add Managers</button></td>
                             </tr> //this for each loop will map through available organizations in the database and display them 
                             //on the DOM in a table
                         })}
