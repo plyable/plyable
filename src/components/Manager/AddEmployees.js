@@ -20,6 +20,12 @@ class AddEmployees extends Component {
     this.setState({ emailList: event.target.value })
   }
 
+  componentDidMount = () => {
+    if(this.props.reduxState.user.security_level===2){
+        this.props.history.push('/main');
+    }
+  }
+
   render() {
 
     return (

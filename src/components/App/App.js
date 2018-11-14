@@ -38,31 +38,19 @@ class App extends Component {
           <Nav />
           <Switch>
             {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
-            <Redirect exact from="/" to="/home" />
+            <Redirect exact from="/" to="/main" />
             {/* Visiting localhost:3000/about will show the about page.
             This is a route anyone can see, no login necessary */}
-            <Route
+            {/* <Route
               exact
               path="/about"
               component={AboutPage}
-            />
+            /> */}
 
-            {/* HM: Route for add employees */}
-            <Route
-              exact
-              path="/addemployees"
-              component={AddEmployees}
-            />
-
-            <Route
-              exact
-              path="/survey"
-              component={Survey}
-            />
 
             <Route
               
-              path="/register/"
+              path="/register"
               component={Registration}
             />
 
@@ -70,18 +58,29 @@ class App extends Component {
             Visiting localhost:3000/home will show the UserPage if the user is logged in.
             If the user is not logged in, the ProtectedRoute will show the 'Login' or 'Register' page.
             Even though it seems like they are different pages, the user is always on localhost:3000/home */}
-            <ProtectedRoute
+            {/* <ProtectedRoute
               exact
               path="/home"
               component={UserPage}
-            />
+            /> */}
             {/* This works the same as the other protected route, except that if the user is logged in,
             they will see the info page instead. */}
+            {/* HM: Route for add employees */}
             <ProtectedRoute
+              exact
+              path="/addemployees"
+              component={AddEmployees}
+            />
+            <ProtectedRoute
+              exact
+              path="/survey"
+              component={Survey}
+            />
+            {/* <ProtectedRoute
               exact
               path="/info"
               component={InfoPage}
-            />
+            /> */}
             <ProtectedRoute
               exact
               path="/main"
@@ -112,4 +111,8 @@ class App extends Component {
   }
 }
 
-export default connect()(App);
+const mapStateToProps = state => ({
+  user: state.user,
+});
+
+export default connect(mapStateToProps)(App);
