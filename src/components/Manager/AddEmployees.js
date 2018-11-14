@@ -10,9 +10,20 @@ class AddEmployees extends Component {
 
   // Button Click
   sendInvitationEmails = async () => {
-    let splitList = this.state.emailList.split('\n'); // creates comma separate array  
-   
-    await this.props.dispatch({ type: 'ADD_EMPLOYEES', payload: {emailList: splitList} });  // Adds Employee Emails to the DB
+
+    // If box has content, send
+    if (this.state.emailList.length > 0) {
+      let splitList = this.state.emailList.split('\n'); // creates comma separate array  
+
+      await this.props.dispatch({ type: 'ADD_EMPLOYEES', payload: { emailList: splitList } });  // Adds Employee Emails to the DB
+
+      // alert, sent
+      alert('Invitations sent');
+
+    } else { // else alert need content
+      alert('Please add emails. 1 Per line. No Commas.');
+    }
+
   }
 
   // Collect the data entered into the box
@@ -21,8 +32,8 @@ class AddEmployees extends Component {
   }
 
   componentDidMount = () => {
-    if(this.props.reduxState.user.security_level===2){
-        this.props.history.push('/main');
+    if (this.props.reduxState.user.security_level === 2) {
+      this.props.history.push('/main');
     }
   }
 
