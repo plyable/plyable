@@ -33,6 +33,7 @@ const employeeRouter = require('./routes/employee.router');
 const surveyResultsRouter = require('./routes/surveyResults.router');
 // manny start
 const adminOrgRouter = require('./routes/admin.org.main');
+const userMainRouter = require('./routes/user.main.router');
 // manny end
 
 
@@ -55,6 +56,7 @@ app.use('/api/surveyresults', surveyResultsRouter)
 
 /** manny Start */
 app.use('/api/adminorg', adminOrgRouter);
+app.use('/api/main', userMainRouter);
 /** manny end */
 // Serve static files
 app.use(express.static('build'));

@@ -15,7 +15,7 @@ function stringToParams(string) {
     return objectToSend;
 }
 
-class RegisterPage extends Component {
+class Registration extends Component {
     state = {
         email: stringToParams(this.props.location.search).email,
         password: '',
@@ -65,9 +65,5 @@ class RegisterPage extends Component {
 }
 
 
-const mapStateToProps = state => ({
-    mode: state.registerModeReducer
-});
-
-export default connect(mapStateToProps)(withRouter(RegisterPage));
+export default connect()(withRouter(Registration));
 

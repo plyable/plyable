@@ -1,7 +1,6 @@
 import { put, call, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 import Chart from 'chart.js';
-import { CSVLink } from "react-csv";
 
 let chart1;
 let chart2;
