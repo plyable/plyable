@@ -33,14 +33,14 @@ router.post('/', async (req, res) => {
     let org = req.user.org_id;
     let sec = 2;
     if (req.user.security_level < 1){
-      org = req.body.org_id;
+      org = req.query.organization;
       sec = 1;
     }
     try {
 
       // NOTE: employee has 3 days to register from time the email is sent
       const query = `INSERT INTO "user" ("org_id", "password", "email", "temp_key", "temp_key_timeout", "security_level") VALUES ($1, $2, $3, $4, current_date + 3, $5);` // Query to add all the individual emails to the database
-      const array = await req.body.map(email => {
+      const array = await req.body.emailList.map(email => {
 
         let newPassword = randomString();
         let newKey = randomString();

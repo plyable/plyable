@@ -4,7 +4,7 @@ import { withRouter } from 'react-router';
 
 class AdminMain extends Component {
     state = {
-        emails: '',
+        emailList: '',
         organization: 0,
     };
 
@@ -33,8 +33,21 @@ class AdminMain extends Component {
 
     handleCancel = () => {
         this.setState({
-            emails: '',
+            emailList: '',
             organization: 0,
+        });
+    }
+
+    sendInvitationEmails = () => {
+        let splitList = this.state.emailList.split('\n'); // creates comma separate array  
+        this.props.dispatch({ type: 'ADD_EMPLOYEES', payload: {...this.state, emailList: splitList} });
+        this.handleCancel();
+    }
+
+    handleChange = event => {
+        this.setState({
+            ...this.state,
+            emailList: event.target.value,
         });
     }
 
@@ -65,7 +78,17 @@ class AdminMain extends Component {
                 </table>
                 < button onClick={this.handleAddNewOrganizationClick}>Add New Organization</button>
                 <dialog open={this.state.organization > 0}>
-                    
+                <h2>Add Employees</h2>
+        <h3>1 email per line</h3>
+        {/* Large Input Box */}
+        <textarea
+          value={this.state.emailList}
+          onChange={this.handleChange}
+          placeholder='No Commas'
+        >
+        </textarea>
+        <button onClick={this.sendInvitationEmails}>Send Invitations</button>
+
                     <button onClick={this.handleCancel}>Cancel</button>
                 </dialog>
             </div >

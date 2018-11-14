@@ -12,7 +12,7 @@ class AddEmployees extends Component {
   sendInvitationEmails = async () => {
     let splitList = this.state.emailList.split('\n'); // creates comma separate array  
    
-    await this.props.dispatch({ type: 'ADD_EMPLOYEES', payload: splitList });  // Adds Employee Emails to the DB
+    await this.props.dispatch({ type: 'ADD_EMPLOYEES', payload: {emailList: splitList} });  // Adds Employee Emails to the DB
   }
 
   // Collect the data entered into the box
