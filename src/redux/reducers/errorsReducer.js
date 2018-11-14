@@ -17,6 +17,7 @@ const loginMessage = (state = '', action) => {
   }
 };
 
+// TO DO: set up for our registration to login automatically // 
 // registrationMessage holds the string that will display
 // on the registration screen if there's an error
 const registrationMessage = (state = '', action) => {

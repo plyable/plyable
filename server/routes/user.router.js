@@ -30,7 +30,7 @@ router.post('/invite', (req, res) => {
   let email = req.body.email;
   pool.query('SELECT "temp_key" FROM "user" WHERE "email" = $1;', [email])
     .then(result => {
-      console.log('result.rows:', result.rows)
+      // console.log('result.rows:', result.rows)
       if (encryptLib.comparePassword(key, result.rows[0].temp_key)) {
         let now = new Date();
         const password = encryptLib.encryptPassword(req.body.password);
