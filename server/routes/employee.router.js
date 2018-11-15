@@ -3,7 +3,7 @@ const router = express.Router();
 const pool = require('../modules/pool');
 const nodemailer = require('nodemailer');
 
-const encryptLib = require('../modules/encryption'); // WIP
+const encryptLib = require('../modules/encryption');
 
 // Transporter to send emails
 let transporter = nodemailer.createTransport({
@@ -39,9 +39,14 @@ router.post('/', async (req, res) => {
     try {
 
       // NOTE: employee has 3 days to register from time the email is sent
-      const query = `INSERT INTO "user" ("org_id", "password", "email", "temp_key", "temp_key_timeout", "security_level") VALUES ($1, $2, $3, $4, current_date + 3, $5);` // Query to add all the individual emails to the database
-      const array = await req.body.emailList.map(email => {
+      const query =
+        `INSERT INTO "user" ("org_id", "password", "email", "temp_key", "temp_key_timeout", "security_level") 
+        VALUES ($1, $2, $3, $4, current_date + 3, $5)
+        ON CONFLICT ("email")
+        do nothing
+        RETURNING "id";`; // Query to add all the individual emails to the database
 
+      for(let email of req.body.emailList){
         let newPassword = randomString();
         let newKey = randomString();
 
@@ -50,32 +55,34 @@ router.post('/', async (req, res) => {
         let keyToSend = encryptLib.encryptPassword(newKey);
 
         // on insert, using salted and hashed strings, add pw, temp_key, temp_key_timeout
-        pool.query(query, [org, passwordToSend, email, keyToSend, security_to_add]);
-        return {
-          email: email,
+        pool.query(query, [org, passwordToSend, email, keyToSend, security_to_add])
+          .then(result => {
+            if (result.rowCount > 0) {
+              const emailInfo = {
+                email: email,
+                // create a url with key
+                url: `http://localhost:3000/#/register/?email=` + encodeURIComponent(`${email}`) + `&key=` + encodeURIComponent(`${newKey}`),//encodeURI will replaces certain characters with escape characters, heightening security
+              };
 
-          // create a url with key
-          url: `http://localhost:3000/#/register/?email=` + encodeURIComponent(`${email}`) + `&key=` + encodeURIComponent(`${newKey}`),//encodeURI will replaces certain characters with escape characters, heightening security
-        }
-      }) // END of map
+              let mailConfig = {
+                from: 'tmonkey424242@gmail.com',
+                to: emailInfo.email,
+                subject: 'Plyable Invitation',
+                html: `<p>Click here <a href="${emailInfo.url}">${emailInfo.url}</a></p>`// plain text body
+              };
 
-      Promise.all(array.map((emailObject) => {
-
-        let mailConfig = {
-          from: 'tmonkey424242@gmail.com',
-          to: emailObject.email,
-          subject: 'Plyable Invitation',
-          html: `<p>Click here <a href="${emailObject.url}">${emailObject.url}</a></p>`// plain text body
-        };
-
-        return transporter.sendMail(mailConfig, (error, info) => {
-          if (error) {
-            return console.log(error);
-          }
-          console.log('Message sent: %s', info);
-
-        }) //end sendMail
-      })) //end map
+              transporter.sendMail(mailConfig, (error, info) => {
+                if (error) {
+                  return console.log(error);
+                }
+                console.log('Message sent: %s', info);
+      
+              }); //end sendMail
+            } else {
+              console.log('User already exists.');
+            }
+        });
+      }
       res.sendStatus(201);
     } catch (error) {
       console.log('ERROR in sending emails:', error);
