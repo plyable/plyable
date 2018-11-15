@@ -65,7 +65,7 @@ class App extends Component {
             /> */}
             {/* This works the same as the other protected route, except that if the user is logged in,
             they will see the info page instead. */}
-            {/* HM: Route for add employees */}
+            
             <ProtectedRoute
               exact
               path="/addemployees"
