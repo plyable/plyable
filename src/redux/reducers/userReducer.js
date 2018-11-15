@@ -2,6 +2,8 @@ const userReducer = (state = {}, action) => {
   switch (action.type) {
     case 'SET_USER':
       return action.payload;
+    case 'ADD_SURVEY_STATUS':
+      return { ...state, ...action.payload };
     case 'UNSET_USER':
       return {};
     default:

@@ -67,11 +67,30 @@ router.get('/chart', (req, res) => {
     });
 });
 
-/**
- * POST route template
- */
-router.post('/', (req, res) => {
+router.get('/survey/status', (req, res) => {
+    console.log('in /api/main/survey/status/userId GET');
 
+    let selectSurveyStatus = `
+        SELECT 
+            COALESCE("rs"."week", -1) AS "survey_week"
+        FROM 
+            "user" AS "us"
+            LEFT JOIN "organization" AS "og"
+                ON "us"."org_id" = "og"."id"
+            LEFT OUTER JOIN "response" AS "rs"
+                ON "us"."id" = "rs"."user_id"
+                    AND "og"."current_week" = "rs"."week"
+        WHERE 
+            "us"."id" = $1 ;
+    `;
+
+    pool.query(selectSurveyStatus, [
+        req.user.id
+    ]).then(results => {
+        res.send(results.rows);
+    }).catch(error => {
+        console.log('Error getting user survey status :', error);
+    });
 });
 
 module.exports = router;

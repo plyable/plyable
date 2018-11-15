@@ -1,7 +1,7 @@
 // Eli will make this 1 card with props 
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 class SubmitButton extends Component {
 
@@ -11,12 +11,13 @@ class SubmitButton extends Component {
         //eventually to the server
     }
 
-  render() {
-    return (
-        <button onClick={this.handleClick}>Finish Survey</button>
-  )}
+    render() {
+        return (
+            <button onClick={this.handleClick}>Finish Survey</button>
+        )
+    }
 }
 
-const mapStateToProps = ({ survey }) => ({ survey: survey.surveyScore });
+const mapStateToProps = ({ user, survey }) => ({ user, survey: survey.surveyScore });
 
-export default connect(mapStateToProps)(SubmitButton);
+export default connect(mapStateToProps)(withRouter(SubmitButton));

@@ -8,7 +8,11 @@ class UserMain extends Component {
         if(this.props.user.security_level===0){
             this.props.history.push('/adminmain');
         } else {
-            this.props.dispatch({ type: 'USER_ORG_CHART' });
+            if(this.props.user.survey_week < 0){
+                this.props.history.push('/survey');
+            } else {
+                this.props.dispatch({ type: 'USER_ORG_CHART' });
+            }
         }
     }
 
