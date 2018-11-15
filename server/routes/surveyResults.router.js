@@ -53,6 +53,32 @@ router.post('/', (req, res) => {
         })
 });//end POST call server side
 
+router.get('/:id', (req, res) => {
+    if (req.user.security_level < 1 || (req.user.security_level < 2 && req.user.org_id == req.params.id)) {
+        pool.query(`SELECT 
+        "user".email, 
+        COUNT("response"."week")
+    FROM 
+        "organization"
+        LEFT JOIN "user" 
+            ON "organization".id = "user".org_id
+        LEFT OUTER JOIN "response" 
+            ON "user".id = "response".user_id
+                AND "response".week = "organization".current_week
+    WHERE 
+        "organization".id = $1 
+    GROUP BY "user".email;`, [req.params.id])
+            .then((results) => {
+                res.send(results.rows)
+            }).catch((error) => {
+                console.log('Error GETTING incompleted feedback from PostgreSQL', error);
+                res.sendStatus(500);
+            });
+    } else {
+        res.sendStatus(403);
+    }
+});
+
 module.exports = router;
 
 
