@@ -8,7 +8,24 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((id, done) => {
-  pool.query('SELECT id, org_id, email, security_level FROM "user" WHERE id = $1', [id]).then((result) => {
+  let selectUser = `
+    SELECT 
+      "us"."id", 
+      "us"."org_id", 
+      "us"."email", 
+      "us"."security_level",
+        COALESCE("rs"."week", -1) AS "survey_week"
+    FROM 
+        "user" AS "us"
+        LEFT JOIN "organization" AS "og"
+            ON "us"."org_id" = "og"."id"
+        LEFT OUTER JOIN "response" AS "rs"
+          ON "us"."id" = "rs"."user_id"
+            AND "og"."current_week" = "rs"."week"
+    WHERE 
+        "us"."id" = $1 ;
+  `;
+  pool.query(selectUser, [id]).then((result) => {
     // Handle Errors
     const user = result && result.rows && result.rows[0];
 

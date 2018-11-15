@@ -9,8 +9,6 @@ function* userOrgChart() {
         const response = yield call(axios.get, `/api/main/chart`);
         const chartList = response.data;
 
-        console.log(chartList);
-
         if(chart1) {
             chart1.destroy();
         }

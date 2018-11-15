@@ -10,24 +10,21 @@ const Nav = (props) => (
       <h2 className="nav-title">Prime Solo Project</h2>
     </Link>
     <div className="nav-right">
-        <Link className="nav-link"
-          to={props.user.security_level === 0 ? "/adminmain" : "/main"}>
-          {props.user.id ? 'Main' : 'Login'}
-        </Link>
+      <Link className="nav-link"
+        to={props.user.security_level === 0 ? "/adminmain" : "/main"}>
+        {props.user.id ? 'Main' : 'Login'}
+      </Link>
       {/* Show the link to the info page and the logout button if the user is logged in */}
       {props.user.id && props.user.security_level === 0 ? (
         <>
           {/* HM: Temporary Nav Link For Manager Add Employees */}
           <Link className="nav-link" to="/addemployees">
-            Add Employees
+            Add Manager
           </Link>
           <LogOutButton className="nav-link" />
         </>
       ) : props.user.id && (
         <>
-          <Link className="nav-link" to="/survey">
-            Take Survey
-          </Link>
           {props.user.security_level === 1 ? (
             <Link className="nav-link" to="/addemployees">
               Add Employees
@@ -36,10 +33,6 @@ const Nav = (props) => (
           <LogOutButton className="nav-link" />
         </>
       )}
-      {/* Always show this link since the about page is not protected */}
-      {/* <Link className="nav-link" to="/about">
-        About
-      </Link> */}
     </div>
   </div>
 );
