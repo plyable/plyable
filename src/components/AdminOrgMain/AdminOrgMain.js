@@ -114,7 +114,7 @@ class AdminOrgMain extends Component {
 
         this.props.dispatch({ type: 'AVG_DATA', payload: { id: id } });
         this.props.dispatch({ type: 'SPECIFIC_DATA', payload: { id: id, behaviorId: 0 } });
-        this.props.dispatch({ type: 'DOWNLOAD_BEHAVIOR_DATA', payload: { id: id } });
+        this.props.dispatch({ type: 'DOWNLOAD_DATA', payload: { id: id } });
     }
 
     render() {
@@ -129,9 +129,9 @@ class AdminOrgMain extends Component {
                 </div>
                 <div style={{ textAlign: 'right' }}>
                     {
-                        this.props.avgData.length > 0 &&
+                        this.props.downloadAverageData.length > 0 &&
                         <CSVLink
-                            data={this.props.avgData}
+                            data={this.props.downloadAverageData}
                             headers={headersForAverage}
                             asyncOnClick={true}
                             filename={this.getFileName()}
@@ -159,7 +159,8 @@ const mapStateToProps = ({ adminChartData }) => ({
     avgData: adminChartData.avgData,
     specificData: adminChartData.specificData,
     behaviorData: adminChartData.behaviorData,
-    downloadBehaviorData: adminChartData.downloadBehaviorData
+    downloadBehaviorData: adminChartData.downloadBehaviorData,
+    downloadAverageData: adminChartData.downloadAverageData,
 });
 
 export default connect(mapStateToProps)(withRouter(AdminOrgMain));

@@ -36,9 +36,19 @@ const downloadBehaviorData = (state = [], action) => {
     }
 }
 
+const downloadAverageData = (state = [], action) => {
+    switch (action.type) {
+        case 'GET_DOWNLOAD_AVERAGE_DATA':
+            return action.payload;
+        default:
+            return state;
+    }
+}
+
 export default combineReducers({
     avgData,
     specificData,
     behaviorData,
-    downloadBehaviorData
+    downloadBehaviorData,
+    downloadAverageData
 });

@@ -1,12 +1,14 @@
 const express = require('express');
+const { rejectUnauthenticated } = require('../modules/authentication-middleware');
 const pool = require('../modules/pool');
 const router = express.Router();
+const TOTAL_WEEKS = 12;
 
 /**
  * GET route template
  */
-router.get('/chart', (req, res) => {
-    console.log('in /api/main/chart/orgId');
+router.get('/chart', rejectUnauthenticated, (req, res) => {
+    console.log('in /api/main/chart GET');
 
     let selectAvg = `
         WITH "temp_avg" AS (
@@ -29,6 +31,7 @@ router.get('/chart', (req, res) => {
             HAVING
                 "us2"."org_id" = $1
                 AND "rs2"."week" != ( SELECT "current_week" FROM "organization" WHERE "id" = $1 )
+                AND "rs2"."week" > ( SELECT ("current_week"-${TOTAL_WEEKS}) AS "min_month" FROM "organization" WHERE "id" = $1 )
         )
         SELECT
             "ta"."week",
@@ -68,8 +71,8 @@ router.get('/chart', (req, res) => {
     });
 });
 
-router.get('/survey/status', (req, res) => {
-    console.log('in /api/main/survey/status/userId GET');
+router.get('/survey/status', rejectUnauthenticated, (req, res) => {
+    console.log('in /api/main/survey/status GET');
 
     let selectSurveyStatus = `
         SELECT 
