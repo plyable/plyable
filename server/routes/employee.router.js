@@ -46,7 +46,7 @@ router.post('/', async (req, res) => {
         do nothing
         RETURNING "id";`; // Query to add all the individual emails to the database
 
-      for(let email of req.body.emailList){
+      for (let email of req.body.emailList) {
         let newPassword = randomString();
         let newKey = randomString();
 
@@ -76,12 +76,12 @@ router.post('/', async (req, res) => {
                   return console.log(error);
                 }
                 console.log('Message sent: %s', info);
-      
+
               }); //end sendMail
             } else {
               console.log('User already exists.');
             }
-        });
+          });
       }
       res.sendStatus(201);
     } catch (error) {
@@ -106,11 +106,11 @@ router.get('/newAdmin/:newPassword', (req, res) => {
             .then(result => {
               res.sendStatus(201);
             }).catch(error => {
-              pool.query(`DELETE FROM "organization" WHERE "id" = $1`, [results.rows[0]]);
-              console.log('error settingup admin');
+              pool.query(`DELETE FROM "organization" WHERE "id" = $1`, [result.rows[0]]);
+              console.log('error setting up admin');
               res.sendStatus(500);
             })
-        }).catch( error => {
+        }).catch(error => {
           console.log('error inserting first organization', error);
           res.sendStatus(500);
         });
