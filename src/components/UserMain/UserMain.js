@@ -2,10 +2,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import securityLevel from '../../constants/securityLevel';
 
 class UserMain extends Component {
     componentDidMount = () => {
-        if(this.props.user.security_level===0){
+        if(this.props.user.security_level === securityLevel.ADMIN_ROLE){
             this.props.history.push('/adminmain');
         } else {
             if(this.props.user.survey_week < 0){

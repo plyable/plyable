@@ -7,14 +7,16 @@ let chart2;
 
 function* avgData(action) {
     try {
-        const id = action.payload.id;
-        const response = yield call(axios.get, `/api/adminorg/average/${id}`);
+        const orgId = action.payload.id;
+        const response = yield call(axios.get, `/api/adminorg/average/${orgId}`);
         const avgList = response.data;
 
+        // remove previous data
         if(chart1) {
             chart1.destroy();
         }
 
+        // draw chart
         chart1 = new Chart(document.getElementById('myChart1'), {
             type: 'line',
             data: {

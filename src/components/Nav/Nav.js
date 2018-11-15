@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import LogOutButton from '../LogOutButton/LogOutButton';
 import './Nav.css';
+import securityLevel from '../../constants/securityLevel';
 
 const Nav = (props) => (
   <div className="nav">
@@ -11,21 +12,17 @@ const Nav = (props) => (
     </Link>
     <div className="nav-right">
       <Link className="nav-link"
-        to={props.user.security_level === 0 ? "/adminmain" : "/main"}>
+        to={props.user.security_level === securityLevel.ADMIN_ROLE ? "/adminmain" : "/main"}>
         {props.user.id ? 'Main' : 'Login'}
       </Link>
       {/* Show the link to the info page and the logout button if the user is logged in */}
-      {props.user.id && props.user.security_level === 0 ? (
+      {props.user.id && props.user.security_level === securityLevel.ADMIN_ROLE ? (
         <>
-          {/* HM: Temporary Nav Link For Manager Add Employees */}
-          <Link className="nav-link" to="/addemployees">
-            Add Manager
-          </Link>
           <LogOutButton className="nav-link" />
         </>
       ) : props.user.id && (
         <>
-          {props.user.security_level === 1 ? (
+          {props.user.security_level === securityLevel.MANAGER_ROLE ? (
             <>
               <Link className="nav-link" to="/viewparticipation">
                 Survey Status

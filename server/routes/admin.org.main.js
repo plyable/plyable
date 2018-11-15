@@ -1,14 +1,13 @@
 const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
+const securityLevel = require('../constants/securityLevel');
 
-/**
- * GET route template
- */
 router.get('/average/:id', (req, res) => {
     console.log('in /api/adminorg/average/id GET');
+
     const id = req.params.id;
-    if (req.user && req.user.security_level < 1) {
+    if (req.user && req.user.security_level < securityLevel.MANAGER_ROLE) {
         let selectAverage = `
             WITH "temp_avg" AS (
                 SELECT
@@ -29,6 +28,14 @@ router.get('/average/:id', (req, res) => {
                     "bh2"."positive"
                 HAVING
                     "us2"."org_id" = $1
+                    AND "rs2"."week" != (
+                    	SELECT 
+                    		"current_week" 
+                    	FROM 
+                    		"organization" 
+                    	WHERE 
+                    		"id" = $1
+                    )
             ), "temp_user_count" AS (
                 SELECT
                     "rs2"."week",
@@ -117,7 +124,7 @@ router.get('/specific/all/:id', (req, res) => {
     console.log('in /api/adminorg/specific/all/id GET');
 
     const id = req.params.id;
-    if (req.user && req.user.security_level < 1) {
+    if (req.user && req.user.security_level < securityLevel.MANAGER_ROLE) {
         let selectrSpecific = `
             SELECT
                 "bh2"."value",
@@ -139,6 +146,14 @@ router.get('/specific/all/:id', (req, res) => {
                 "bh2"."value"
             HAVING
                 "us2"."org_id" = $1
+                AND "rs2"."week" != (
+                	SELECT
+                		"current_week"
+                	FROM
+                		"organization"
+                	WHERE
+                		"id" = $1
+                )
             ORDER BY
                 "rd2"."behavior_id" ASC,
                 "rs2"."week" ASC
@@ -163,7 +178,7 @@ router.get('/specific/:id/:behaviorId', (req, res) => {
 
     const id = req.params.id;
     const behaviorId = req.params.behaviorId;
-    if (req.user && req.user.security_level < 1) {
+    if (req.user && req.user.security_level < securityLevel.MANAGER_ROLE) {
         let selectrSpecific = `
             SELECT
                 "rs2"."week",
@@ -192,6 +207,14 @@ router.get('/specific/:id/:behaviorId', (req, res) => {
                     FROM "behavior" 
                     ORDER BY "id" ASC 
                     LIMIT 1
+                )
+                AND "rs2"."week" != (
+                	SELECT
+                		"current_week"
+                	FROM
+                		"organization"
+                	WHERE
+                		"id" = $1
                 )
             ORDER BY
                 "rs2"."week" ASC
