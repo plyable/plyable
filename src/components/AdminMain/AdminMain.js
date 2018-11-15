@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import securityLevel from '../../constants/securityLevel';
 
 class AdminMain extends Component {
     state = {
@@ -9,7 +10,7 @@ class AdminMain extends Component {
     };
 
     componentDidMount() {
-        if(this.props.reduxState.user.security_level!==0){
+        if(this.props.reduxState.user.security_level !== securityLevel.ADMIN_ROLE){
             this.props.history.push('/main');
         } else {
             this.props.dispatch({ type: 'FETCH_ORGANIZATIONS', payload: this.props.reduxState.adminMainReducer })

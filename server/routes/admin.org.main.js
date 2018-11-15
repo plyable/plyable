@@ -1,14 +1,12 @@
 const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
+const securityLevel = require('../constants/securityLevel');
 
-/**
- * GET route template
- */
 router.get('/average/:id', (req, res) => {
     console.log('in /api/adminorg/average/id GET');
     const id = req.params.id;
-    if (req.user && req.user.security_level < 1) {
+    if (req.user && req.user.security_level < securityLevel.MANAGER_ROLE) {
         let selectAverage = `
             WITH "temp_avg" AS (
                 SELECT
@@ -117,7 +115,7 @@ router.get('/specific/all/:id', (req, res) => {
     console.log('in /api/adminorg/specific/all/id GET');
 
     const id = req.params.id;
-    if (req.user && req.user.security_level < 1) {
+    if (req.user && req.user.security_level < securityLevel.MANAGER_ROLE) {
         let selectrSpecific = `
             SELECT
                 "bh2"."value",
@@ -163,7 +161,7 @@ router.get('/specific/:id/:behaviorId', (req, res) => {
 
     const id = req.params.id;
     const behaviorId = req.params.behaviorId;
-    if (req.user && req.user.security_level < 1) {
+    if (req.user && req.user.security_level < securityLevel.MANAGER_ROLE) {
         let selectrSpecific = `
             SELECT
                 "rs2"."week",
