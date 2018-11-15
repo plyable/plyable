@@ -109,8 +109,6 @@ class AdminOrgMain extends Component {
     }
 
     componentDidMount = () => {
-        arr = window.location.hash.split('/');
-        id = arr[arr.length - 1] === '' ? arr[arr.length - 2] : arr[arr.length - 1];
 
         this.props.dispatch({ type: 'AVG_DATA', payload: { id: id } });
         this.props.dispatch({ type: 'SPECIFIC_DATA', payload: { id: id, behaviorId: 0 } });
@@ -118,6 +116,8 @@ class AdminOrgMain extends Component {
     }
 
     render() {
+        arr = window.location.hash.split('/');
+        id = arr[arr.length - 1] === '' ? arr[arr.length - 2] : arr[arr.length - 1];
         return (
             <div>
                 <div>
