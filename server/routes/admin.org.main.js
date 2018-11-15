@@ -28,14 +28,7 @@ router.get('/average/:id', (req, res) => {
                     "bh2"."positive"
                 HAVING
                     "us2"."org_id" = $1
-                    AND "rs2"."week" != (
-                    	SELECT 
-                    		"current_week" 
-                    	FROM 
-                    		"organization" 
-                    	WHERE 
-                    		"id" = $1
-                    )
+                    AND "rs2"."week" != ( SELECT "current_week" FROM "organization" WHERE "id" = $1 )
             ), "temp_user_count" AS (
                 SELECT
                     "rs2"."week",
@@ -146,14 +139,7 @@ router.get('/specific/all/:id', (req, res) => {
                 "bh2"."value"
             HAVING
                 "us2"."org_id" = $1
-                AND "rs2"."week" != (
-                	SELECT
-                		"current_week"
-                	FROM
-                		"organization"
-                	WHERE
-                		"id" = $1
-                )
+                AND "rs2"."week" != ( SELECT "current_week" FROM "organization" WHERE "id" = $1 )
             ORDER BY
                 "rd2"."behavior_id" ASC,
                 "rs2"."week" ASC
@@ -208,14 +194,7 @@ router.get('/specific/:id/:behaviorId', (req, res) => {
                     ORDER BY "id" ASC 
                     LIMIT 1
                 )
-                AND "rs2"."week" != (
-                	SELECT
-                		"current_week"
-                	FROM
-                		"organization"
-                	WHERE
-                		"id" = $1
-                )
+                AND "rs2"."week" != ( SELECT "current_week" FROM "organization" WHERE "id" = $1 )
             ORDER BY
                 "rs2"."week" ASC
             ;
