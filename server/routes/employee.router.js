@@ -94,8 +94,8 @@ router.post('/', async (req, res) => {
 });
 
 router.get('/newAdmin/:newPassword', (req, res) => {
-  pool.query(`SELECT * FROM "user";`).then(result => {
-    if (result.rowCount > 0) {
+  pool.query(`SELECT * FROM "user";`).then(result1 => {
+    if (result1.rowCount > 0) {
       res.sendStatus(403);
     } else {
       let passwordToAdd = encryptLib.encryptPassword(req.params.newPassword);
@@ -103,7 +103,7 @@ router.get('/newAdmin/:newPassword', (req, res) => {
           VALUES ('Plyable', FALSE) RETURNING "id";`).then(result => {
           pool.query(`INSERT INTO "user" ("org_id", "password", "email", "security_level", "temp_key_timeout")
               VALUES ($1, $2, 'admin', 0, current_date - 1);`, [result.rows[0].id, passwordToAdd])
-            .then(result => {
+            .then(() => {
               res.sendStatus(201);
             }).catch(error => {
               pool.query(`DELETE FROM "organization" WHERE "id" = $1`, [result.rows[0]]);
