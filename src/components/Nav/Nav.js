@@ -26,9 +26,14 @@ const Nav = (props) => (
       ) : props.user.id && (
         <>
           {props.user.security_level === 1 ? (
-            <Link className="nav-link" to="/addemployees">
-              Add Employees
+            <>
+              <Link className="nav-link" to="/viewparticipation">
+                Survey Status
             </Link>
+              <Link className="nav-link" to="/addemployees">
+                Add Employees
+            </Link>
+            </>
           ) : null}
           <LogOutButton className="nav-link" />
         </>
