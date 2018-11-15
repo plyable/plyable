@@ -14,10 +14,10 @@ let headersForAverage = [
 ];
 
 class AdminOrgMain extends Component {
- 
+
     convertArrayOfObjectsToCSV = (args) => {
         var result, ctr, keys, columnDelimiter, lineDelimiter, data, title;
- 
+
         data = args.data || null;
         if (data == null || !data.length) {
             return null;
@@ -27,26 +27,26 @@ class AdminOrgMain extends Component {
         if (title == null || !title.length) {
             return null;
         }
- 
+
         columnDelimiter = args.columnDelimiter || ',';
         lineDelimiter = args.lineDelimiter || '\n';
- 
+
         keys = Object.keys(data[0]);
         keys.shift();
- 
+
         result = '';
         result += title;
         result += lineDelimiter;
         result += keys.join(columnDelimiter);
         result += lineDelimiter;
- 
+
         data.forEach(item => {
             ctr = 0;
-            if(title === item.value){
+            if (title === item.value) {
                 keys.forEach(key => {
                     if (ctr > 0) result += columnDelimiter;
-     
-                    if(item[key] !== item.value){
+
+                    if (item[key] !== item.value) {
                         result += item[key];
                         ctr++;
                     }
@@ -54,26 +54,26 @@ class AdminOrgMain extends Component {
                 result += lineDelimiter;
             }
         });
- 
+
         return result += lineDelimiter;
     }
- 
+
     downloadCSV = () => {
-        var data, filename, link, csv='';
+        var data, filename, link, csv = '';
 
         let valueList = [];
         const dataList = this.props.downloadBehaviorData.map(data => ({
             value: data.value, "Time_in_weeks": data.week, "Avg._Score": data.avg, "#_of_responses": data.user_count
         }));
 
-        for(let data of this.props.downloadBehaviorData){
+        for (let data of this.props.downloadBehaviorData) {
             let str = data.value;
-            if(valueList.indexOf(str) < 0){
+            if (valueList.indexOf(str) < 0) {
                 valueList.push(data.value);
             }
         }
- 
-        for(let value of valueList){
+
+        for (let value of valueList) {
             csv += this.convertArrayOfObjectsToCSV({
                 title: value,
                 data: dataList
@@ -81,14 +81,14 @@ class AdminOrgMain extends Component {
         }
 
         if (csv == null) return;
- 
+
         filename = this.getFileName();
- 
+
         if (!csv.match(/^data:text\/csv/i)) {
             csv = 'data:text/csv;charset=utf-8,' + csv;
         }
         data = encodeURI(csv);
- 
+
         link = document.createElement('a');
         link.setAttribute('href', data);
         link.setAttribute('download', filename);
@@ -114,6 +114,7 @@ class AdminOrgMain extends Component {
         this.props.dispatch({ type: 'AVG_DATA', payload: { id: id } });
         this.props.dispatch({ type: 'SPECIFIC_DATA', payload: { id: id, behaviorId: 0 } });
         this.props.dispatch({ type: 'DOWNLOAD_BEHAVIOR_DATA', payload: { id: id } });
+        this.props.dispatch({ type: 'FETCH_PARTICIPATION', payload: id });
     }
 
     render() {
@@ -125,7 +126,7 @@ class AdminOrgMain extends Component {
                 <div style={{ width: '70vw' }}>
                     <canvas id="myChart1"></canvas>
                 </div>
-                <div style={{textAlign: 'right'}}>
+                <div style={{ textAlign: 'right' }}>
                     {
                         this.props.avgData.length > 0 &&
                         <CSVLink
@@ -140,12 +141,12 @@ class AdminOrgMain extends Component {
                     }
                 </div>
                 <div style={{ width: '70vw', textAlign: 'center' }}>
-                    <select onChange={this.handleChangeBehavior} style={{width:'70%', height:'50px', fontSize: '30px' }}>
+                    <select onChange={this.handleChangeBehavior} style={{ width: '70%', height: '50px', fontSize: '30px' }}>
                         {this.props.behaviorData.map(behavior => <option key={behavior.id} value={behavior.id}>{behavior.value}</option>)}
                     </select>
                     <canvas id="myChart2"></canvas>
                 </div>
-                <div className="downloadCsv" id="specificData" style={{textAlign: 'right'}}>
+                <div className="downloadCsv" id="specificData" style={{ textAlign: 'right' }}>
                     <button onClick={this.downloadCSV}>Download CSV</button>
                 </div>
             </div>

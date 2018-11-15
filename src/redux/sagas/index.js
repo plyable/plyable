@@ -16,6 +16,7 @@ import userMainSaga from './userMainSaga';
 //daniel start
 import addNewOrgSaga from './addNewOrgSaga';
 import surveySaga from './surveySaga';
+import participationSaga from './participationSaga';
 //daniel end
 
 export default function* rootSaga() {
@@ -29,5 +30,6 @@ export default function* rootSaga() {
         addEmployeeSaga(),
         addNewOrgSaga(),
         surveySaga(),
+        participationSaga(),
     ]);
 }
