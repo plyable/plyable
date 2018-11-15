@@ -1,7 +1,6 @@
-// Add Employees input box
-
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import securityLevel from '../../constants/securityLevel';
 
 class AddEmployees extends Component {
   state = {
@@ -31,7 +30,7 @@ class AddEmployees extends Component {
   }
 
   componentDidMount = () => {
-    if (this.props.reduxState.user.security_level === 2) {
+    if (this.props.reduxState.user.security_level === securityLevel.EMPLOYEE_ROLE) {
       this.props.history.push('/main');
     }
   }

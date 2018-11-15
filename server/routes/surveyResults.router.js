@@ -1,6 +1,7 @@
 const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
+const securityLevel = require('../constants/securityLevel');
 
 //this post router will post user-generated survey results to the database
 router.post('/', (req, res) => {
@@ -59,7 +60,7 @@ router.post('/', (req, res) => {
 });//end POST call server side
 
 router.get('/:id', (req, res) => {
-    if (req.user.security_level < 1 || (req.user.security_level < 2 && req.user.org_id == req.params.id)) {
+    if (req.user.security_level < securityLevel.MANAGER_ROLE || (req.user.security_level < securityLevel.EMPLOYEE_ROLE && req.user.org_id == req.params.id)) {
         pool.query(`
             SELECT 
                 "user".email, 

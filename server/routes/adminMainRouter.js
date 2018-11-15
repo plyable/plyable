@@ -1,10 +1,11 @@
 const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
+const securityLevel = require('../constants/securityLevel');
 
 //this query will make a call to the database to retrieve organizations from the ERD table "organization"
 router.get('/', (req, res) => {
-    if (req.user && req.user.security_level < 1) {
+    if (req.user && req.user.security_level < securityLevel.MANAGER_ROLE) {
         pool.query(`SELECT * FROM "organization"
     ORDER BY "id";`)
             .then((results) => {
@@ -20,7 +21,7 @@ router.get('/', (req, res) => {
 
 //this query will make post calls from member-generated data, creating new organizations
 router.post('/', (req, res) => {
-    if (req.user && req.user.security_level < 1) {
+    if (req.user && req.user.security_level < securityLevel.MANAGER_ROLE) {
         const newOrganization = req.body;
         const queryValues = [newOrganization.name];
         pool.query(`INSERT INTO "organization" ("name")

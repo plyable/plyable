@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 const pool = require('../modules/pool');
 const nodemailer = require('nodemailer');
-
 const encryptLib = require('../modules/encryption');
+const securityLevel = require('../constants/securityLevel')
 
 // Transporter to send emails
 let transporter = nodemailer.createTransport({
@@ -28,13 +28,13 @@ const randomString = () => {
 
 // Add Employee Emails to DB & Send email invitations with links
 router.post('/', async (req, res) => {
-  if (req.user && req.user.security_level < 2) {
+  if (req.user && req.user.security_level < securityLevel.EMPLOYEE_ROLE) {
     //this part is to reuse this route for adding managers, with security_level 1 and org_id variable
     let org = req.user.org_id;
-    let security_to_add = 2;
-    if (req.user.security_level < 1) {
+    let security_to_add = securityLevel.EMPLOYEE_ROLE;
+    if (req.user.security_level < securityLevel.MANAGER_ROLE) {
       org = req.body.org_id;
-      security_to_add = 1;
+      security_to_add = securityLevel.MANAGER_ROLE;
     }
     try {
 
@@ -102,7 +102,7 @@ router.get('/newAdmin/:newPassword', (req, res) => {
       pool.query(`INSERT INTO "organization" ("name", "collecting_data")
           VALUES ('Plyable', FALSE) RETURNING "id";`).then(result => {
           pool.query(`INSERT INTO "user" ("org_id", "password", "email", "security_level", "temp_key_timeout")
-              VALUES ($1, $2, 'admin', 0, current_date - 1);`, [result.rows[0].id, passwordToAdd])
+              VALUES ($1, $2, 'admin', ${securityLevel.ADMIN_ROLE}, current_date - 1);`, [result.rows[0].id, passwordToAdd])
             .then(() => {
               res.sendStatus(201);
             }).catch(error => {
