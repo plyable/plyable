@@ -46,7 +46,7 @@ router.post('/', async (req, res) => {
         do nothing
         RETURNING "id";`; // Query to add all the individual emails to the database
 
-      for(let email of req.body.emailList){
+      for (let email of req.body.emailList) {
         let newPassword = randomString();
         let newKey = randomString();
 
@@ -76,12 +76,12 @@ router.post('/', async (req, res) => {
                   return console.log(error);
                 }
                 console.log('Message sent: %s', info);
-      
+
               }); //end sendMail
             } else {
               console.log('User already exists.');
             }
-        });
+          });
       }
       res.sendStatus(201);
     } catch (error) {
@@ -94,8 +94,8 @@ router.post('/', async (req, res) => {
 });
 
 router.get('/newAdmin/:newPassword', (req, res) => {
-  pool.query(`SELECT * FROM "user";`).then(result => {
-    if (result.rowCount > 0) {
+  pool.query(`SELECT * FROM "user";`).then(result1 => {
+    if (result1.rowCount > 0) {
       res.sendStatus(403);
     } else {
       let passwordToAdd = encryptLib.encryptPassword(req.params.newPassword);
@@ -103,14 +103,14 @@ router.get('/newAdmin/:newPassword', (req, res) => {
           VALUES ('Plyable', FALSE) RETURNING "id";`).then(result => {
           pool.query(`INSERT INTO "user" ("org_id", "password", "email", "security_level", "temp_key_timeout")
               VALUES ($1, $2, 'admin', 0, current_date - 1);`, [result.rows[0].id, passwordToAdd])
-            .then(result => {
+            .then(() => {
               res.sendStatus(201);
             }).catch(error => {
-              pool.query(`DELETE FROM "organization" WHERE "id" = $1`, [results.rows[0]]);
-              console.log('error settingup admin');
+              pool.query(`DELETE FROM "organization" WHERE "id" = $1`, [result.rows[0]]);
+              console.log('error setting up admin');
               res.sendStatus(500);
             })
-        }).catch( error => {
+        }).catch(error => {
           console.log('error inserting first organization', error);
           res.sendStatus(500);
         });
