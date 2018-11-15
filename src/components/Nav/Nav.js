@@ -17,10 +17,6 @@ const Nav = (props) => (
       {/* Show the link to the info page and the logout button if the user is logged in */}
       {props.user.id && props.user.security_level === 0 ? (
         <>
-          {/* HM: Temporary Nav Link For Manager Add Employees */}
-          <Link className="nav-link" to="/addemployees">
-            Add Manager
-          </Link>
           <LogOutButton className="nav-link" />
         </>
       ) : props.user.id && (

@@ -82,7 +82,7 @@ class AdminMain extends Component {
                 </table>
                 < button onClick={this.handleAddNewOrganizationClick}>Add New Organization</button>
                 <dialog open={this.state.org_id > 0}>
-                <h2>Add Employees</h2>
+                <h2>Add Managers</h2>
         <h3>1 email per line</h3>
         {/* Large Input Box */}
         <textarea
