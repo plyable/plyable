@@ -79,11 +79,10 @@ router.post('/', async (req, res) => {
       
               }); //end sendMail
             } else {
-              console.log('Already exist');
+              console.log('User already exists.');
             }
         });
       }
-
       res.sendStatus(201);
     } catch (error) {
       console.log('ERROR in sending emails:', error);

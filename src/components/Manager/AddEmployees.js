@@ -17,10 +17,9 @@ class AddEmployees extends Component {
 
       await this.props.dispatch({ type: 'ADD_EMPLOYEES', payload: { emailList: splitList } });  // Adds Employee Emails to the DB
 
-      // alert, sent
-      alert('Invitations sent');
+      // TO DO: alert success only if email sent
 
-    } else { // else alert need content
+    } else { // alert that content is needed
       alert('Please add emails. 1 Per line. No Commas.');
     }
 
