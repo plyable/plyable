@@ -25,6 +25,7 @@ import Registration from '../Registration/Registration';
 import './App.css';
 import AdminMain from '../AdminMain/AdminMain';
 import NewOrgForm from '../AdminMain/NewOrgForm';
+import CompletedFeedback from '../AdminOrgMain/CompletedFeedback';
 
 class App extends Component {
   componentDidMount() {
@@ -49,7 +50,7 @@ class App extends Component {
 
 
             <Route
-              
+
               path="/register"
               component={Registration}
             />
@@ -100,6 +101,11 @@ class App extends Component {
               exact
               path="/adminmain/createneworganization"
               component={NewOrgForm}
+            />
+            <ProtectedRoute
+              exact
+              path="/viewparticipation"
+              render={() => <CompletedFeedback id={this.props.user.org_id} />}
             />
             {/* If none of the other routes matched, we will show a 404. */}
             <Route render={() => <h1>404</h1>} />
