@@ -3,7 +3,7 @@ const router = express.Router();
 const pool = require('../modules/pool');
 const nodemailer = require('nodemailer');
 const encryptLib = require('../modules/encryption');
-const securityLevel = require('../constants/securityLevel')
+const securityLevel = require('../constants/securityLevel');
 
 // Transporter to send emails
 let transporter = nodemailer.createTransport({
