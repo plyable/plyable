@@ -28,14 +28,7 @@ router.get('/chart', (req, res) => {
                 "bh2"."positive"
             HAVING
                 "us2"."org_id" = $1
-                AND "rs2"."week" != (
-                    SELECT 
-                        "current_week" 
-                    FROM 
-                        "organization" 
-                    WHERE 
-                        "id" = $1
-                )
+                AND "rs2"."week" != ( SELECT "current_week" FROM "organization" WHERE "id" = $1 )
         )
         SELECT
             "ta"."week",
