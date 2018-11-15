@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { CSVLink } from "react-csv";
+import CompletedFeedback from './CompletedFeedback';
 
 let arr = window.location.hash.split('/');
 let id = arr[arr.length - 1] === '' ? arr[arr.length - 2] : arr[arr.length - 1];
@@ -114,7 +115,6 @@ class AdminOrgMain extends Component {
         this.props.dispatch({ type: 'AVG_DATA', payload: { id: id } });
         this.props.dispatch({ type: 'SPECIFIC_DATA', payload: { id: id, behaviorId: 0 } });
         this.props.dispatch({ type: 'DOWNLOAD_BEHAVIOR_DATA', payload: { id: id } });
-        this.props.dispatch({ type: 'FETCH_PARTICIPATION', payload: id });
     }
 
     render() {
@@ -123,6 +123,7 @@ class AdminOrgMain extends Component {
                 <div>
                     <button onClick={this.goBack}>Back</button>
                 </div>
+                <CompletedFeedback id={id} />
                 <div style={{ width: '70vw' }}>
                     <canvas id="myChart1"></canvas>
                 </div>
