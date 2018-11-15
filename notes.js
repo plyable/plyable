@@ -12,3 +12,9 @@
         </tr>
     </tbody>
 </table>
+
+// schedule.scheduleJob('1 * * * * *', function () {
+//   console.log('Another minute, another log');
+// });
+
+//use .cancel to deactivate?
