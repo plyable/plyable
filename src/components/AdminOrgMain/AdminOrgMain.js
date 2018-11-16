@@ -57,7 +57,9 @@ class AdminOrgMain extends Component {
                 value: data.value, 
                 "Time_in_weeks": data.week, 
                 "Avg_Score": data.avg, 
-                "#_of_responses": data.user_count
+                "#_of_responses": data.user_count,
+                "Total_Users": data.total_count,
+                "%_of_Responses": data.percent
             }));
     
             for (let data of this.props.downloadBehaviorData) {
@@ -80,7 +82,9 @@ class AdminOrgMain extends Component {
                 "Time_in_Weeks": data.week, 
                 "Positive_Avg_Score": data.positive, 
                 "Negative_Avg_Score": data.negative, 
-                "#_of_Responses": data.user_count
+                "#_of_Responses": data.user_count,
+                "Total_Users": data.total_count,
+                "%_of_Responses": data.percent
             }));
 
             csv = this.convertArrayOfObjectsToCSV({
