@@ -123,7 +123,7 @@ class AdminOrgMain extends Component {
                 <div>
                     <button onClick={this.goBack}>Back</button>
                 </div>
-                <CompletedFeedback id={id} />
+                <CompletedFeedback />
                 <div style={{ width: '70vw' }}>
                     <canvas id="myChart1"></canvas>
                 </div>

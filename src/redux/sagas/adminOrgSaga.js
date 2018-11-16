@@ -20,7 +20,7 @@ function* avgData(action) {
         chart1 = new Chart(document.getElementById('myChart1'), {
             type: 'line',
             data: {
-                labels: avgList.map(avg => avg.week),
+                labels: avgList.map(avg => 'week'.concat(' ', avg.week)),
                 datasets: [{
                     label: 'Negative',
                     data: avgList.map(avg => avg.negative),
@@ -93,7 +93,7 @@ function* specificData(action) {
         chart2 = new Chart(document.getElementById('myChart2'), {
             type: 'line',
             data: {
-                labels: specificList.map(data => data.week),
+                labels: specificList.map(data => 'week'.concat(' ', data.week)),
                 datasets: [{
                     label: 'Data',
                     data: specificList.map(data => data.avg),
