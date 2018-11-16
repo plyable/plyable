@@ -2,8 +2,8 @@ import { put, call, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 import Chart from 'chart.js';
 
-let chart1;
-let chart2;
+let avgChart;
+let specificChart;
 
 function* avgData(action) {
     try {
@@ -12,12 +12,12 @@ function* avgData(action) {
         const avgList = response.data;
 
         // remove previous data
-        if(chart1) {
-            chart1.destroy();
+        if(avgChart) {
+            avgChart.destroy();
         }
 
         // draw chart
-        chart1 = new Chart(document.getElementById('myChart1'), {
+        avgChart = new Chart(document.getElementById('myChart1'), {
             type: 'line',
             data: {
                 labels: avgList.map(avg => 'week'.concat(' ', avg.week)),
@@ -47,7 +47,7 @@ function* avgData(action) {
                         position: 'left',
                         display: true,
                         scaleLabel: {
-                            display: true,
+                            display: false,
                             labelString: 'Request State'
                         },
                         ticks: {
@@ -86,11 +86,11 @@ function* specificData(action) {
         const response = yield call(axios.get, `/api/adminorg/specific/chart/${id}/${behaviorId}`);
         const specificList = response.data;
 
-        if(chart2) {
-            chart2.destroy();
+        if(specificChart) {
+            specificChart.destroy();
         }
 
-        chart2 = new Chart(document.getElementById('myChart2'), {
+        specificChart = new Chart(document.getElementById('myChart2'), {
             type: 'line',
             data: {
                 labels: specificList.map(data => 'week'.concat(' ', data.week)),
@@ -114,7 +114,7 @@ function* specificData(action) {
                         position: 'left',
                         display: true,
                         scaleLabel: {
-                            display: true,
+                            display: false,
                             labelString: 'Request State'
                         },
                         ticks: {
