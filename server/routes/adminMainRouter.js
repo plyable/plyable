@@ -43,13 +43,12 @@ router.post('/', rejectUnauthenticated, (req, res) => {
     }
 });//end POST call server side
 
-// WIP //
 // Deactivate organization so no longer collecting data
-router.put('/:id', rejectUnauthenticated, (req, res) => {
+router.put('/:id', (req, res) => {
     // Update 'collecting_data' by organization id
     const queryText = `UPDATE "organization" SET "collecting_data" = false WHERE "id" = $1;`;
     pool.query(queryText, [req.params.id])
-        .then(results => {
+        .then( () => {
             res.sendStatus(200);
         }).catch(error => {
             console.log('Error in deactivating organization:', error);
