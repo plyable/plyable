@@ -61,7 +61,7 @@ router.post('/', async (req, res) => {
               const emailInfo = {
                 email: email,
                 // create a url with key
-                url: `http://localhost:3000/#/register/?email=` + encodeURIComponent(`${email}`) + `&key=` + encodeURIComponent(`${newKey}`),//encodeURI will replaces certain characters with escape characters, heightening security
+                url: `http://${process.env.PUBLIC_URL}/#/register/?email=` + encodeURIComponent(`${email}`) + `&key=` + encodeURIComponent(`${newKey}`),//encodeURI will replaces certain characters with escape characters, heightening security
               };
 
               let mailConfig = {
