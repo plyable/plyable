@@ -7,7 +7,6 @@ class AdminMain extends Component {
     state = {
         emailList: '',
         org_id: 0,
-        collecting_data: true,
     };
 
     componentDidMount() {
@@ -30,7 +29,6 @@ class AdminMain extends Component {
     handleDeactivateClick = (org_id) => {
         console.log('deactivate clicked - organization id:', org_id);
         this.props.dispatch({type: 'DEACTIVATE_ORGANIZATION', payload: org_id});
-        this.setState({collecting_data: false}); // set local state just for conditionally rendering button
     }
 
     handleAddManagers = id => () => {
