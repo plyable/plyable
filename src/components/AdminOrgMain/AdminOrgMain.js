@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import CompletedFeedback from './CompletedFeedback';
+import CompletedFeedback from '../CompletedFeedback/CompletedFeedback';
 
 let arr = window.location.hash.split('/');
 let id = arr[arr.length - 1] === '' ? arr[arr.length - 2] : arr[arr.length - 1];
