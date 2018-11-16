@@ -7,6 +7,7 @@ class AdminMain extends Component {
     state = {
         emailList: '',
         org_id: 0,
+        collecting_data: true,
     };
 
     componentDidMount() {
@@ -25,11 +26,12 @@ class AdminMain extends Component {
         this.props.history.push(`/adminmain/organization/${id}`);
     }//this button will take the admin to an organization-specific admin page
 
-    // WIP //
+    //this button will deactivate the organization, thereby stop the collection of data, but the data will still be viewable
     handleDeactivateClick = (org_id) => {
         console.log('deactivate clicked - organization id:', org_id);
-        this.props.dispatch({type: 'DEACTIVATE_ORGANIZATION', payload: org_id})
-    }//this button will deactivate the organization, thereby stop the collection of data, but the data will still be viewable
+        this.props.dispatch({type: 'DEACTIVATE_ORGANIZATION', payload: org_id});
+        this.setState({collecting_data: false}); // set local state just for conditionally rendering button
+    }
 
     handleAddManagers = id => () => {
         this.setState({
@@ -76,7 +78,9 @@ class AdminMain extends Component {
                             return <tr key={organization.id} organization={organization}>
                                 <td>{organization.name}</td>
                                 <td><button onClick={() => this.handleViewOrgClick(organization.id)}>View</button></td>
-                                <td><button onClick={() => this.handleDeactivateClick(organization.id)}>Deactivate</button></td>
+                                {/* Ternary Function to render button or text */}
+                                <td> {organization.collecting_data ? <button onClick={()=>this.handleDeactivateClick(organization.id)}>Deactivate</button> : <p>Deactivated</p>}</td>
+                                
                                 <td><button onClick={this.handleAddManagers(organization.id)}>Add Managers</button></td>
                             </tr> //this for each loop will map through available organizations in the database and display them 
                             //on the DOM in a table
