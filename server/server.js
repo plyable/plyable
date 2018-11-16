@@ -1,8 +1,6 @@
-
 const express = require('express');
 const schedule = require('node-schedule');
 const pool = require('./modules/pool');
-
 
 require('dotenv').config();
 
@@ -17,11 +15,8 @@ const userRouter = require('./routes/user.router');
 const adminMainRouter = require('./routes/adminMainRouter')
 const employeeRouter = require('./routes/employee.router');
 const surveyResultsRouter = require('./routes/surveyResults.router');
-// manny start
 const adminOrgRouter = require('./routes/admin.org.main');
 const userMainRouter = require('./routes/user.main.router');
-// manny end
-
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -40,10 +35,9 @@ app.use('/adminmain', adminMainRouter);
 app.use('/api/employee', employeeRouter);
 app.use('/api/surveyresults', surveyResultsRouter)
 
-/** manny Start */
 app.use('/api/adminorg', adminOrgRouter);
 app.use('/api/main', userMainRouter);
-/** manny end */
+
 // Serve static files
 app.use(express.static('build'));
 
@@ -54,7 +48,6 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Listening on port: ${PORT}`);
 });
-
 
 //node schedule that will update the current week every Sunday evening at 11:59PM
 const rule = new schedule.RecurrenceRule();
