@@ -26,20 +26,13 @@ class Survey extends Component {
     }
 
     render() {
-        let dummyCards = [
-            { id: '1', value: 'goodness', definition: 'that which is good', context: 'it is good to be good', positive: true },
-            { id: '2', value: 'horrification', definition: 'being horribly absurd', context: 'a terrible combination', positive: false },
-            { id: '3', value: 'comfortude', definition: 'being comfortable at being comfortabld', context: 'it is not enough to simply be comfortable', positive: true },
-            { id: '4', value: 'dreadedness', definition: 'ease at which something becomes dreaded', context: 'little should be dreaded', positive: false },
-            { id: '5', value: 'evil', definition: 'a classic', context: 'don\'t be it', positive: false },
-            { id: '6', value: 'succulent', definition: 'tastes really good', context: 'lunch is important too', positive: true }
-        ]
+        let Cards = this.props.state.behaviorReducer.behaviors;
         return (
             <div>
                 {this.state.openCard < 6 && <h5>{this.state.openCard + 1} of 6</h5>}
                 <h1>Survey</h1>
-                {this.state.openCard < 6 ? <BehaviorCard
-                    card={dummyCards[this.state.openCard]}
+                {Cards && this.state.openCard < 6 ? <BehaviorCard
+                    card={Cards[this.state.openCard] || {value: 'Loading'}}
                     current={this.state.openCard}
                     switchCard={this.switchCard}
                 />

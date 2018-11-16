@@ -10,6 +10,7 @@ import participationReducer from './participationReducer';
 // It bundles up all of the other reducers so our project can use them.
 // This is imported in index.js as rootSaga
 import adminChartData from './adminOrgReducer';
+import behaviorReducer from './behaviorsReducer';
 //daniel start
 import addNewOrgReducer from './addNewOrgReducer';
 //daniel end
@@ -24,6 +25,7 @@ const rootReducer = combineReducers({
   survey, //this will hold the results of a users weekly survey
   addNewOrgReducer,
   participationReducer,
+  behaviorReducer,
 });
 
 export default rootReducer;
