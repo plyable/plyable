@@ -1,11 +1,13 @@
 const express = require('express');
+const { rejectUnauthenticated } = require('../modules/authentication-middleware');
 const pool = require('../modules/pool');
 const router = express.Router();
 const securityLevel = require('../constants/securityLevel');
 
 //this post router will post user-generated survey results to the database
-router.post('/', (req, res) => {
+router.post('/', rejectUnauthenticated, (req, res) => {
     const newSurveyScore = req.body;
+
     //only allow one survey result per employee per week
     pool.query(`
         SELECT
@@ -59,7 +61,7 @@ router.post('/', (req, res) => {
     });
 });//end POST call server side
 
-router.get('/:id', (req, res) => {
+router.get('/:id', rejectUnauthenticated, (req, res) => {
     if (req.user.security_level < securityLevel.MANAGER_ROLE || (req.user.security_level < securityLevel.EMPLOYEE_ROLE && req.user.org_id == req.params.id)) {
         pool.query(`
             SELECT 

@@ -1,4 +1,4 @@
-import { put, call, takeLatest } from 'redux-saga/effects';
+import { call, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 import Chart from 'chart.js';
 

@@ -2,32 +2,22 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { CSVLink } from "react-csv";
 import CompletedFeedback from './CompletedFeedback';
 
 let arr = window.location.hash.split('/');
 let id = arr[arr.length - 1] === '' ? arr[arr.length - 2] : arr[arr.length - 1];
-let headersForAverage = [
-    { label: "Time in weeks", key: "week" },
-    { label: "positive avg. score", key: "positive" },
-    { label: "negative avg. score", key: "negative" },
-    { label: "# of response", key: "user_count" }
-];
 
 class AdminOrgMain extends Component {
 
     convertArrayOfObjectsToCSV = (args) => {
-        var result, ctr, keys, columnDelimiter, lineDelimiter, data, title;
+        let result, ctr, keys, columnDelimiter, lineDelimiter, data, title;
 
         data = args.data || null;
         if (data == null || !data.length) {
             return null;
         }
 
-        title = args.title || null;
-        if (title == null || !title.length) {
-            return null;
-        }
+        title = args.title || '';
 
         columnDelimiter = args.columnDelimiter || ',';
         lineDelimiter = args.lineDelimiter || '\n';
@@ -59,31 +49,48 @@ class AdminOrgMain extends Component {
         return result += lineDelimiter;
     }
 
-    downloadCSV = () => {
-        var data, filename, link, csv = '';
+    downloadCSV = keyword => () => {
+        let data, link, csv = '', valueList = [];
 
-        let valueList = [];
-        const dataList = this.props.downloadBehaviorData.map(data => ({
-            value: data.value, "Time_in_weeks": data.week, "Avg._Score": data.avg, "#_of_responses": data.user_count
-        }));
-
-        for (let data of this.props.downloadBehaviorData) {
-            let str = data.value;
-            if (valueList.indexOf(str) < 0) {
-                valueList.push(data.value);
+        if(keyword === 'behaviors') {
+            const dataList = this.props.downloadBehaviorData.map(data => ({
+                value: data.value, 
+                "Time_in_weeks": data.week, 
+                "Avg_Score": data.avg, 
+                "#_of_responses": data.user_count
+            }));
+    
+            for (let data of this.props.downloadBehaviorData) {
+                let str = data.value;
+                if (valueList.indexOf(str) < 0) {
+                    valueList.push(data.value);
+                }
             }
-        }
+    
+            for (let value of valueList) {
+                csv += this.convertArrayOfObjectsToCSV({
+                    title: value,
+                    data: dataList,
+                    keyword: keyword
+                });
+            }
+        } else if(keyword === 'average') {
+            const dataList = this.props.downloadAverageData.map(data => ({
+                value: 'Behavior Average Data',
+                "Time_in_Weeks": data.week, 
+                "Positive_Avg_Score": data.positive, 
+                "Negative_Avg_Score": data.negative, 
+                "#_of_Responses": data.user_count
+            }));
 
-        for (let value of valueList) {
-            csv += this.convertArrayOfObjectsToCSV({
-                title: value,
-                data: dataList
+            csv = this.convertArrayOfObjectsToCSV({
+                title: 'Behavior Average Data',
+                data: dataList,
+                keyword: keyword
             });
         }
 
-        if (csv == null) return;
-
-        filename = this.getFileName();
+        if (csv === '') return;
 
         if (!csv.match(/^data:text\/csv/i)) {
             csv = 'data:text/csv;charset=utf-8,' + csv;
@@ -92,12 +99,20 @@ class AdminOrgMain extends Component {
 
         link = document.createElement('a');
         link.setAttribute('href', data);
-        link.setAttribute('download', filename);
+        link.setAttribute('download', this.getFileName(keyword));
         link.click();
     }
 
-    getFileName = () => {
-        return 'behavior_average_' + Date.now() + '.csv';
+    getFileName = keyword => {
+        let filename = 'noname.csv';
+
+        if(keyword === 'behaviors') {
+            filename = 'behavior_specific_' + Date.now() + '.csv';
+        } else if(keyword === 'average') {
+            filename = 'behavior_average_' + Date.now() + '.csv';
+        }
+
+        return filename;
     }
 
     handleChangeBehavior = event => {
@@ -125,30 +140,19 @@ class AdminOrgMain extends Component {
                 </div>
                 <CompletedFeedback />
                 <div style={{ width: '70vw' }}>
-                    <canvas id="myChart1"></canvas>
+                    <canvas id="adminAverageChart"></canvas>
                 </div>
-                <div style={{ textAlign: 'right' }}>
-                    {
-                        this.props.downloadAverageData.length > 0 &&
-                        <CSVLink
-                            data={this.props.downloadAverageData}
-                            headers={headersForAverage}
-                            asyncOnClick={true}
-                            filename={this.getFileName()}
-                            target="_blank"
-                        >
-                            Download me
-                        </CSVLink>
-                    }
+                <div className="downloadCsv" style={{ textAlign: 'right' }}>
+                    <button onClick={this.downloadCSV('average')}>Download CSV</button>
                 </div>
                 <div style={{ width: '70vw', textAlign: 'center' }}>
                     <select onChange={this.handleChangeBehavior} style={{ width: '70%', height: '50px', fontSize: '30px' }}>
                         {this.props.behaviorData.map(behavior => <option key={behavior.id} value={behavior.id}>{behavior.value}</option>)}
                     </select>
-                    <canvas id="myChart2"></canvas>
+                    <canvas id="adminSpecificChart"></canvas>
                 </div>
-                <div className="downloadCsv" id="specificData" style={{ textAlign: 'right' }}>
-                    <button onClick={this.downloadCSV}>Download CSV</button>
+                <div className="downloadCsv" style={{ textAlign: 'right' }}>
+                    <button onClick={this.downloadCSV('behaviors')}>Download CSV</button>
                 </div>
             </div>
         );

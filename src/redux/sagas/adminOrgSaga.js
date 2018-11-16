@@ -17,7 +17,7 @@ function* avgData(action) {
         }
 
         // draw chart
-        avgChart = new Chart(document.getElementById('myChart1'), {
+        avgChart = new Chart(document.getElementById('adminAverageChart'), {
             type: 'line',
             data: {
                 labels: avgList.map(avg => 'week'.concat(' ', avg.week)),
@@ -90,7 +90,7 @@ function* specificData(action) {
             specificChart.destroy();
         }
 
-        specificChart = new Chart(document.getElementById('myChart2'), {
+        specificChart = new Chart(document.getElementById('adminSpecificChart'), {
             type: 'line',
             data: {
                 labels: specificList.map(data => 'week'.concat(' ', data.week)),
