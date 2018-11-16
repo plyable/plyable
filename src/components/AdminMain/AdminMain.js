@@ -7,10 +7,12 @@ class AdminMain extends Component {
     state = {
         emailList: '',
         org_id: 0,
+        deactivateDialog: false,
+        addManager: false
     };
 
     componentDidMount() {
-        if(this.props.reduxState.user.security_level !== securityLevel.ADMIN_ROLE){
+        if (this.props.reduxState.user.security_level !== securityLevel.ADMIN_ROLE) {
             this.props.history.push('/main');
         } else {
             this.props.dispatch({ type: 'FETCH_ORGANIZATIONS', payload: this.props.reduxState.adminMainReducer })
@@ -28,27 +30,39 @@ class AdminMain extends Component {
     //this button will deactivate the organization, thereby stop the collection of data, but the data will still be viewable
     handleDeactivateClick = (org_id) => {
         console.log('deactivate clicked - organization id:', org_id);
-        this.props.dispatch({type: 'DEACTIVATE_ORGANIZATION', payload: org_id});
+        this.setState({deactivateDialog: true, org_id: org_id}) // open dialog box
+    }
+    
+    handleDeactivateConfirm = (org_id) => {
+        this.props.dispatch({ type: 'DEACTIVATE_ORGANIZATION', payload: org_id });
+        this.setState({...this.state, deactivateDialog: false})
+    }
+
+    handleCancelDeactivate = () => {
+        this.setState({...this.state, deactivateDialog: false})
     }
 
     handleAddManagers = id => () => {
         this.setState({
             ...this.state,
             org_id: id,
+            addManager: true
         });
     }
 
-    handleCancel = () => {
+    handleCancelAddManager = () => {
         this.setState({
+            ...this.state,
             emailList: '',
             org_id: 0,
+            addManager: false
         });
     }
 
     sendInvitationEmails = () => {
         let splitList = this.state.emailList.split('\n'); // creates comma separate array  
-        this.props.dispatch({ type: 'ADD_EMPLOYEES', payload: {...this.state, emailList: splitList} });
-        this.handleCancel();
+        this.props.dispatch({ type: 'ADD_EMPLOYEES', payload: { ...this.state, emailList: splitList } });
+        this.handleCancelAddManager();
     }
 
     handleChange = event => {
@@ -77,28 +91,38 @@ class AdminMain extends Component {
                                 <td>{organization.name}</td>
                                 <td><button onClick={() => this.handleViewOrgClick(organization.id)}>View</button></td>
                                 {/* Ternary Function to render button or text */}
-                                <td> {organization.collecting_data ? <button onClick={()=>this.handleDeactivateClick(organization.id)}>Deactivate</button> : <p>Deactivated</p>}</td>
-                                
-                                <td><button onClick={this.handleAddManagers(organization.id)}>Add Managers</button></td>
+                                <td> {organization.collecting_data ? <button onClick={() => this.handleDeactivateClick(organization.id)}>Deactivate</button> : <p>Deactivated</p>}</td>
+                                {/* Ternary Function to disable   */}
+                                <td>
+                                    <button onClick={this.handleAddManagers(organization.id)} disabled={!organization.collecting_data}>Add Managers</button></td>
                             </tr> //this for each loop will map through available organizations in the database and display them 
                             //on the DOM in a table
                         })}
                     </tbody>
                 </table>
                 < button onClick={this.handleAddNewOrganizationClick}>Add New Organization</button>
-                <dialog open={this.state.org_id > 0}>
-                <h2>Add Managers</h2>
-        <h3>1 email per line</h3>
-        {/* Large Input Box */}
-        <textarea
-          value={this.state.emailList}
-          onChange={this.handleChange}
-          placeholder='No Commas'
-        >
-        </textarea>
-        <button onClick={this.sendInvitationEmails}>Send Invitations</button>
+                
+                {/* Dialog box for deactivating */}
+                <dialog open={this.state.deactivateDialog}>
+                        <h2>Are you sure you want to deactivate this company?</h2>
+                        <button onClick={() => this.handleDeactivateConfirm(this.state.org_id)}>Yes</button>
+                        <button onClick={this.handleCancelDeactivate}>No</button>
+                </dialog>
 
-                    <button onClick={this.handleCancel}>Cancel</button>
+                {/* Dialog box for inviting managers */}
+                <dialog open={this.state.addManager}>
+                    <h2>Add Managers</h2>
+                    <h3>1 email per line</h3>
+                    {/* Large Input Box */}
+                    <textarea
+                        value={this.state.emailList}
+                        onChange={this.handleChange}
+                        placeholder='No Commas'
+                    >
+                    </textarea>
+                    <button onClick={this.sendInvitationEmails}>Send Invitations</button>
+
+                    <button onClick={this.handleCancelAddManager}>Cancel</button>
                 </dialog>
             </div >
         );
