@@ -2,25 +2,25 @@ import { put, call, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 import Chart from 'chart.js';
 
-let chart1;
-let chart2;
+let avgChart;
+let specificChart;
 
 function* avgData(action) {
     try {
         const orgId = action.payload.id;
-        const response = yield call(axios.get, `/api/adminorg/average/${orgId}`);
+        const response = yield call(axios.get, `/api/adminorg/average/chart/${orgId}`);
         const avgList = response.data;
 
         // remove previous data
-        if(chart1) {
-            chart1.destroy();
+        if(avgChart) {
+            avgChart.destroy();
         }
 
         // draw chart
-        chart1 = new Chart(document.getElementById('myChart1'), {
+        avgChart = new Chart(document.getElementById('adminAverageChart'), {
             type: 'line',
             data: {
-                labels: avgList.map(avg => avg.week),
+                labels: avgList.map(avg => 'week'.concat(' ', avg.week)),
                 datasets: [{
                     label: 'Negative',
                     data: avgList.map(avg => avg.negative),
@@ -47,7 +47,7 @@ function* avgData(action) {
                         position: 'left',
                         display: true,
                         scaleLabel: {
-                            display: true,
+                            display: false,
                             labelString: 'Request State'
                         },
                         ticks: {
@@ -83,17 +83,17 @@ function* specificData(action) {
             yield put({ type: 'BEHAVIOR_DATA' });
         }
 
-        const response = yield call(axios.get, `/api/adminorg/specific/${id}/${behaviorId}`);
+        const response = yield call(axios.get, `/api/adminorg/specific/chart/${id}/${behaviorId}`);
         const specificList = response.data;
 
-        if(chart2) {
-            chart2.destroy();
+        if(specificChart) {
+            specificChart.destroy();
         }
 
-        chart2 = new Chart(document.getElementById('myChart2'), {
+        specificChart = new Chart(document.getElementById('adminSpecificChart'), {
             type: 'line',
             data: {
-                labels: specificList.map(data => data.week),
+                labels: specificList.map(data => 'week'.concat(' ', data.week)),
                 datasets: [{
                     label: 'Data',
                     data: specificList.map(data => data.avg),
@@ -114,7 +114,7 @@ function* specificData(action) {
                         position: 'left',
                         display: true,
                         scaleLabel: {
-                            display: true,
+                            display: false,
                             labelString: 'Request State'
                         },
                         ticks: {
@@ -152,15 +152,16 @@ function* behaviorData() {
     }
 }
 
-function* downloadBehaviorData(action) {
+function* downloadData(action) {
     try {
         const id = action.payload.id;
-        const response = yield call(axios.get, `/api/adminorg/specific/all/${id}`);
-        const downloadBehavior = response.data;
-
-        console.log(downloadBehavior);
+        const behaviorResponse = yield call(axios.get, `/api/adminorg/specific/all/${id}`);
+        const averageResponse = yield call(axios.get, `/api/adminorg/average/all/${id}`);
+        const downloadBehavior = behaviorResponse.data;
+        const downloadAverage = averageResponse.data;
 
         yield put({ type: 'GET_DOWNLOAD_BEHAVIOR_DATA', payload: downloadBehavior });
+        yield put({ type: 'GET_DOWNLOAD_AVERAGE_DATA', payload: downloadAverage });
     } catch (error) {
         console.log('Error getting behavior data :', error);
     }
@@ -170,7 +171,7 @@ function* adminOrgSaga() {
     yield takeLatest('AVG_DATA', avgData);
     yield takeLatest('SPECIFIC_DATA', specificData);
     yield takeLatest('BEHAVIOR_DATA', behaviorData);
-    yield takeLatest('DOWNLOAD_BEHAVIOR_DATA', downloadBehaviorData);
+    yield takeLatest('DOWNLOAD_DATA', downloadData);
 }
 
 export default adminOrgSaga;

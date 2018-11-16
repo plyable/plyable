@@ -5,7 +5,10 @@ import { withRouter } from 'react-router';
 class CompletedFeedback extends Component {
 
     componentDidMount() {
-        this.props.dispatch({ type: 'FETCH_PARTICIPATION', payload: this.props.id });
+        const arr = window.location.hash.split('/');
+        const id = arr[arr.length - 1] === '' ? arr[arr.length - 2] : arr[arr.length - 1];
+        
+        this.props.dispatch({ type: 'FETCH_PARTICIPATION', payload: id });
     }
 
 
