@@ -25,7 +25,7 @@ import Registration from '../Registration/Registration';
 import './App.css';
 import AdminMain from '../AdminMain/AdminMain';
 import NewOrgForm from '../AdminMain/NewOrgForm';
-import CompletedFeedback from '../AdminOrgMain/CompletedFeedback';
+import CompletedFeedback from '../CompletedFeedback/CompletedFeedback';
 
 class App extends Component {
   componentDidMount() {
