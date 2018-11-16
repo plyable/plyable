@@ -1,9 +1,11 @@
 .nav-title {
-    font-size: 24px;
+    font-size: 44px;
     font-weight: 700;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     display: inline-block;
     color: #f2f2f2;
     padding-left: 10px;
+    text-decoration: none;
 }
 
 .nav {
@@ -13,24 +15,31 @@
 
 .nav-link {
   float: left;
-  color: #f2f2f2;
-  background-color: #00acb0;
+  color: rgb(238, 238, 238);
   text-align: center;
-  padding: 24px 10px;
+  padding: 3px 1px;
   text-decoration: none;
   font-size: 15px;
-
-  /* these last two make the logout button in
-  the nav bar look like another link */
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  text-transform: uppercase;
   border:none;
   cursor: pointer;
   outline:0;
+  background: none;
 }
 
 .nav-link:hover {
-  background-color: #008183;
+  background-color: rgb(51, 181, 51);
 }
 
 .nav-right {
   float: right;
 }
+
+.appBar{
+background-color: purple;
+}
+/* (82, 132, 196, 1) */
+
+
+/* <img id="comp-jnzkczqvimgimage" alt="Web_1920_–_34.png" data-type="image" style="width: 491px; height: 460px; object-fit: cover;" src="https://static.wixstatic.com/media/55a6fa_8df7f1de12e241aca43953e67e0e2ca7~mv2.png/v1/fill/w_491,h_460,al_c,q_80,usm_0.66_1.00_0.01/Web_1920_%E2%80%93_34.webp"> */
