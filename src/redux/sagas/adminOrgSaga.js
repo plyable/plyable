@@ -4,6 +4,7 @@ import Chart from 'chart.js';
 
 let avgChart;
 let specificChart;
+const MIN_PERCENT = 60;
 
 function* avgData(action) {
     try {
@@ -16,23 +17,27 @@ function* avgData(action) {
             avgChart.destroy();
         }
 
+        let positiveData = avgList.filter(avg => avg.percent >= MIN_PERCENT).map(avg => ({ x: avg.week, y: avg.positive }));
+        let negativeData = avgList.filter(avg => avg.percent >= MIN_PERCENT).map(avg => ({ x: avg.week, y: avg.negative }));
+
         // draw chart
         avgChart = new Chart(document.getElementById('adminAverageChart'), {
             type: 'line',
             data: {
-                labels: avgList.map(avg => 'week'.concat(' ', avg.week)),
                 datasets: [{
                     label: 'Negative',
-                    data: avgList.map(avg => avg.negative),
+                    data: positiveData,
                     backgroundColor: 'rgba(255, 99, 132, 0.2)',
                     borderColor: 'rgba(255,99,132,1)',
                     borderWidth: 1,
+                    lineTension: 0
                 }, {
                     label: 'Positive',
-                    data: avgList.map(avg => avg.positive),
+                    data: negativeData,
                     backgroundColor: 'rgba(54, 162, 235, 0.2)',
                     borderColor: 'rgba(54, 162, 235, 1)',
                     borderWidth: 1,
+                    lineTension: 0
                 }]
             },
             options: {
@@ -43,6 +48,15 @@ function* avgData(action) {
                     fontSize: 30
                 },
                 scales: {
+                    xAxes: [{ 
+                        type: 'linear',
+                        ticks: {
+                            stepSize: 1,
+                            callback: function (dataLabel, index) {
+                                return 'week'.concat(' ', dataLabel);
+                            }
+                        }
+                    }],
                     yAxes: [{
                         position: 'left',
                         display: true,
@@ -90,13 +104,15 @@ function* specificData(action) {
             specificChart.destroy();
         }
 
+        let chartData = specificList.filter(data => data.percent >= MIN_PERCENT).map(data => ({ x: data.week, y: data.avg }));
+
         specificChart = new Chart(document.getElementById('adminSpecificChart'), {
             type: 'line',
             data: {
                 labels: specificList.map(data => 'week'.concat(' ', data.week)),
                 datasets: [{
                     label: 'Data',
-                    data: specificList.map(data => data.avg),
+                    data: chartData,
                     backgroundColor: 'rgba(54, 162, 235, 0.2)',
                     borderColor: 'rgba(54, 162, 235, 1)',
                     borderWidth: 1,
@@ -110,6 +126,15 @@ function* specificData(action) {
                     fontSize: 30
                 },
                 scales: {
+                    xAxes: [{ 
+                        type: 'linear',
+                        ticks: {
+                            stepSize: 1,
+                            callback: function (dataLabel, index) {
+                                return 'week'.concat(' ', dataLabel);
+                            }
+                        }
+                    }],
                     yAxes: [{
                         position: 'left',
                         display: true,
