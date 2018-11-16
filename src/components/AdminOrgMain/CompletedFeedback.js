@@ -6,8 +6,12 @@ class CompletedFeedback extends Component {
 
     componentDidMount() {
         const arr = window.location.hash.split('/');
-        const id = arr[arr.length - 1] === '' ? arr[arr.length - 2] : arr[arr.length - 1];
-        
+        let id;
+        if(this.props.useOrgId){
+            id = this.props.reduxState.user.org_id
+        } else {
+            id = this.props.id || arr[arr.length - 1] === '' ? arr[arr.length - 2] : arr[arr.length - 1];
+        }
         this.props.dispatch({ type: 'FETCH_PARTICIPATION', payload: id });
     }
 

@@ -26,13 +26,13 @@ class Survey extends Component {
     }
 
     render() {
-        let Cards = this.props.state.behaviorReducer.behaviors;
+        let cards = this.props.state.behaviorReducer.behaviors;
         return (
             <div>
                 {this.state.openCard < 6 && <h5>{this.state.openCard + 1} of 6</h5>}
                 <h1>Survey</h1>
-                {Cards && this.state.openCard < 6 ? <BehaviorCard
-                    card={Cards[this.state.openCard] || {value: 'Loading'}}
+                {cards && this.state.openCard < 6 ? <BehaviorCard
+                    card={cards[this.state.openCard] || {value: 'Loading'}}
                     current={this.state.openCard}
                     switchCard={this.switchCard}
                 />
