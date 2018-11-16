@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { put, takeLatest } from 'redux-saga/effects';
+import { call, put, takeLatest } from 'redux-saga/effects';
 
 
 function* fetchOrganizations(action) {
@@ -12,10 +12,21 @@ function* fetchOrganizations(action) {
     }
 }
 
-function* adminMainSaga() {
-    yield takeLatest('FETCH_ORGANIZATIONS', fetchOrganizations) //when componentDidMount runs this action, it runs this generator function
-    //which then runs fetchOrganizations
+// WIP //
+// Deactivate organization so no longer collecting data
+function* deactivateOrganization(action) {
+    try {
+        console.log('WIP(action.payload in deactivateOrganization):', action.payload);
+        yield call(axios.put, `adminmain/${action.payload}`)
+    } catch (error) {
+        console.log('Error in deactivateOrganization in adminMainSaga:', error);
+    }
+}
 
+function* adminMainSaga() {
+    yield takeLatest('FETCH_ORGANIZATIONS', fetchOrganizations) //when componentDidMount runs this action, it runs this generator function //which then runs fetchOrganizations
+    // WIP //
+    yield takeLatest('DEACTIVATE_ORGANIZATION', deactivateOrganization)
 }
 
 export default adminMainSaga;
