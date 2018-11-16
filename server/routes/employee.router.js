@@ -9,8 +9,8 @@ const securityLevel = require('../constants/securityLevel');
 let transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: 'tmonkey424242@gmail.com',
-    pass: process.env.mailpass
+    user: process.env.ADMIN_EMAIL,
+    pass: process.env.MAIL_PW
   }
 });
 
@@ -65,7 +65,7 @@ router.post('/', async (req, res) => {
               };
 
               let mailConfig = {
-                from: 'tmonkey424242@gmail.com',
+                from: process.env.ADMIN_EMAIL,
                 to: emailInfo.email,
                 subject: 'Plyable Invitation',
                 html: `<p>Click here <a href="${emailInfo.url}">${emailInfo.url}</a></p>`// plain text body
