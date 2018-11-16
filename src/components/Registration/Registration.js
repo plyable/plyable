@@ -37,6 +37,7 @@ class Registration extends Component {
         }
     }
 
+    // TO DO: can we delete this?
     componentDidMount() {
     }
 
@@ -45,7 +46,7 @@ class Registration extends Component {
             <div>
                 <form onSubmit={this.handleSubmit}>
                     <label>Email
-                        <input type="email" onChange={this.handleInputChangeFor('email')} value={this.state.email} required />
+                        <input type="email" onChange={this.handleInputChangeFor('email')} value={this.state.email} required disabled/> 
                     </label>
                     <br />
                     <label>Password
