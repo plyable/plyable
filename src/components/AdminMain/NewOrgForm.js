@@ -6,8 +6,6 @@ class NewOrgForm extends Component {
     state = {
         newOrganization: {
             name: '',
-            // managerName: '',
-            // managerEmail: '',
         }
     };//this is the local state for creating new organizations
 
@@ -32,6 +30,7 @@ class NewOrgForm extends Component {
                 // managerEmail: '',
             }
         });//spread operator holds former state, setState alters state to make a new organization
+        this.props.dispatch({ type: 'ADD_NEW_ORGANIZATION_SNACKBAR' })
     };//end handleOrgSubmit
 
     render() {

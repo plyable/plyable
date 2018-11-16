@@ -2,14 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import securityLevel from '../../constants/securityLevel';
+import AlertSnackBar from '../Messages/AlertSnackBar';
 
 class AdminMain extends Component {
     state = {
         emailList: '',
         org_id: 0,
         deactivateDialog: false,
-        addManager: false
-    };
+        addManager: false,
+    }
 
     componentDidMount() {
         if (this.props.reduxState.user.security_level !== securityLevel.ADMIN_ROLE) {
@@ -30,16 +31,16 @@ class AdminMain extends Component {
     //this button will deactivate the organization, thereby stop the collection of data, but the data will still be viewable
     handleDeactivateClick = (org_id) => {
         console.log('deactivate clicked - organization id:', org_id);
-        this.setState({deactivateDialog: true, org_id: org_id}) // open dialog box
+        this.setState({ deactivateDialog: true, org_id: org_id }) // open dialog box
     }
-    
+
     handleDeactivateConfirm = (org_id) => {
         this.props.dispatch({ type: 'DEACTIVATE_ORGANIZATION', payload: org_id });
-        this.setState({...this.state, deactivateDialog: false})
+        this.setState({ ...this.state, deactivateDialog: false })
     }
 
     handleCancelDeactivate = () => {
-        this.setState({...this.state, deactivateDialog: false})
+        this.setState({ ...this.state, deactivateDialog: false })
     }
 
     handleAddManagers = id => () => {
@@ -101,12 +102,12 @@ class AdminMain extends Component {
                     </tbody>
                 </table>
                 < button onClick={this.handleAddNewOrganizationClick}>Add New Organization</button>
-                
+
                 {/* Dialog box for deactivating */}
                 <dialog open={this.state.deactivateDialog}>
-                        <h2>Are you sure you want to deactivate this company?</h2>
-                        <button onClick={() => this.handleDeactivateConfirm(this.state.org_id)}>Yes</button>
-                        <button onClick={this.handleCancelDeactivate}>No</button>
+                    <h2>Are you sure you want to deactivate this company?</h2>
+                    <button onClick={() => this.handleDeactivateConfirm(this.state.org_id)}>Yes</button>
+                    <button onClick={this.handleCancelDeactivate}>No</button>
                 </dialog>
 
                 {/* Dialog box for inviting managers */}

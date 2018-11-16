@@ -1,5 +1,5 @@
 import React from 'react';
-
+import AlertSnackBar from './AlertSnackBar';
 //Daniel Imports Above, Eli Imports Below
 
 //sort of like an index.js, all the dialogues are put here, and opened when needed
@@ -9,6 +9,7 @@ import React from 'react';
 const AllMessages = () => {
     return (
         <div>
+            <AlertSnackBar />
             {/* Daniel Toasts Above, Eli Dialogs Below */}
         </div>
     );

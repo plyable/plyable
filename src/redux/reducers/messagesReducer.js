@@ -1,4 +1,5 @@
 const messagesReducer = (state = {
+    addNewOrganizationSnackBar: false,
     loginError: false,
     deactivedOrganization: false,
     addedEmployees: false,
@@ -8,8 +9,16 @@ const messagesReducer = (state = {
     //each component of state corresponds to a dialog that lives on app.js
     //on actions that trigger this reducer open or close one of these dialogs
     switch (action.type) {
-
-
+        case 'ADD_NEW_ORGANIZATION_SNACKBAR':
+            return {
+                ...state,
+                addNewOrganizationSnackBar: true,
+            }
+        case 'CLOSE_NEW_ORGANIZATION_SNACKBAR':
+            return {
+                ...state,
+                addNewOrganizationSnackBar: false,
+            }
         // Daniel cases above, Eli Cases below
 
         default:
