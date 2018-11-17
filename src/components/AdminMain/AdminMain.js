@@ -8,7 +8,10 @@ class AdminMain extends Component {
         emailList: '',
         org_id: 0,
         deactivateDialog: false,
-        addManager: false
+        addManager: false,
+        editDialog: false,
+        organization: {},
+        orgName: '',
     };
 
     componentDidMount() {
@@ -29,7 +32,6 @@ class AdminMain extends Component {
 
     //this button will deactivate the organization, thereby stop the collection of data, but the data will still be viewable
     handleDeactivateClick = (org_id) => {
-        console.log('deactivate clicked - organization id:', org_id);
         this.setState({deactivateDialog: true, org_id: org_id}) // open dialog box
     }
     
@@ -40,6 +42,37 @@ class AdminMain extends Component {
 
     handleCancelDeactivate = () => {
         this.setState({...this.state, deactivateDialog: false})
+    }
+
+    // show edit dialog and store organization's name in state
+    handleEditOrgClick = organization => () => {
+        this.setState({ 
+            org_id: organization.id,
+            orgName: organization.name,
+            editDialog: true
+        });
+    }
+
+    // change orgName in state
+    handleChangeOrgName = event => {
+        this.setState({ orgName: event.target.value });
+    }
+
+    // close dialog when cancel button is clicked
+    handleEditCancelClick = () => {
+        this.setState({ editDialog: false });
+    }
+
+    // close dialog and update organization name
+    handleUpdateOrgClick = () => {
+        this.setState({ editDialog: false });
+        this.props.dispatch({ 
+            type: 'UPDATE_ORGANIZATION', 
+            payload: {
+                id: this.state.org_id, 
+                name: this.state.orgName,
+            } 
+        });
     }
 
     handleAddManagers = id => () => {
@@ -81,32 +114,74 @@ class AdminMain extends Component {
                         <tr>
                             <th>Organization Name</th>
                             <th>Survey Results Page</th>
+                            <th>Edit</th>
                             <th>Deactivate</th>
                             <th>Add Managers</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {this.props.reduxState.adminMainReducer.map(organization => {
-                            return <tr key={organization.id} organization={organization}>
+                        {this.props.reduxState.adminMainReducer.map(organization => (
+                            <tr key={organization.id} organization={organization}>
                                 <td>{organization.name}</td>
-                                <td><button onClick={() => this.handleViewOrgClick(organization.id)}>View</button></td>
+                                <td>
+                                    <button onClick={() => this.handleViewOrgClick(organization.id)}>
+                                        View
+                                    </button>
+                                </td>
+                                <td>
+                                    <button onClick={this.handleEditOrgClick(organization)}>
+                                        Edit
+                                    </button>
+                                </td>
                                 {/* Ternary Function to render button or text */}
-                                <td> {organization.collecting_data ? <button onClick={() => this.handleDeactivateClick(organization.id)}>Deactivate</button> : <p>Deactivated</p>}</td>
+                                <td> 
+                                    {
+                                        organization.collecting_data ? 
+                                        <button onClick={() => this.handleDeactivateClick(organization.id)}>
+                                            Deactivate
+                                        </button> : 
+                                        <p>Deactivated</p>
+                                    }
+                                </td>
                                 {/* Ternary Function to disable   */}
                                 <td>
-                                    <button onClick={this.handleAddManagers(organization.id)} disabled={!organization.collecting_data}>Add Managers</button></td>
-                            </tr> //this for each loop will map through available organizations in the database and display them 
+                                    <button 
+                                        onClick={this.handleAddManagers(organization.id)} 
+                                        disabled={!organization.collecting_data}
+                                    >
+                                        Add Managers
+                                    </button>
+                                </td>
+                            </tr> 
+                            //this for each loop will map through available organizations in the database and display them 
                             //on the DOM in a table
-                        })}
+                        ))}
                     </tbody>
                 </table>
                 < button onClick={this.handleAddNewOrganizationClick}>Add New Organization</button>
+
+                {/* Dialog box for editing organization */}
+                <dialog
+                    open={this.state.editDialog}
+                >
+                    <h2>Edit Organization</h2>
+                    <label htmlFor="orgName">Name</label>
+                    <input 
+                        type="text" 
+                        id="orgName" 
+                        value={this.state.orgName} 
+                        onChange={this.handleChangeOrgName}
+                    />
+                    <br />
+                    <button onClick={this.handleUpdateOrgClick}>Update</button>
+                    <button onClick={this.handleEditCancelClick}>Cancel</button>
+                </dialog>
                 
                 {/* Dialog box for deactivating */}
                 <dialog open={this.state.deactivateDialog}>
-                        <h2>Are you sure you want to deactivate this company?</h2>
-                        <button onClick={() => this.handleDeactivateConfirm(this.state.org_id)}>Yes</button>
-                        <button onClick={this.handleCancelDeactivate}>No</button>
+                    <h2>Are you sure you want to deactivate this company?</h2>
+                    <button onClick={() => this.handleDeactivateConfirm(this.state.org_id)}>Yes</button>
+                    <button onClick={this.handleCancelDeactivate}>No</button>
                 </dialog>
 
                 {/* Dialog box for inviting managers */}
@@ -118,10 +193,8 @@ class AdminMain extends Component {
                         value={this.state.emailList}
                         onChange={this.handleChange}
                         placeholder='No Commas'
-                    >
-                    </textarea>
+                    ></textarea>
                     <button onClick={this.sendInvitationEmails}>Send Invitations</button>
-
                     <button onClick={this.handleCancelAddManager}>Cancel</button>
                 </dialog>
             </div >
