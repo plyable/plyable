@@ -1,5 +1,5 @@
 import React from 'react';
-
+import AlertSnackBar from './AlertSnackBar';
 //Daniel Imports Above, Eli Imports Below
 import SendingEmails from './SendingEmails';
 import './messages.css';
@@ -11,6 +11,7 @@ import './messages.css';
 const AllMessages = () => {
     return (
         <div>
+            <AlertSnackBar />
             {/* Daniel Toasts Above, Eli Dialogs Below */}
             <SendingEmails />
         </div>

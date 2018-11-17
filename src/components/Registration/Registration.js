@@ -35,6 +35,8 @@ class Registration extends Component {
         } else {
             console.log('your password doesn\'t match');
         }
+        this.props.dispatch({ type: 'REGISTRATION_COMPLETED_SNACKBAR' })//this will dispatch an action type which triggers a SnackBar alert
+        this.props.history.push('/main');
     }
 
     // TO DO: can we delete this?
@@ -46,7 +48,7 @@ class Registration extends Component {
             <div>
                 <form onSubmit={this.handleSubmit}>
                     <label>Email
-                        <input type="email" onChange={this.handleInputChangeFor('email')} value={this.state.email} required disabled/> 
+                        <input type="email" onChange={this.handleInputChangeFor('email')} value={this.state.email} required disabled />
                     </label>
                     <br />
                     <label>Password

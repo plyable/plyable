@@ -21,6 +21,7 @@ class LoginPage extends Component {
     } else {
       this.props.dispatch({ type: 'LOGIN_INPUT_ERROR' });
     }
+    this.props.dispatch({ type: 'LOGIN_SNACKBAR' })//this will dispatch an action type which triggers a SnackBar alert
   } // end login
 
   handleInputChangeFor = propertyName => (event) => {
@@ -73,7 +74,7 @@ class LoginPage extends Component {
             />
           </div>
         </form>
-        
+
       </div>
     );
   }
