@@ -4,9 +4,10 @@ import Chart from 'chart.js';
 
 let chart1;
 
-function* userOrgChart() {
+function* userOrgChart(action) {
     try {
-        const response = yield call(axios.get, `/api/main/chart`);
+        const behaviorId = action.payload.behaviorId;
+        const response = yield call(axios.get, `/api/main/chart/${behaviorId}`);
         const chartList = response.data;
 
         if(chart1) {
