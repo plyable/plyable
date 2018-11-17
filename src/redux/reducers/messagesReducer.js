@@ -1,5 +1,6 @@
 const messagesReducer = (state = {
     addNewOrganizationSnackBar: false,
+    surveyCompletedSnackBar: false,
     loginError: false,
     deactivedOrganization: false,
     addedEmployees: false,
@@ -19,6 +20,17 @@ const messagesReducer = (state = {
                 ...state,
                 addNewOrganizationSnackBar: false,
             }
+        case 'SURVEY_COMPLETED_SNACKBAR':
+            return {
+                ...state,
+                surveyCompletedSnackBar: true,
+            }
+        case 'CLOSE_SURVEY_COMPLETED_SNACKBAR':
+            return {
+                ...state,
+                surveyCompletedSnackBar: false,
+            }
+
         // Daniel cases above, Eli Cases below
 
         default:

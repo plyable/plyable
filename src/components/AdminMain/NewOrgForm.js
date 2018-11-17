@@ -30,7 +30,7 @@ class NewOrgForm extends Component {
                 // managerEmail: '',
             }
         });//spread operator holds former state, setState alters state to make a new organization
-        this.props.dispatch({ type: 'ADD_NEW_ORGANIZATION_SNACKBAR' })
+        this.props.dispatch({ type: 'ADD_NEW_ORGANIZATION_SNACKBAR' })//this will dispatch an action type which triggers a SnackBar alert
     };//end handleOrgSubmit
 
     render() {

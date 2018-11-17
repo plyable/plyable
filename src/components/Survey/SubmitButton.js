@@ -9,6 +9,8 @@ class SubmitButton extends Component {
         this.props.dispatch({ type: 'SEND_SURVEY_RESULTS', payload: this.props.survey });
         //this sends the survey results, as stored in redux state to a saga and
         //eventually to the server
+        this.props.dispatch({ type: 'SURVEY_COMPLETED_SNACKBAR' })//this will dispatch an action type which triggers a SnackBar alert
+
     }
 
     render() {
