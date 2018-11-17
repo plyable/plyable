@@ -7,66 +7,69 @@ const TOTAL_WEEKS = 12;
 /**
  * GET route template
  */
-router.get('/chart', rejectUnauthenticated, (req, res) => {
+router.get('/chart/:behaviorId', rejectUnauthenticated, (req, res) => {
     console.log('in /api/main/chart GET');
 
-    let selectAvg = `
-        WITH "temp_avg" AS (
-            SELECT
-                "rs2"."week",
-                ROUND(AVG("rd2"."score"), 1) AS "avg",
-                "bh2"."positive"
-            FROM
-                "response" AS "rs2"
-                LEFT JOIN "response_data" AS "rd2"
-                    ON "rs2"."id" = "rd2"."response_id"
-                LEFT JOIN "user" AS "us2"
-                    ON "rs2"."user_id" = "us2"."id"
-                LEFT JOIN "behavior" AS "bh2"
-                    ON "rd2"."behavior_id" = "bh2"."id"
-            GROUP BY
-                "us2"."org_id",
-                "rs2"."week",
-                "bh2"."positive"
-            HAVING
-                "us2"."org_id" = $1
-                AND "rs2"."week" != ( SELECT "current_week" FROM "organization" WHERE "id" = $1 )
-                AND "rs2"."week" > ( SELECT ("current_week"-${TOTAL_WEEKS}) AS "min_month" FROM "organization" WHERE "id" = $1 )
-        )
+    const behaviorId = req.params.behaviorId;
+    let selectrSpecific = `
         SELECT
-            "ta"."week",
-            (
-                SELECT
-                    "avg"
-                FROM
-                    "temp_avg"
-                WHERE
-                    "week" = "ta"."week"
-                    AND "positive" = true
-            ) AS "positive",
-            (
-                SELECT
-                    "avg"
-                FROM
-                    "temp_avg"
-                WHERE
-                    "week" = "ta"."week"
-                    AND "positive" = false
-            ) AS "negative"
+            "rs2"."week",
+            ROUND(AVG("rd2"."score"), 1) AS "avg",
+            COUNT(DISTINCT "rs2"."user_id") AS "user_count",
+            "tuc"."total_count", 
+            (COUNT(DISTINCT "rs2"."user_id")*100)/"tuc"."total_count" AS "percent"
         FROM
-            "temp_avg" AS "ta"
+            "response" AS "rs2"
+            LEFT JOIN "response_data" AS "rd2"
+                ON "rs2"."id" = "rd2"."response_id"
+            LEFT JOIN "user" AS "us2"
+                ON "rs2"."user_id" = "us2"."id"
+            LEFT JOIN "behavior" AS "bh2"
+                ON "rd2"."behavior_id" = "bh2"."id"
+            LEFT JOIN (
+                SELECT
+                    "og"."id",
+                    COUNT("us"."id") AS "total_count"
+                FROM
+                    "organization" AS "og"
+                    LEFT JOIN "user" AS "us"
+                        ON "og"."id" = "us"."org_id"
+                GROUP BY
+                    "og"."id"
+                HAVING
+                    "og"."id" = $1
+            ) AS "tuc"
+                ON "us2"."org_id" = "tuc"."id"
         GROUP BY
-            "ta"."week"
+            "us2"."org_id",
+            "rd2"."behavior_id",
+            "rs2"."week",
+            "tuc"."total_count"
+        HAVING
+            "us2"."org_id" = $1
+            AND "rd2"."behavior_id" = (
+                SELECT 
+                    CASE 
+                        WHEN 0 = CAST($2 AS INTEGER) THEN "id"
+                    ELSE
+                        CAST($2 AS INTEGER) END AS "id"
+                FROM "behavior" 
+                ORDER BY "id" ASC 
+                LIMIT 1
+            )
+            AND "rs2"."week" != ( SELECT "current_week" FROM "organization" WHERE "id" = $1 )
+            AND "rs2"."week" > ( SELECT ("current_week"-${TOTAL_WEEKS}) AS "min_month" FROM "organization" WHERE "id" = $1 )
         ORDER BY
-            "ta"."week" ASC ;
+            "rs2"."week" ASC ;
     `;
 
-    pool.query(selectAvg, [
-        req.user.org_id
+    pool.query(selectrSpecific, [
+        req.user.org_id,
+        behaviorId
     ]).then(results => {
         res.send(results.rows);
     }).catch(error => {
-        console.log('Error getting organization chart data :', error);
+        console.log('Error getting specific chart data for users :', error);
         res.sendStatus(500);
     });
 });

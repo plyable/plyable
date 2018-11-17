@@ -25,9 +25,18 @@ function* deactivateOrganization(action) {
     }
 }
 
+/**
+ * Update organization's name
+ */
+function* updateOrganization(action) {
+    yield call(axios.post, '/adminmain/org/update', action.payload);
+    yield put({ type: 'FETCH_ORGANIZATIONS' });
+}
+
 function* adminMainSaga() {
-    yield takeLatest('FETCH_ORGANIZATIONS', fetchOrganizations) //when componentDidMount runs this action, it runs this generator function //which then runs fetchOrganizations
-    yield takeLatest('DEACTIVATE_ORGANIZATION', deactivateOrganization)
+    yield takeLatest('FETCH_ORGANIZATIONS', fetchOrganizations); //when componentDidMount runs this action, it runs this generator function //which then runs fetchOrganizations
+    yield takeLatest('DEACTIVATE_ORGANIZATION', deactivateOrganization);
+    yield takeLatest('UPDATE_ORGANIZATION', updateOrganization);
 }
 
 export default adminMainSaga;

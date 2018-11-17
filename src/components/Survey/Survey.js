@@ -1,50 +1,55 @@
-//this component holds all the behavior cards.
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withStyles } from '@material-ui/core/styles';
 import BehaviorCard from './BehaviorCard';
-import SubmitButton from './SubmitButton';
+
+const styles = theme => ({
+    title: {
+        marginLeft: '10vw',
+    },
+});
 
 class Survey extends Component {
-
     state = {
-        openCard: 0,//this determines which of the cards is being rendered
+        openCard: 0, //this determines which of the cards is being rendered
     }
 
-    componentDidMount() {
+    componentDidMount = () => {
         //on mount, fetch data reguarding this weeks survey
         this.props.dispatch({ type: 'FETCH_BEHAVIORS' });
     }
 
-    switchCard = number => {
-        this.setState({
-            openCard: number,
-        });
-    }
-
-    handleBack = () => {
-        this.setState({ openCard: this.state.openCard - 1 });
+    switchCard = (number, keyword) => {
+        this.setState({ openCard: number });
+        if(keyword === 'prev') {
+            this.props.dispatch({ 
+                type: 'REMOVE_BEHAVIOR', 
+                payload: { 
+                    id: this.props.behaviors[this.state.openCard-1].id 
+                } 
+            });
+        }
     }
 
     render() {
-        let cards = this.props.state.behaviorReducer.behaviors;
+        let cards = this.props.behaviors;
+        const { classes } = this.props;
         return (
             <div>
-                {this.state.openCard < 6 && <h5>{this.state.openCard + 1} of 6</h5>}
-                <h1>Survey</h1>
-                {cards && this.state.openCard < 6 ? <BehaviorCard
+                <h1 className={classes.title}>Survey</h1>
+                <BehaviorCard
                     card={cards[this.state.openCard] || {value: 'Loading'}}
                     current={this.state.openCard}
                     switchCard={this.switchCard}
+                    cardNumber={this.state.openCard}
                 />
-                    : <div>
-                        <button onClick={this.handleBack}>Back</button>
-                        <SubmitButton />
-                    </div>}
             </div>
         )
     }
 }
 
-const mapStateToProps = state => ({ state });
+const mapStateToProps = ({ behaviorReducer }) => ({ 
+    behaviors: behaviorReducer.behaviors,
+});
 
-export default connect(mapStateToProps)(Survey);
+export default connect(mapStateToProps)(withStyles(styles)(Survey));

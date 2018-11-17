@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
 
 class SubmitButton extends Component {
 
@@ -15,11 +16,18 @@ class SubmitButton extends Component {
 
     render() {
         return (
-            <button onClick={this.handleClick}>Finish Survey</button>
+            <Button 
+                size="small" 
+                color="primary" 
+                onClick={this.handleClick}
+                disabled={this.props.disabled}
+            >
+                Finish Survey
+            </Button>
         )
     }
 }
 
-const mapStateToProps = ({ user, survey }) => ({ user, survey: survey.surveyScore });
+const mapStateToProps = ({ survey }) => ({ survey: survey.surveyScore });
 
 export default connect(mapStateToProps)(withRouter(SubmitButton));
