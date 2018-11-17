@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import securityLevel from '../../constants/securityLevel';
+/*----Material UI---*/
+import { Table, TableBody, TableCell, TableHead, TableRow, TablePagination } from '@material-ui/core';
+
 
 class AdminMain extends Component {
     state = {
@@ -12,6 +15,8 @@ class AdminMain extends Component {
         editDialog: false,
         organization: {},
         orgName: '',
+        page: 0,
+        rowsPerPage: 5,
     };
 
     componentDidMount() {
@@ -105,60 +110,95 @@ class AdminMain extends Component {
             emailList: event.target.value,
         });
     }
+    handleChangeRowsPerPage = event => {
+        this.setState({
+            ...this.state,
+            rowsPerPage: event.target.value
+        });
+    };
+    handleChangePage = (event, page) => {
+        this.setState({
+            ...this.state,
+            page,
+        });
+    };
 
     render() {
+        const { rowsPerPage, page } = this.state;
+        const emptyRows = rowsPerPage - Math.min(rowsPerPage, this.props.reduxState.adminMainReducer.length - page * rowsPerPage);
         return (
             <div>
                 <h1>Organization List</h1>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Organization Name</th>
-                            <th>Survey Results Page</th>
-                            <th>Edit</th>
-                            <th>Deactivate</th>
-                            <th>Add Managers</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.props.reduxState.adminMainReducer.map(organization => (
-                            <tr key={organization.id} organization={organization}>
-                                <td>{organization.name}</td>
-                                <td>
-                                    <button onClick={() => this.handleViewOrgClick(organization.id)}>
-                                        View
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Organization Name</TableCell>
+                            <TableCell>Survey Results Page</TableCell>
+                            <TableCell>Edit</TableCell>
+                            <TableCell>Deactivate</TableCell>
+                            <TableCell>Add Managers</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {this.props.reduxState.adminMainReducer.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                            .map(organization => (
+                                <TableRow key={organization.id} organization={organization}>
+                                    <TableCell>{organization.name}</TableCell>
+                                    <TableCell>
+                                        <button onClick={() => this.handleViewOrgClick(organization.id)}>
+                                            View
                                     </button>
-                                </td>
-                                <td>
-                                    <button onClick={this.handleEditOrgClick(organization)}>
-                                        Edit
+                                    </TableCell>
+                                    <TableCell>
+                                        <button onClick={this.handleEditOrgClick(organization)}>
+                                            Edit
                                     </button>
-                                </td>
-                                {/* Ternary Function to render button or text */}
-                                <td>
-                                    {
-                                        organization.collecting_data ?
-                                            <button onClick={() => this.handleDeactivateClick(organization.id)}>
-                                                Deactivate
+                                    </TableCell>
+                                    {/* Ternary Function to render button or text */}
+                                    <TableCell>
+                                        {
+                                            organization.collecting_data ?
+                                                <button onClick={() => this.handleDeactivateClick(organization.id)}>
+                                                    Deactivate
                                         </button> :
-                                            <p>Deactivated</p>
-                                    }
-                                </td>
-                                {/* Ternary Function to disable   */}
-                                <td>
-                                    <button
-                                        onClick={this.handleAddManagers(organization.id)}
-                                        disabled={!organization.collecting_data}
-                                    >
-                                        Add Managers
+                                                <p>Deactivated</p>
+                                        }
+                                    </TableCell>
+                                    {/* Ternary Function to disable   */}
+                                    <TableCell>
+                                        <button
+                                            onClick={this.handleAddManagers(organization.id)}
+                                            disabled={!organization.collecting_data}
+                                        >
+                                            Add Managers
                                     </button>
-                                </td>
-                            </tr>
-                            //this for each loop will map through available organizations in the database and display them 
-                            //on the DOM in a table
-                        ))}
-                    </tbody>
-                </table>
+                                    </TableCell>
+                                </TableRow>
+                                //this for each loop will map through available organizations in the database and display them 
+                                //on the DOM in a table
+                            ))}
+                        {emptyRows > 0 && (
+                            <TableRow style={{ height: 49 * emptyRows }}>
+                                <TableCell colSpan={6} />
+                            </TableRow>
+                        )}
+                    </TableBody>
+                </Table>
+                <TablePagination
+                    rowsPerPageOptions={[5, 10, 25]}
+                    component="div"
+                    count={this.props.reduxState.adminMainReducer.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    backIconButtonProps={{
+                        'aria-label': 'Previous Page',
+                    }}
+                    nextIconButtonProps={{
+                        'aria-label': 'Next Page',
+                    }}
+                    onChangePage={this.handleChangePage}
+                    onChangeRowsPerPage={this.handleChangeRowsPerPage}
+                />
                 < button onClick={this.handleAddNewOrganizationClick}>Add New Organization</button>
 
                 {/* Dialog box for editing organization */}
