@@ -161,8 +161,6 @@ class AdminMain extends Component {
                 </table>
                 < button onClick={this.handleAddNewOrganizationClick}>Add New Organization</button>
 
-<<<<<<< HEAD
-=======
                 {/* Dialog box for editing organization */}
                 <dialog
                     open={this.state.editDialog}
@@ -180,27 +178,26 @@ class AdminMain extends Component {
                     <button onClick={this.handleEditCancelClick}>Cancel</button>
                 </dialog>
 
->>>>>>> master
-        {/* Dialog box for deactivating */ }
-        <dialog open={this.state.deactivateDialog}>
-            <h2>Are you sure you want to deactivate this company?</h2>
-            <button onClick={() => this.handleDeactivateConfirm(this.state.org_id)}>Yes</button>
-            <button onClick={this.handleCancelDeactivate}>No</button>
-        </dialog>
+                {/* Dialog box for deactivating */}
+                <dialog open={this.state.deactivateDialog}>
+                    <h2>Are you sure you want to deactivate this company?</h2>
+                    <button onClick={() => this.handleDeactivateConfirm(this.state.org_id)}>Yes</button>
+                    <button onClick={this.handleCancelDeactivate}>No</button>
+                </dialog>
 
-        {/* Dialog box for inviting managers */ }
-        <dialog open={this.state.addManager}>
-            <h2>Add Managers</h2>
-            <h3>1 email per line</h3>
-            {/* Large Input Box */}
-            <textarea
-                value={this.state.emailList}
-                onChange={this.handleChange}
-                placeholder='No Commas'
-            ></textarea>
-            <button onClick={this.sendInvitationEmails}>Send Invitations</button>
-            <button onClick={this.handleCancelAddManager}>Cancel</button>
-        </dialog>
+                {/* Dialog box for inviting managers */}
+                <dialog open={this.state.addManager}>
+                    <h2>Add Managers</h2>
+                    <h3>1 email per line</h3>
+                    {/* Large Input Box */}
+                    <textarea
+                        value={this.state.emailList}
+                        onChange={this.handleChange}
+                        placeholder='No Commas'
+                    ></textarea>
+                    <button onClick={this.sendInvitationEmails}>Send Invitations</button>
+                    <button onClick={this.handleCancelAddManager}>Cancel</button>
+                </dialog>
             </div >
         );
     }
