@@ -26,6 +26,7 @@ import './App.css';
 import AdminMain from '../AdminMain/AdminMain';
 import NewOrgForm from '../AdminMain/NewOrgForm';
 import CompletedFeedback from '../CompletedFeedback/CompletedFeedback';
+import Messages from '../Messages/AllMessages';
 
 class App extends Component {
   componentDidMount() {
@@ -110,6 +111,7 @@ class App extends Component {
             {/* If none of the other routes matched, we will show a 404. */}
             <Route render={() => <h1>404</h1>} />
           </Switch>
+          <Messages />
           <Footer />
         </div>
       </Router>

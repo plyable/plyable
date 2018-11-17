@@ -6,6 +6,7 @@ import adminMainReducer from './adminMainReducer';
 import survey from './surveyReducer';
 import addEmployeeReducer from './addEmployeeReducer';
 import participationReducer from './participationReducer';
+import messagesReducer from './messagesReducer';
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
 // This is imported in index.js as rootSaga
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
   addNewOrgReducer,
   participationReducer,
   behaviorReducer,
+  messagesReducer,
 });
 
 export default rootReducer;
