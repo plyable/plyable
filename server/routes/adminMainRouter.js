@@ -54,6 +54,30 @@ router.put('/:id', (req, res) => {
             console.log('Error in deactivating organization:', error);
             res.sendStatus(500);
         })
-})
+});
+
+// Update Organization's name
+router.post('/org/update', (req, res) => {
+    const organization = req.body;
+
+    const updateOrg = `
+        UPDATE
+            "organization"
+        SET
+            "name" = $1
+        WHERE
+            "id" = $2 ;
+    `;
+
+    pool.query(updateOrg, [
+        organization.name,
+        organization.id
+    ]).then(() => {
+        res.sendStatus(200);
+    }).catch(error => {
+        console.log('Error updating organization name :', error);
+        res.sendStatus(500);
+    });
+});
 
 module.exports = router;
