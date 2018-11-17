@@ -2,7 +2,28 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { withStyles } from '@material-ui/core';
 import securityLevel from '../../constants/securityLevel';
+
+const styles = theme => ({
+    title: {
+        marginLeft: '15px',
+        color: 'rgba(82, 132, 196, 1)'
+    },
+    chartFrame: { 
+        width: '100vw', 
+        textAlign: 'center'
+    },
+    selectBox: { 
+        width: '80%', 
+        height: '50px', 
+        fontSize: '20px', 
+        backgroundColor: 'rgba(82, 132, 196, 0.6)',
+        color: 'white',
+        textAlign: 'center',
+        textAlignLast: 'center',
+    },
+});
 
 class UserMain extends Component {
     componentDidMount = () => {
@@ -12,16 +33,28 @@ class UserMain extends Component {
             if(this.props.user.survey_week < 0){
                 this.props.history.push('/survey');
             } else {
-                this.props.dispatch({ type: 'USER_ORG_CHART' });
+                this.props.dispatch({ type: 'FETCH_BEHAVIORS' });
+                this.props.dispatch({ type: 'USER_ORG_CHART', payload: { behaviorId: 0 } });
             }
         }
     }
 
+    handleChangeBehavior = event => {
+        this.props.dispatch({ type: 'USER_ORG_CHART', payload: { behaviorId: event.target.value } });
+    }
+
     render() {
+        const { classes } = this.props;
         return (
             <div>
-                <h2>User Main</h2>
-                <div style={{width: '70vw'}}>
+                <h2 className={classes.title}>User Main</h2>
+                <div className={classes.chartFrame}>
+                    <select 
+                        onChange={this.handleChangeBehavior} 
+                        className={classes.selectBox}
+                    >
+                        {this.props.behaviors.map(behavior => <option key={behavior.id} value={behavior.id}>{behavior.value}</option>)}
+                    </select>
                     <canvas id="userViewChart"></canvas>
                 </div>
             </div>
@@ -29,6 +62,9 @@ class UserMain extends Component {
     }
 }
 
-const mapStateToProps = ({ user }) => ({ user });
+const mapStateToProps = ({ user, behaviorReducer }) => ({ 
+    user,
+    behaviors: behaviorReducer.behaviors,
+});
 
-export default connect(mapStateToProps)(withRouter(UserMain));
+export default connect(mapStateToProps)(withStyles(styles)(withRouter(UserMain)));
