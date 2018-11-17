@@ -2,6 +2,7 @@ import React from 'react';
 
 //Daniel Imports Above, Eli Imports Below
 import SendingEmails from './SendingEmails';
+import './messages.css';
 
 //sort of like an index.js, all the dialogues are put here, and opened when needed
 //their primary purpose is to prevent the user from mucking around when important
