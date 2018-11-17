@@ -1,6 +1,9 @@
 const messagesReducer = (state = {
     addNewOrganizationSnackBar: false,
     surveyCompletedSnackBar: false,
+    confirmDeactivateSnackBar: false,
+    registrationCompletedSnackBar: false,
+    loginSnackbar: false,
     loginError: false,
     deactivedOrganization: false,
     addedEmployees: false,
@@ -15,21 +18,35 @@ const messagesReducer = (state = {
                 ...state,
                 addNewOrganizationSnackBar: true,
             }
-        case 'CLOSE_NEW_ORGANIZATION_SNACKBAR':
-            return {
-                ...state,
-                addNewOrganizationSnackBar: false,
-            }
         case 'SURVEY_COMPLETED_SNACKBAR':
             return {
                 ...state,
                 surveyCompletedSnackBar: true,
             }
-        case 'CLOSE_SURVEY_COMPLETED_SNACKBAR':
+        case 'CONFIRM_DEACTIVATE_SNACKBAR':
             return {
                 ...state,
-                surveyCompletedSnackBar: false,
+                confirmDeactivateSnackBar: true,
             }
+        case 'REGISTRATION_COMPLETED_SNACKBAR':
+            return {
+                ...state,
+                registrationCompletedSnackBar: true,
+            }
+        case 'LOGIN_SNACKBAR':
+            return {
+                ...state,
+                loginSnackbar: true,
+            }
+        case 'CLOSE_SNACKBAR':
+            return {
+                ...state,
+                addNewOrganizationSnackBar: false,
+                surveyCompletedSnackBar: false,
+                confirmDeactivateSnackBar: false,
+                registrationCompletedSnackBar: false,
+                loginSnackbar: false,
+            }//this one action handles closing all snackbars
 
         // Daniel cases above, Eli Cases below
 

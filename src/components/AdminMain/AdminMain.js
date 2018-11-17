@@ -36,6 +36,7 @@ class AdminMain extends Component {
     handleDeactivateConfirm = (org_id) => {
         this.props.dispatch({ type: 'DEACTIVATE_ORGANIZATION', payload: org_id });
         this.setState({ ...this.state, deactivateDialog: false })
+        this.props.dispatch({ type: 'CONFIRM_DEACTIVATE_SNACKBAR' })//this will dispatch an action type which triggers a SnackBar alert
     }
 
     handleCancelDeactivate = () => {
