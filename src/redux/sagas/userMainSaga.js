@@ -1,32 +1,34 @@
-import { call, takeLatest } from 'redux-saga/effects';
+import { put, call, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 import Chart from 'chart.js';
 
-let chart1;
+let specificChart;
+const MIN_PERCENT = 60;
 
 function* userOrgChart(action) {
     try {
         const behaviorId = action.payload.behaviorId;
-        const response = yield call(axios.get, `/api/main/chart/${behaviorId}`);
-        const chartList = response.data;
 
-        if(chart1) {
-            chart1.destroy();
+        if(behaviorId === 0) {
+            yield put({ type: 'BEHAVIOR_DATA' });
         }
 
-        chart1 = new Chart(document.getElementById('userViewChart'), {
+        const response = yield call(axios.get, `/api/main/chart/${behaviorId}`);
+        const specificList = response.data;
+
+        if(specificChart) {
+            specificChart.destroy();
+        }
+
+        let chartData = specificList.filter(data => data.percent >= MIN_PERCENT).map(data => ({ x: data.week, y: data.avg }));
+
+        specificChart = new Chart(document.getElementById('userViewChart'), {
             type: 'line',
             data: {
-                labels: chartList.map(avg => avg.week),
+                labels: specificList.map(data => 'week'.concat(' ', data.week)),
                 datasets: [{
-                    label: 'Negative',
-                    data: chartList.map(avg => avg.negative),
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    borderColor: 'rgba(255,99,132,1)',
-                    borderWidth: 1,
-                }, {
-                    label: 'Positive',
-                    data: chartList.map(avg => avg.positive),
+                    label: 'Data',
+                    data: chartData,
                     backgroundColor: 'rgba(54, 162, 235, 0.2)',
                     borderColor: 'rgba(54, 162, 235, 1)',
                     borderWidth: 1,
@@ -34,22 +36,29 @@ function* userOrgChart(action) {
             },
             options: {
                 responsive: true,
+                aspectRatio: 1.5,
                 title: {
                     display: true,
-                    text: 'Behavior Assessment Averages',
-                    fontSize: 30
+                    text: 'Behavior Specific Averages',
+                    fontSize: 20
                 },
                 scales: {
+                    xAxes: [{ 
+                        type: 'linear',
+                        ticks: {
+                            stepSize: 1,
+                            callback: function (dataLabel, index) {
+                                return 'week'.concat(' ', dataLabel);
+                            }
+                        }
+                    }],
                     yAxes: [{
                         position: 'left',
                         display: true,
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Request State'
-                        },
                         ticks: {
                             beginAtZero: true,
                             max: 3,
+                            fontSize: 10,
                             callback: function (dataLabel, index) {
                                 if (dataLabel === 3) {
                                     return 'Consistently';
