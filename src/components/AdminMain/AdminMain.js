@@ -280,7 +280,7 @@ class AdminMain extends Component {
                     onChangePage={this.handleChangePage}
                     onChangeRowsPerPage={this.handleChangeRowsPerPage}
                 />
-                < button onClick={this.handleAddNewOrganizationClick}>Add New Organization</button>
+                <Button color="primary" onClick={this.handleAddNewOrganizationClick}>Add New Organization</Button>
 
                 {/* Dialog box for editing organization */}
                 <dialog
