@@ -42,7 +42,7 @@ class Nav extends Component {
         <AppBar position="static" className={classes.appBar} >
           <Toolbar>
             <Typography variant="h5" color="inherit" className={classes.grow}>
-              <Link className="nav-title" to="/home">Plyable</Link>
+              <Link className="nav-title" to="/home">P l y a b l e</Link>
             </Typography>
             <div className="nav-right">
               <Typography variant="h6">
