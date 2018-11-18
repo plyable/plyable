@@ -1,7 +1,7 @@
 .nav-title {
     font-size: 44px;
     font-weight: 700;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-family: Andale Mono;
     display: inline-block;
     color: #f2f2f2;
     padding-left: 10px;
@@ -39,7 +39,5 @@
 .appBar{
 background-color: purple;
 }
-/* (82, 132, 196, 1) */
 
 
-/* <img id="comp-jnzkczqvimgimage" alt="Web_1920_–_34.png" data-type="image" style="width: 491px; height: 460px; object-fit: cover;" src="https://static.wixstatic.com/media/55a6fa_8df7f1de12e241aca43953e67e0e2ca7~mv2.png/v1/fill/w_491,h_460,al_c,q_80,usm_0.66_1.00_0.01/Web_1920_%E2%80%93_34.webp"> */

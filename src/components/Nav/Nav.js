@@ -26,7 +26,7 @@ const styles = {
     marginRight: 20,
   },
   appBar: {
-    backgroundColor: "rgb(82, 132, 196, 1)",
+    backgroundColor: "rgb(82, 132, 196)",
     textAlign: "center",
 
   }
