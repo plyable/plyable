@@ -69,8 +69,6 @@ class UserMain extends Component {
         return (
             <div>
                 <h2 className={classes.title}>User Main</h2>
-
-
                 <div className={classes.info}>
                     {this.renderMessage()}
                     <h4>Note: Organization data will only be shown if 60% or more employees have responded.</h4>
