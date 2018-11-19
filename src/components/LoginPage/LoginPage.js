@@ -9,7 +9,6 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 /*----Material UI----*/
 
-//????????????What have I done? lol, I cannot log in now. Get another set of eyes in the morning
 
 const styles = theme => ({
   formControl: {
@@ -73,16 +72,18 @@ class LoginPage extends Component {
           </h2>
         )}
         <form>
-          <FormControl >
+          <FormControl className={classes.container}>
             <Typography variant="h4" component="h3">
               Login
                      </Typography>
             <div>
               <Typography htmlFor="email">
-                Email Address:
-              <TextField
+                <TextField
+                  className={classes.textField}
                   type="text"
+                  label="Email Address"
                   name="Email Address"
+                  margin="normal"
                   value={this.state.email}
                   onChange={this.handleInputChangeFor('email')}
                 />
@@ -90,10 +91,12 @@ class LoginPage extends Component {
             </div>
             <div>
               <Typography htmlFor="password">
-                Password:
-              <TextField
+                <TextField
+                  className={classes.textField}
                   type="password"
+                  label="Password"
                   name="password"
+                  margin="normal"
                   value={this.state.password}
                   onChange={this.handleInputChangeFor('password')}
                 />
