@@ -39,12 +39,28 @@ CREATE TABLE "response_data" (
 	"score" INT NOT NULL
 );
 
-CREATE TABLE "expectation_data" (
-	"id" SERIAL PRIMARY KEY,
-	"behavior_id" INT REFERENCES "behavior",
-	"response_id" INT REFERENCES "response",
-	"score" INT NOT NULL
-);
+ALTER TABLE "response_data"
+ADD COLUMN "expect_score" int;
+
+UPDATE "response_data"
+SET "expect_score" = "score"+1
+;
+
+UPDATE "response_data"
+SET "expect_score" = 3
+WHERE "expect_score" = 4;
+
+ALTER TABLE "response_data"
+ALTER COLUMN "expect_score" SET NOT NULL;
+
+DROP TABLE "expectation_data";
+
+-- CREATE TABLE "expectation_data" (
+-- 	"id" SERIAL PRIMARY KEY,
+-- 	"behavior_id" INT REFERENCES "behavior",
+-- 	"response_id" INT REFERENCES "response",
+-- 	"score" INT NOT NULL
+-- );
 --required inserts for survey cards
 INSERT INTO "behavior" ("value", "definition", "context", "positive")
 VALUES ('Empowerment', 'Authority or power given to someone to do something; the process of becoming stronger
