@@ -6,11 +6,9 @@ import './Nav.css';
 import securityLevel from '../../constants/securityLevel';
 /*----Material-UI----*/
 import PropTypes from 'prop-types';
-
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-
 import { withStyles } from '@material-ui/core/styles';
 /*----Material-UI----*/
 import Logo from '../../images/Plyable_Logo_v01_00.png';
@@ -29,13 +27,10 @@ const styles = {
   appBar: {
     backgroundColor: "#00868b",
     textAlign: "center",
-
   }
 };
 
-
 class Nav extends Component {
-
   render() {
     const { classes } = this.props
     return (
@@ -64,12 +59,12 @@ class Nav extends Component {
                       <Typography>
                         <Link className="nav-link" to="/viewparticipation">
                           Survey Status
-            </Link>
+                        </Link>
                       </Typography>
                       <Typography>
                         <Link className="nav-link" to="/addemployees">
                           Add Employees
-            </Link>
+                        </Link>
                       </Typography>
                     </>
                   ) : null}
@@ -84,9 +79,7 @@ class Nav extends Component {
   }
 }
 
-Nav.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
+Nav.propTypes = { classes: PropTypes.object.isRequired };
 
 // Instead of taking everything from state, we just want the user
 // object to determine if they are logged in
@@ -94,10 +87,7 @@ Nav.propTypes = {
 // if you wanted you could write this code like this:
 // const mapStateToProps = ({ user }) => ({ user });
 
-const mapStateToProps = state => ({
-  user: state.user,
-});
-
+const mapStateToProps = ({ user }) => ({ user });
 const navStyles = withStyles(styles)(Nav);
 
 export default connect(mapStateToProps)(navStyles);
