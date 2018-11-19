@@ -77,7 +77,7 @@ class LoginPage extends Component {
               Login
                      </Typography>
             <div>
-              <Typography htmlFor="email">
+              {/* <Typography htmlFor="email"> */}
                 <TextField
                   className={classes.textField}
                   type="text"
@@ -87,10 +87,10 @@ class LoginPage extends Component {
                   value={this.state.email}
                   onChange={this.handleInputChangeFor('email')}
                 />
-              </Typography>
+              {/* </Typography> */}
             </div>
             <div>
-              <Typography htmlFor="password">
+              {/* <Typography htmlFor="password"> */}
                 <TextField
                   className={classes.textField}
                   type="password"
@@ -100,7 +100,7 @@ class LoginPage extends Component {
                   value={this.state.password}
                   onChange={this.handleInputChangeFor('password')}
                 />
-              </Typography>
+              {/* </Typography> */}
             </div>
             <Button onClick={this.login} type="submit" value='Submit' color="secondary">Login</Button>
           </FormControl>

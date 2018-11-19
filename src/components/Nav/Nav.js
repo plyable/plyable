@@ -38,7 +38,7 @@ class Nav extends Component {
         <AppBar position="static" className={classes.appBar} >
           <Toolbar>
             <Typography variant="h5" color="inherit" className={classes.grow}>
-              <Link className="nav-title" to="/home"><img src={Logo} height="145" width="375" /></Link>
+              <Link className="nav-title" to="/home"><img src={Logo} height="145" width="375" alt="" /></Link>
             </Typography>
             <div className="nav-right">
               <Typography variant="h6">
