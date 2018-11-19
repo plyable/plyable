@@ -18,8 +18,22 @@ function* addEmployeeEmail(action) {
   }
 }
 
+function* reinviteEmployee(action) {
+  try {
+    yield axios({
+      method: 'PUT',
+      url: '/api/employee/reinvite',
+      params: {email: action.payload}
+    });
+    yield put({ type: 'EMPLOYEE_REINVITED' });
+  } catch (error) {
+    console.log('ERROR in reinviteEmployee saga:', error);
+  }
+}
+
 function* addEmployeeSaga() {
   yield takeLatest('ADD_EMPLOYEES', addEmployeeEmail);
+  yield takeLatest('REINVITE', reinviteEmployee);
 }
 
 export default addEmployeeSaga;
