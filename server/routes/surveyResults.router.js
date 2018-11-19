@@ -6,7 +6,8 @@ const securityLevel = require('../constants/securityLevel');
 
 //this post router will post user-generated survey results to the database
 router.post('/', rejectUnauthenticated, (req, res) => {
-    const newSurveyScore = req.body;
+    const newSurveyScore = req.body.survey;
+    const newExpectationSurveyScore = req.body.expectationSurvey;
 
     //only allow one survey result per employee per week
     pool.query(`
@@ -34,12 +35,18 @@ router.post('/', rejectUnauthenticated, (req, res) => {
                 req.user.id, 
                 req.user.org_id
             ]).then((result2) => {
-                let insert = `INSERT INTO "response_data" ("response_id", "behavior_id", "score") VALUES ($1,$2,$3);`;
+                let insertScore = `INSERT INTO "response_data" ("response_id", "behavior_id", "score") VALUES ($1,$2,$3);`;
+                let insertExpectationScore = `INSERT INTO "expectation_data" ("response_id", "behavior_id", "score") VALUES ($1,$2,$3);`;
                 let array = [];
 
                 for (let data of newSurveyScore) {
                     const queryValues = [result2.rows[0].id, data.id, data.score];
-                    array.push(pool.query(insert, queryValues));
+                    array.push(pool.query(insertScore, queryValues));
+                };//end for/of loop
+
+                for (let data of newExpectationSurveyScore) {
+                    const queryValues = [result2.rows[0].id, data.id, data.score];
+                    array.push(pool.query(insertExpectationScore, queryValues));
                 };//end for/of loop
 
                 Promise.all(array).then(() => {

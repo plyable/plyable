@@ -38,3 +38,10 @@ CREATE TABLE "response_data" (
 	"response_id" INT REFERENCES "response",
 	"score" INT NOT NULL
 );
+
+CREATE TABLE "expectation_data" (
+	"id" SERIAL PRIMARY KEY,
+	"behavior_id" INT REFERENCES "behavior",
+	"response_id" INT REFERENCES "response",
+	"score" INT NOT NULL
+);
