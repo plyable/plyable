@@ -134,7 +134,9 @@ router.post('/', rejectUnauthenticated, async (req, res) => {
         }
       } catch (error) {
         if (error.message === 'email already exists') {
-          statusToSend = 204;
+          if( statusToSend !== 500){
+            statusToSend = 204;
+          }
         } else {
           console.log('error in mail process', error);
           statusToSend = 500;
