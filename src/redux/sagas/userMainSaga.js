@@ -55,7 +55,9 @@ function* userOrgChart(action) {
                         ticks: {
                             stepSize: 1,
                             callback: function (dataLabel, index) {
-                                return 'week'.concat(' ', dataLabel);
+                                if(dataLabel > -1){
+                                    return 'week'.concat(' ', dataLabel);
+                                }
                             }
                         }
                     }],
