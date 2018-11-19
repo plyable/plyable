@@ -6,6 +6,7 @@ function* addEmployeeEmail(action) {
   try {
     yield put({ type: 'SENDING_EMAILS' });
     const response = yield call(axios.post, '/api/employee', action.payload);
+    console.log(response);
     if (response.status === 204) {
       yield put({ type: 'EMAIL_REDUNDANT' });
     } else {
