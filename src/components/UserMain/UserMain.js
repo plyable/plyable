@@ -10,15 +10,12 @@ const styles = theme => ({
         marginLeft: '15px',
         color: 'rgba(82, 132, 196, 1)'
     },
-<<<<<<< HEAD
-=======
     // WIP
     info: {
         marginLeft: '15px',
         color: 'black'
     },
 
->>>>>>> master
     chartFrame: {
         width: '100vw',
         textAlign: 'center'
