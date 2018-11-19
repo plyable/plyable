@@ -52,7 +52,7 @@ class UserMain extends Component {
 
     // Messages to user based on 1) completed survey for the week 2) won't see data until next week
     renderMessage = () => {
-        if (this.props.user.survey_week == 0) {
+        if (Number(this.props.user.survey_week) === 0) {
             return <h4>You will not see data in the graphs until next week.</h4>
         }
         else if (this.props.user.survey_week >= 0) {
