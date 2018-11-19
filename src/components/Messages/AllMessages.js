@@ -2,6 +2,8 @@ import React from 'react';
 import AlertSnackBar from './AlertSnackBar';
 //Daniel Imports Above, Eli Imports Below
 import SendingEmails from './SendingEmails';
+import EmailError from './EmailError';
+import RedundantEmail from './RedundantEmail';
 import './messages.css';
 
 //sort of like an index.js, all the dialogues are put here, and opened when needed
@@ -14,6 +16,8 @@ const AllMessages = () => {
             <AlertSnackBar />
             {/* Daniel Toasts Above, Eli Dialogs Below */}
             <SendingEmails />
+            <EmailError />
+            <RedundantEmail />
         </div>
     );
 }

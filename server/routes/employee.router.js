@@ -4,6 +4,7 @@ const pool = require('../modules/pool');
 const nodemailer = require('nodemailer');
 const encryptLib = require('../modules/encryption');
 const securityLevel = require('../constants/securityLevel');
+const { rejectUnauthenticated } = require('../modules/authentication-middleware');
 
 // Transporter to send emails
 let transporter = nodemailer.createTransport({
@@ -25,69 +26,124 @@ const randomString = () => {
   }
   return randomString;
 }
-
-// Add Employee Emails to DB & Send email invitations with links
-router.post('/', async (req, res) => {
-  if (req.user && req.user.security_level < securityLevel.EMPLOYEE_ROLE) {
-    //this part is to reuse this route for adding managers, with security_level 1 and org_id variable
+sendMail = (req, emailList, statusToSend) => {
+  console.log('remaining emails:', emailList);
+  console.log('current status', statusToSend);
+  if (emailList.length > 0) {
+    //choose security level based on req.user.security_level
+    let email = emailList.shift();
     let org = req.user.org_id;
     let security_to_add = securityLevel.EMPLOYEE_ROLE;
     if (req.user.security_level < securityLevel.MANAGER_ROLE) {
       org = req.body.org_id;
       security_to_add = securityLevel.MANAGER_ROLE;
     }
-    try {
+    const query =
+      `INSERT INTO "user" ("org_id", "password", "email", "temp_key", "temp_key_timeout", "security_level") 
+  VALUES ($1, $2, $3, $4, current_date + 3, $5)
+  ON CONFLICT ("email")
+  do nothing
+  RETURNING "id";`;
+    let newPassword = randomString();
+    let newKey = randomString();
+    // salt and hash both strings
+    let passwordToSend = encryptLib.encryptPassword(newPassword);
+    let keyToSend = encryptLib.encryptPassword(newKey);
 
-      // NOTE: employee has 3 days to register from time the email is sent
-      const query =
-        `INSERT INTO "user" ("org_id", "password", "email", "temp_key", "temp_key_timeout", "security_level") 
-        VALUES ($1, $2, $3, $4, current_date + 3, $5)
-        ON CONFLICT ("email")
-        do nothing
-        RETURNING "id";`; // Query to add all the individual emails to the database
+    // on insert, using salted and hashed strings, add pw, temp_key, temp_key_timeout
+    pool.query(query, [org, passwordToSend, email, keyToSend, security_to_add])
+      .then(result => {
+        if (result.rowCount > 0) {
+          const emailInfo = {
+            email: email,
+            // create a url with key
+            url: `${process.env.PUBLIC_URL}/#/register/?email=` + encodeURIComponent(`${email}`) + `&key=` + encodeURIComponent(`${newKey}`),//encodeURI will replaces certain characters with escape characters, heightening security
+          };
 
-      for (let email of req.body.emailList) {
+          let mailConfig = {
+            from: process.env.ADMIN_EMAIL,
+            to: emailInfo.email,
+            subject: 'Plyable Invitation',
+            html: `<p>Click here <a href="${emailInfo.url}">${emailInfo.url}</a></p>`// plain text body
+          };
+
+          transporter.sendMail(mailConfig, (error, info) => {
+            if (error) {
+              return sendMail(req, emailList, 500);
+            }
+            console.log('Message sent: %s', info);
+            return sendMail(req, emailList, statusToSend);
+          }); //end sendMail
+        } else {
+          console.log('User already exists.');
+          return sendMail(req, emailList, 204);
+        }
+      });
+  } else {
+    console.log('finishing function with status:', statusToSend);
+    return statusToSend;
+  }
+}
+// Add Employee Emails to DB & Send email invitations with links
+router.post('/', rejectUnauthenticated, async (req, res) => {
+  if (req.user.security_level < securityLevel.EMPLOYEE_ROLE) {
+    //this part is to reuse this route for adding managers, with security_level 1 and org_id variable
+    // NOTE: employee has 3 days to register from time the email is sent
+    // Query to add all the individual emails to the database
+    let statusToSend = 201;
+    let org = req.user.org_id;
+    //choose security level based on req.user.security_level
+    let security_to_add = securityLevel.EMPLOYEE_ROLE;
+    if (req.user.security_level < securityLevel.MANAGER_ROLE) {
+      org = req.body.org_id;
+      security_to_add = securityLevel.MANAGER_ROLE;
+    }
+    const query =
+      `INSERT INTO "user" ("org_id", "password", "email", "temp_key", "temp_key_timeout", "security_level") 
+  VALUES ($1, $2, $3, $4, current_date + 3, $5)
+  ON CONFLICT ("email")
+  do nothing
+  RETURNING "id";`;
+    req.body.emailList.forEach(async email => {
+      try {
         let newPassword = randomString();
         let newKey = randomString();
-
         // salt and hash both strings
         let passwordToSend = encryptLib.encryptPassword(newPassword);
         let keyToSend = encryptLib.encryptPassword(newKey);
-
         // on insert, using salted and hashed strings, add pw, temp_key, temp_key_timeout
-        pool.query(query, [org, passwordToSend, email, keyToSend, security_to_add])
-          .then(result => {
-            if (result.rowCount > 0) {
-              const emailInfo = {
-                email: email,
-                // create a url with key
-                url: `${process.env.PUBLIC_URL}/#/register/?email=` + encodeURIComponent(`${email}`) + `&key=` + encodeURIComponent(`${newKey}`),//encodeURI will replaces certain characters with escape characters, heightening security
-              };
+        const result = pool.query(query, [org, passwordToSend, email, keyToSend, security_to_add]);
+        if (result.rowCount < 0) {
+          const emailInfo = {
+            email: email,
+            // create a url with key
+            url: `${process.env.PUBLIC_URL}/#/register/?email=` + encodeURIComponent(`${email}`) + `&key=` + encodeURIComponent(`${newKey}`),//encodeURI will replaces certain characters with escape characters, heightening security
+          };
 
-              let mailConfig = {
-                from: process.env.ADMIN_EMAIL,
-                to: emailInfo.email,
-                subject: 'Plyable Invitation',
-                html: `<p>Click here <a href="${emailInfo.url}">${emailInfo.url}</a></p>`// plain text body
-              };
+          let mailConfig = {
+            from: process.env.ADMIN_EMAIL,
+            to: emailInfo.email,
+            subject: 'Plyable Invitation',
+            html: `<p>Click here <a href="${emailInfo.url}">${emailInfo.url}</a></p>`// plain text body
+          };
 
-              transporter.sendMail(mailConfig, (error, info) => {
-                if (error) {
-                  return console.log(error);
-                }
-                console.log('Message sent: %s', info);
-
-              }); //end sendMail
-            } else {
-              console.log('User already exists.');
-            }
-          });
+          await transporter.sendMail(mailConfig); //end sendMail
+        } else {
+          console.log('User already exists.');
+          throw new Error('email already exists');
+        }
+      } catch (error) {
+        if (error.message === 'email already exists') {
+          if( statusToSend !== 500){
+            statusToSend = 204;
+          }
+        } else {
+          console.log('error in mail process', error);
+          statusToSend = 500;
+        }
       }
-      res.sendStatus(201);
-    } catch (error) {
-      console.log('ERROR in sending emails:', error);
-      res.sendStatus(500);
-    } // END try 
+    });
+    res.sendStatus(statusToSend);
   } else {
     res.sendStatus(403);
   }

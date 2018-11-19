@@ -64,6 +64,16 @@ class AlertSnackBar extends React.Component {
                         'aria-describedby': 'message-id',
                     }}
                 />
+                <Snackbar
+                    anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                    open={this.props.messagesReducer.emailSuccess}
+                    autoHideDuration={3000}
+                    onClose={this.handleClose}
+                    message={"Invites Sent"}
+                    ContentProps={{
+                        'aria-describedby': 'message-id',
+                    }}
+                />
             </div>
         );
     }
