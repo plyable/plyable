@@ -1,6 +1,33 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+/*----Material UI----*/
+import FormControl from '@material-ui/core/FormControl';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+/*----Material UI----*/
 
+const styles = theme => ({
+    formControl: {
+        margin: theme.spacing.unit,
+        minWidth: 120,
+        minHeight: 120,
+    },
+    selectEmpty: {
+        marginTop: theme.spacing.unit * 2,
+    },
+    container: {
+        display: 'flex',
+        flexWrap: 'wrap',
+    },
+    textField: {
+        marginLeft: theme.spacing.unit,
+        marginRight: theme.spacing.unit,
+        width: 'flex',
+    },
+});
 
 class NewOrgForm extends Component {
     state = {
@@ -34,21 +61,37 @@ class NewOrgForm extends Component {
     };//end handleOrgSubmit
 
     render() {
+        const { classes } = this.props;
         return (
-            <div>
+            <div >
                 <h1>Add a New Organization</h1>
-                <form onSubmit={this.handleOrgSubmit}>
-                    <input type='text' value={this.state.newOrganization.name} placeholder="New Organization" onChange={this.handleChangeFor('name')} />
-                    <input type='submit' value='Submit' />
+                <form>
+                    <FormControl className={classes.container} noValidate autoComplete="off">
+                        <TextField
+                            id="standard-name"
+                            label="New Organization"
+                            className={classes.textField}
+                            value={this.state.newOrganization.name}
+                            onChange={this.handleChangeFor('name')}
+                            margin="normal"
+                        />
+                        <Button onClick={this.handleOrgSubmit} type="submit" value='Submit' color="primary">Submit</Button>
+                    </FormControl>
                 </form>
             </div >
         );
     }
 }
 
+NewOrgForm.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+
 const mapStateToProps = reduxState => ({
     reduxState,
 });
 
-export default connect(mapStateToProps)(NewOrgForm);
+const newOrgFormStyles = withStyles(styles)(NewOrgForm)
+
+export default connect(mapStateToProps)(newOrgFormStyles);
 

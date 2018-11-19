@@ -28,11 +28,18 @@ import NewOrgForm from '../AdminMain/NewOrgForm';
 import CompletedFeedback from '../CompletedFeedback/CompletedFeedback';
 import Messages from '../Messages/AllMessages';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core';
-
+import teal from '@material-ui/core/colors/teal';
+import indigo from '@material-ui/core/colors/indigo';
+import red from '@material-ui/core/colors/red'
 const theme = createMuiTheme({
   typography: {
     useNextVariants: true,
   },
+  palette: {
+    primary: indigo,
+    secondary: teal,
+    errors: red,
+  }
 });
 
 class App extends Component {

@@ -26,7 +26,7 @@ const styles = {
     marginRight: 20,
   },
   appBar: {
-    backgroundColor: "rgb(82, 132, 196, 1)",
+    backgroundColor: "rgb(82, 132, 196)",
     textAlign: "center",
 
   }
@@ -42,7 +42,7 @@ class Nav extends Component {
         <AppBar position="static" className={classes.appBar} >
           <Toolbar>
             <Typography variant="h5" color="inherit" className={classes.grow}>
-              <Link className="nav-title" to="/home">Plyable</Link>
+              <Link className="nav-title" to="/home">P l y a b l e</Link>
             </Typography>
             <div className="nav-right">
               <Typography variant="h6">
