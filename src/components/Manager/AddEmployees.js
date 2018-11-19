@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import securityLevel from '../../constants/securityLevel';
+import FullList from './FullList';
 
 class AddEmployees extends Component {
   state = {
@@ -51,6 +52,7 @@ class AddEmployees extends Component {
 
         {/* OnClick rather than submit, to allow enter for new line */}
         <button onClick={this.sendInvitationEmails}>Send Invitations</button>
+        <FullList />
 
       </div>
     );
