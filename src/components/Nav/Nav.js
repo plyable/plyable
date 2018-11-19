@@ -13,6 +13,7 @@ import Typography from '@material-ui/core/Typography';
 
 import { withStyles } from '@material-ui/core/styles';
 /*----Material-UI----*/
+import Logo from '../../images/Plyable_Logo_v01_00.png';
 
 const styles = {
   root: {
@@ -26,7 +27,7 @@ const styles = {
     marginRight: 20,
   },
   appBar: {
-    backgroundColor: "rgb(82, 132, 196)",
+    backgroundColor: "#00868b",
     textAlign: "center",
 
   }
@@ -42,7 +43,7 @@ class Nav extends Component {
         <AppBar position="static" className={classes.appBar} >
           <Toolbar>
             <Typography variant="h5" color="inherit" className={classes.grow}>
-              <Link className="nav-title" to="/home">P l y a b l e</Link>
+              <Link className="nav-title" to="/home"><img src={Logo} height="145" width="375" /></Link>
             </Typography>
             <div className="nav-right">
               <Typography variant="h6">

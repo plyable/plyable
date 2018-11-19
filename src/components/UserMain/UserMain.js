@@ -10,14 +10,14 @@ const styles = theme => ({
         marginLeft: '15px',
         color: 'rgba(82, 132, 196, 1)'
     },
-    chartFrame: { 
-        width: '100vw', 
+    chartFrame: {
+        width: '100vw',
         textAlign: 'center'
     },
-    selectBox: { 
-        width: '80%', 
-        height: '50px', 
-        fontSize: '20px', 
+    selectBox: {
+        width: '80%',
+        height: '50px',
+        fontSize: '20px',
         backgroundColor: 'rgba(82, 132, 196, 0.6)',
         color: 'white',
         textAlign: 'center',
@@ -27,10 +27,10 @@ const styles = theme => ({
 
 class UserMain extends Component {
     componentDidMount = () => {
-        if(this.props.user.security_level === securityLevel.ADMIN_ROLE){
+        if (this.props.user.security_level === securityLevel.ADMIN_ROLE) {
             this.props.history.push('/adminmain');
         } else {
-            if(this.props.user.survey_week < 0){
+            if (this.props.user.survey_week < 0) {
                 this.props.history.push('/survey');
             } else {
                 this.props.dispatch({ type: 'FETCH_BEHAVIORS' });
@@ -48,9 +48,10 @@ class UserMain extends Component {
         return (
             <div>
                 <h2 className={classes.title}>User Main</h2>
+                <img src="https://drive.google.com/open?id=1ELVrHzUOI6Eecv58ZOQWFptOduaDm8NU" />
                 <div className={classes.chartFrame}>
-                    <select 
-                        onChange={this.handleChangeBehavior} 
+                    <select
+                        onChange={this.handleChangeBehavior}
                         className={classes.selectBox}
                     >
                         {this.props.behaviors.map(behavior => <option key={behavior.id} value={behavior.id}>{behavior.value}</option>)}
@@ -62,7 +63,7 @@ class UserMain extends Component {
     }
 }
 
-const mapStateToProps = ({ user, behaviorReducer }) => ({ 
+const mapStateToProps = ({ user, behaviorReducer }) => ({
     user,
     behaviors: behaviorReducer.behaviors,
 });

@@ -24,9 +24,9 @@ const styles = theme => ({
         textAlign: 'center',
     },
     card: {
-      maxWidth: 700,
-      margin: '0 auto',
-      textAlign: 'center',
+        maxWidth: 700,
+        margin: '0 auto',
+        textAlign: 'center',
     },
     center: {
         textAlign: 'center',
@@ -34,9 +34,10 @@ const styles = theme => ({
     value: {
         color: "rgb(82, 132, 196, 1)",
         textAlign: 'center',
+        font: 'Calibri',
     },
     grow: {
-      flexGrow: 1,
+        flexGrow: 1,
     },
     progress: {
         textAlign: 'left',
@@ -57,13 +58,13 @@ class BehaviorCard extends Component {
 
     //this function runs whenever the client clicks the next or prev button, and updates redux state
     handleSubmit = () => {
-        this.props.dispatch({ 
-            type: 'SET_SCORE', 
-            payload: { 
-                id: this.props.card.id, 
-                value: this.props.card.value, 
-                score: this.state.score 
-            } 
+        this.props.dispatch({
+            type: 'SET_SCORE',
+            payload: {
+                id: this.props.card.id,
+                value: this.props.card.value,
+                score: this.state.score
+            }
         });
         this.setState({ score: null });
     }
@@ -104,7 +105,7 @@ class BehaviorCard extends Component {
                             </Typography>
                         </CardContent>
                     </CardActionArea>
-                    <div style={{textAlign: 'center'}}>
+                    <div style={{ textAlign: 'center' }}>
                         <FormControl>
                             <RadioGroup
                                 aria-label="Behavior"
@@ -127,7 +128,7 @@ class BehaviorCard extends Component {
                             disabled={this.props.current > 0 ? false : true}
                         />
                         <div className={classes.grow} />
-                        {this.props.cardNumber+1 < 6 ?
+                        {this.props.cardNumber + 1 < 6 ?
                             <NextButton
                                 number={this.props.current + 1}
                                 switchCard={this.props.switchCard}
@@ -135,7 +136,7 @@ class BehaviorCard extends Component {
                                 disabled={this.state.score !== undefined ? false : true}
                             /> :
                             <SubmitButton
-                                disabled={this.state.score !== undefined ? false : true} 
+                                disabled={this.state.score !== undefined ? false : true}
                             />
                         }
                     </CardActions>
