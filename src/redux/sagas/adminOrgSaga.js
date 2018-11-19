@@ -17,6 +17,8 @@ function* avgData(action) {
             avgChart.destroy();
         }
 
+        console.log(avgList);
+
         let positiveData = avgList.filter(avg => avg.percent >= MIN_PERCENT).map(avg => ({ x: avg.week, y: avg.positive }));
         let negativeData = avgList.filter(avg => avg.percent >= MIN_PERCENT).map(avg => ({ x: avg.week, y: avg.negative }));
 
@@ -53,7 +55,9 @@ function* avgData(action) {
                         ticks: {
                             stepSize: 1,
                             callback: function (dataLabel, index) {
-                                return 'week'.concat(' ', dataLabel);
+                                if(dataLabel > -1){
+                                    return 'week'.concat(' ', dataLabel);
+                                }
                             }
                         }
                     }],
@@ -131,7 +135,9 @@ function* specificData(action) {
                         ticks: {
                             stepSize: 1,
                             callback: function (dataLabel, index) {
-                                return 'week'.concat(' ', dataLabel);
+                                if(dataLabel > -1){
+                                    return 'week'.concat(' ', dataLabel);
+                                }
                             }
                         }
                     }],
