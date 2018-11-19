@@ -6,11 +6,9 @@ import './Nav.css';
 import securityLevel from '../../constants/securityLevel';
 /*----Material-UI----*/
 import PropTypes from 'prop-types';
-
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-
 import { withStyles } from '@material-ui/core/styles';
 /*----Material-UI----*/
 
@@ -28,13 +26,10 @@ const styles = {
   appBar: {
     backgroundColor: "rgb(82, 132, 196, 1)",
     textAlign: "center",
-
   }
 };
 
-
 class Nav extends Component {
-
   render() {
     const { classes } = this.props
     return (
@@ -42,7 +37,12 @@ class Nav extends Component {
         <AppBar position="static" className={classes.appBar} >
           <Toolbar>
             <Typography variant="h5" color="inherit" className={classes.grow}>
-              <Link className="nav-title" to="/home">Plyable</Link>
+              <Link 
+                className="nav-title" 
+                to={this.props.user.security_level === securityLevel.ADMIN_ROLE ? "/adminmain" : "/main"}
+              >
+                Plyable
+              </Link>
             </Typography>
             <div className="nav-right">
               <Typography variant="h6">
@@ -63,12 +63,12 @@ class Nav extends Component {
                       <Typography>
                         <Link className="nav-link" to="/viewparticipation">
                           Survey Status
-            </Link>
+                        </Link>
                       </Typography>
                       <Typography>
                         <Link className="nav-link" to="/addemployees">
                           Add Employees
-            </Link>
+                        </Link>
                       </Typography>
                     </>
                   ) : null}
@@ -83,9 +83,7 @@ class Nav extends Component {
   }
 }
 
-Nav.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
+Nav.propTypes = { classes: PropTypes.object.isRequired };
 
 // Instead of taking everything from state, we just want the user
 // object to determine if they are logged in
@@ -93,10 +91,7 @@ Nav.propTypes = {
 // if you wanted you could write this code like this:
 // const mapStateToProps = ({ user }) => ({ user });
 
-const mapStateToProps = state => ({
-  user: state.user,
-});
-
+const mapStateToProps = ({ user }) => ({ user });
 const navStyles = withStyles(styles)(Nav);
 
 export default connect(mapStateToProps)(navStyles);
