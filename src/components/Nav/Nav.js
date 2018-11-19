@@ -12,6 +12,8 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 /*----Material-UI----*/
 import Logo from '../../images/Plyable_Logo_v01_00.png';
+import NavDrawer from './NavDrawer';
+
 
 const styles = {
   root: {
@@ -38,14 +40,11 @@ class Nav extends Component {
         <AppBar position="static" className={classes.appBar} >
           <Toolbar>
             <Typography variant="h5" color="inherit" className={classes.grow}>
-              <Link className="nav-title" to="/home"><img src={Logo} height="145" width="375" alt="" /></Link>
+              <Link className="nav-title" to="/adminmain"><img src={Logo} height="145" width="375" alt="" /></Link>
             </Typography>
             <div className="nav-right">
               <Typography variant="h6">
-                <Link className="nav-link"
-                  to={this.props.user.security_level === securityLevel.ADMIN_ROLE ? "/adminmain" : "/main"}>
-                  {this.props.user.id ? 'Main' : 'Login'}
-                </Link>
+                <NavDrawer />
               </Typography>
               {/* Show the link to the info page and the logout button if the user is logged in */}
               {this.props.user.id && this.props.user.security_level === securityLevel.ADMIN_ROLE ? (
@@ -56,16 +55,6 @@ class Nav extends Component {
                 <>
                   {this.props.user.security_level === securityLevel.MANAGER_ROLE ? (
                     <>
-                      <Typography>
-                        <Link className="nav-link" to="/viewparticipation">
-                          Survey Status
-                        </Link>
-                      </Typography>
-                      <Typography>
-                        <Link className="nav-link" to="/addemployees">
-                          Add Employees
-                        </Link>
-                      </Typography>
                     </>
                   ) : null}
                   <LogOutButton className="nav-link" />
