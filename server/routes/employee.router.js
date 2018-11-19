@@ -131,6 +131,23 @@ router.put('/reinvite', rejectUnauthenticated, (req, res) => {
   }
 });
 
+router.put('/email', rejectUnauthenticated, (req, res) => {
+  if (req.user.security_level < securityLevel.EMPLOYEE_ROLE) {
+    const query =
+    `UPDATE "user" SET "email" = $1
+    WHERE "email" = $2 and org_id = $3`;
+    pool.query(query, [req.query.newEmail, req.query.oldEmail, req.user.org_id])
+    .then(() => {
+      res.sendStatus(200);
+    }).catch(error => {
+      console.log('error updating email', error);
+      res.sendStatus(500);
+    });
+  } else {
+    res.sendStatus(403);
+  }
+});
+
 router.get('/newAdmin/:newPassword', (req, res) => {
   pool.query(`SELECT * FROM "user";`).then(result1 => {
     if (result1.rowCount > 0) {
