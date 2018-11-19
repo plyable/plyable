@@ -38,7 +38,6 @@ CREATE TABLE "response_data" (
 	"response_id" INT REFERENCES "response",
 	"score" INT NOT NULL
 );
-<<<<<<< HEAD
 
 CREATE TABLE "expectation_data" (
 	"id" SERIAL PRIMARY KEY,
@@ -46,7 +45,6 @@ CREATE TABLE "expectation_data" (
 	"response_id" INT REFERENCES "response",
 	"score" INT NOT NULL
 );
-=======
 --required inserts for survey cards
 INSERT INTO "behavior" ("value", "definition", "context", "positive")
 VALUES ('Empowerment', 'Authority or power given to someone to do something; the process of becoming stronger
@@ -57,4 +55,3 @@ and more confident', '', true),
  ('Scapegoating', 'Unwarranted blame; misdirection of responsibility', '', false),
  ('Egotism', 'Talking and thinking about oneself excessively because of an undue sense of self-
 importance', '', false); 
->>>>>>> master
