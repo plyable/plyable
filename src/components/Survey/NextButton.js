@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 
 class NextButton extends Component {
@@ -11,17 +11,18 @@ class NextButton extends Component {
         //swichCard changes the local state of Survey.
     }
 
-  render() {
-    return (
-        <Button 
-            size="small" 
-            color="primary" 
-            onClick={this.handleClick}
-            disabled={this.props.disabled}
-        >
-            Next
-        </Button>
-  )}
+    render() {
+        return (
+            <Button
+                size="small"
+                color="primary"
+                onClick={this.handleClick}
+                disabled={this.props.disabled}
+            >
+                Next
+            </Button>
+        )
+    }
 }
 
 export default connect()(NextButton);

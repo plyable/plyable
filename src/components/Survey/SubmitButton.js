@@ -7,7 +7,7 @@ import Button from '@material-ui/core/Button';
 class SubmitButton extends Component {
 
     handleClick = () => {
-        this.props.dispatch({ type: 'SEND_SURVEY_RESULTS', payload: this.props.survey });
+        this.props.dispatch({ type: 'SEND_SURVEY_RESULTS', payload: { survey: this.props.survey, expectationSurvey: this.props.expectationSurvey } });
         //this sends the survey results, as stored in redux state to a saga and
         //eventually to the server
         this.props.dispatch({ type: 'SURVEY_COMPLETED_SNACKBAR' })//this will dispatch an action type which triggers a SnackBar alert
@@ -28,6 +28,9 @@ class SubmitButton extends Component {
     }
 }
 
-const mapStateToProps = ({ survey }) => ({ survey: survey.surveyScore });
+const mapStateToProps = ({ survey }) => ({ 
+    survey: survey.surveyScore, 
+    expectationSurvey: survey.expectationScore  
+});
 
 export default connect(mapStateToProps)(withRouter(SubmitButton));

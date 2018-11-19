@@ -238,7 +238,8 @@ router.get('/behavior', (req, res) => {
             *
         FROM
             "behavior"
-        ;
+        ORDER BY
+            "id" ASC ;
     `).then(results => {
         res.send(results.rows);
     }).catch(error => {
