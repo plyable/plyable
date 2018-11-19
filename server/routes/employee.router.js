@@ -45,11 +45,10 @@ router.post('/', async (req, res) => {
         ON CONFLICT ("email")
         do nothing
         RETURNING "id";`; // Query to add all the individual emails to the database
-
+      let statusToSend = 201;
       for (let email of req.body.emailList) {
         let newPassword = randomString();
         let newKey = randomString();
-
         // salt and hash both strings
         let passwordToSend = encryptLib.encryptPassword(newPassword);
         let keyToSend = encryptLib.encryptPassword(newKey);
@@ -80,10 +79,11 @@ router.post('/', async (req, res) => {
               }); //end sendMail
             } else {
               console.log('User already exists.');
+              statusToSend = 204;
             }
           });
       }
-      res.sendStatus(201);
+      res.sendStatus(statusToSend);
     } catch (error) {
       console.log('ERROR in sending emails:', error);
       res.sendStatus(500);
