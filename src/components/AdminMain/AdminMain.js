@@ -5,7 +5,7 @@ import securityLevel from '../../constants/securityLevel';
 /*----Material UI---*/
 import {
     Table, TableBody, TableCell, TableHead, TableRow, TablePagination,
-    Paper, withStyles, Typography
+    Paper, withStyles
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
@@ -208,7 +208,7 @@ class AdminMain extends Component {
                                                     root: classes.buttons,
                                                     label: classes.label,
                                                 }}
-                                                variant="raised"
+                                                variant="contained"
                                                 onClick={() => this.handleViewOrgClick(organization.id)}>
                                                 View
                                             </Button>
@@ -219,7 +219,7 @@ class AdminMain extends Component {
                                                     root: classes.buttons,
                                                     label: classes.label,
                                                 }}
-                                                variant="raised"
+                                                variant="contained"
                                                 onClick={this.handleEditOrgClick(organization)}>
                                                 Edit
                                             </Button>
@@ -232,7 +232,7 @@ class AdminMain extends Component {
                                                         classes={{
                                                             root: classes.deactivate,
                                                         }}
-                                                        variant="raised"
+                                                        variant="contained"
                                                         onClick={() => this.handleDeactivateClick(organization.id)}>
                                                         Deactivate
                                                     </Button> :
@@ -246,7 +246,7 @@ class AdminMain extends Component {
                                                     root: classes.buttons,
                                                     label: classes.label,
                                                 }}
-                                                variant="raised"
+                                                variant="contained"
                                                 onClick={this.handleAddManagers(organization.id)}
                                                 disabled={!organization.collecting_data}
                                             >
@@ -280,7 +280,11 @@ class AdminMain extends Component {
                     onChangePage={this.handleChangePage}
                     onChangeRowsPerPage={this.handleChangeRowsPerPage}
                 />
-                <Button color="primary" onClick={this.handleAddNewOrganizationClick}>Add New Organization</Button>
+                <Button color="primary" onClick={this.handleAddNewOrganizationClick}
+                    classes={{
+                        root: classes.buttons,
+                        label: classes.label,
+                    }}>Add New Organization</Button>
 
                 {/* Dialog box for editing organization */}
                 <dialog

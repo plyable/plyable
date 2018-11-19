@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
 
 class CompletedFeedback extends Component {
 
@@ -18,7 +17,7 @@ class CompletedFeedback extends Component {
 
     render() {
         let employees = this.props.reduxState.participationReducer;
-        let uncompleted = employees.filter(employee => employee.count == 0);
+        let uncompleted = employees.filter(employee => Number(employee.count) === 0);
         return (
             <div>
                 <h4>{employees.length - uncompleted.length}/{employees.length} {this.props.reduxState.adminMainReducer.name} employees have completed their survey</h4>

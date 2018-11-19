@@ -112,8 +112,8 @@ router.post('/', rejectUnauthenticated, async (req, res) => {
         let passwordToSend = encryptLib.encryptPassword(newPassword);
         let keyToSend = encryptLib.encryptPassword(newKey);
         // on insert, using salted and hashed strings, add pw, temp_key, temp_key_timeout
-        const result = pool.query(query, [org, passwordToSend, email, keyToSend, security_to_add]);
-        if (result.rowCount < 0) {
+        const result = await pool.query(query, [org, passwordToSend, email, keyToSend, security_to_add]);
+        if (result.rowCount > 0) {
           const emailInfo = {
             email: email,
             // create a url with key
