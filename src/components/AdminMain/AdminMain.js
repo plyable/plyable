@@ -3,7 +3,63 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import securityLevel from '../../constants/securityLevel';
 /*----Material UI---*/
-import { Table, TableBody, TableCell, TableHead, TableRow, TablePagination } from '@material-ui/core';
+import {
+    Table, TableBody, TableCell, TableHead, TableRow, TablePagination,
+    Paper, withStyles, Typography
+} from '@material-ui/core';
+import PropTypes from 'prop-types';
+import Button from '@material-ui/core/Button';
+/*----Material UI---*/
+
+const CustomTableCell = withStyles(theme => ({
+    head: {
+        backgroundColor: theme.palette.common.black,
+        color: theme.palette.common.white,
+        fontSize: 24,
+    },
+    body: {
+        fontSize: 20,
+        textTransform: 'upperCase'
+    },
+}))(TableCell);
+
+const styles = theme => ({
+    root: {
+        width: '100%',
+        marginTop: theme.spacing.unit * 3,
+        overflowX: 'auto',
+    },
+    buttons: {
+        background: 'linear-gradient(45deg, rgb(82, 132, 196, 1) 30%, #192343 90%)',
+        borderRadius: 2,
+        border: 0,
+        color: 'white',
+        height: 24,
+        padding: '0 10px',
+        boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+    },
+    deactivate: {
+        background: 'linear-gradient(45deg, #192343 30%, red  90%)',
+        borderRadius: 2,
+        border: 0,
+        color: 'white',
+        height: 24,
+        padding: '0 10px',
+        boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+    },
+    label: {
+        textTransform: 'capitalize',
+        fontSize: 14,
+    },
+    table: {
+        minWidth: 700,
+    },
+    row: {
+        '&:nth-of-type(odd)': {
+            backgroundColor: theme.palette.background.default,
+        },
+    },
+});
 
 
 class AdminMain extends Component {
@@ -16,7 +72,7 @@ class AdminMain extends Component {
         organization: {},
         orgName: '',
         page: 0,
-        rowsPerPage: 5,
+        rowsPerPage: 6,
     };
 
     componentDidMount() {
@@ -126,66 +182,91 @@ class AdminMain extends Component {
     render() {
         const { rowsPerPage, page } = this.state;
         const emptyRows = rowsPerPage - Math.min(rowsPerPage, this.props.reduxState.adminMainReducer.length - page * rowsPerPage);
+        const { classes } = this.props;
         return (
             <div>
-                <h1>Organization List</h1>
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Organization Name</TableCell>
-                            <TableCell>Survey Results Page</TableCell>
-                            <TableCell>Edit</TableCell>
-                            <TableCell>Deactivate</TableCell>
-                            <TableCell>Add Managers</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {this.props.reduxState.adminMainReducer.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                            .map(organization => (
-                                <TableRow key={organization.id} organization={organization}>
-                                    <TableCell>{organization.name}</TableCell>
-                                    <TableCell>
-                                        <button onClick={() => this.handleViewOrgClick(organization.id)}>
-                                            View
-                                    </button>
-                                    </TableCell>
-                                    <TableCell>
-                                        <button onClick={this.handleEditOrgClick(organization)}>
-                                            Edit
-                                    </button>
-                                    </TableCell>
-                                    {/* Ternary Function to render button or text */}
-                                    <TableCell>
-                                        {
-                                            organization.collecting_data ?
-                                                <button onClick={() => this.handleDeactivateClick(organization.id)}>
-                                                    Deactivate
-                                        </button> :
-                                                <p>Deactivated</p>
-                                        }
-                                    </TableCell>
-                                    {/* Ternary Function to disable   */}
-                                    <TableCell>
-                                        <button
-                                            onClick={this.handleAddManagers(organization.id)}
-                                            disabled={!organization.collecting_data}
-                                        >
-                                            Add Managers
-                                    </button>
-                                    </TableCell>
-                                </TableRow>
-                                //this for each loop will map through available organizations in the database and display them 
-                                //on the DOM in a table
-                            ))}
-                        {emptyRows > 0 && (
-                            <TableRow style={{ height: 49 * emptyRows }}>
-                                <TableCell colSpan={6} />
+                <h1>Welcome, {this.props.reduxState.user.email}!</h1>
+                <Paper className={classes.root}>
+                    <Table className={classes.table}>
+                        <TableHead>
+                            <TableRow>
+                                <CustomTableCell>Organization Name</CustomTableCell>
+                                <CustomTableCell>Survey Results Page</CustomTableCell>
+                                <CustomTableCell>Update Information</CustomTableCell>
+                                <CustomTableCell>Cycle Status</CustomTableCell>
+                                <CustomTableCell>Add Manager</CustomTableCell>
                             </TableRow>
-                        )}
-                    </TableBody>
-                </Table>
+                        </TableHead>
+                        <TableBody>
+                            {this.props.reduxState.adminMainReducer.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                .map(organization => (
+                                    <TableRow key={organization.id} organization={organization}>
+                                        <CustomTableCell>{organization.name}</CustomTableCell>
+                                        <CustomTableCell>
+                                            <Button
+                                                classes={{
+                                                    root: classes.buttons,
+                                                    label: classes.label,
+                                                }}
+                                                variant="raised"
+                                                onClick={() => this.handleViewOrgClick(organization.id)}>
+                                                View
+                                            </Button>
+                                        </CustomTableCell>
+                                        <CustomTableCell>
+                                            <Button
+                                                classes={{
+                                                    root: classes.buttons,
+                                                    label: classes.label,
+                                                }}
+                                                variant="raised"
+                                                onClick={this.handleEditOrgClick(organization)}>
+                                                Edit
+                                            </Button>
+                                        </CustomTableCell>
+                                        {/* Ternary Function to render button or text */}
+                                        <CustomTableCell>
+                                            {
+                                                organization.collecting_data ?
+                                                    <Button
+                                                        classes={{
+                                                            root: classes.deactivate,
+                                                        }}
+                                                        variant="raised"
+                                                        onClick={() => this.handleDeactivateClick(organization.id)}>
+                                                        Deactivate
+                                                    </Button> :
+                                                    <p>Deactivated</p>
+                                            }
+                                        </CustomTableCell>
+                                        {/* Ternary Function to disable   */}
+                                        <CustomTableCell>
+                                            <Button
+                                                classes={{
+                                                    root: classes.buttons,
+                                                    label: classes.label,
+                                                }}
+                                                variant="raised"
+                                                onClick={this.handleAddManagers(organization.id)}
+                                                disabled={!organization.collecting_data}
+                                            >
+                                                Send Invite
+                                    </Button>
+                                        </CustomTableCell>
+                                    </TableRow>
+                                    //this for each loop will map through available organizations in the database and display them 
+                                    //on the DOM in a table
+                                ))}
+                            {emptyRows > 0 && (
+                                <TableRow style={{ height: 49 * emptyRows }}>
+                                    <CustomTableCell colSpan={6} />
+                                </TableRow>
+                            )}
+                        </TableBody>
+                    </Table>
+                </Paper>
                 <TablePagination
-                    rowsPerPageOptions={[5, 10, 25]}
+                    rowsPerPageOptions={[6, 12, 24]}
                     component="div"
                     count={this.props.reduxState.adminMainReducer.length}
                     rowsPerPage={rowsPerPage}
@@ -199,7 +280,7 @@ class AdminMain extends Component {
                     onChangePage={this.handleChangePage}
                     onChangeRowsPerPage={this.handleChangeRowsPerPage}
                 />
-                < button onClick={this.handleAddNewOrganizationClick}>Add New Organization</button>
+                <Button color="primary" onClick={this.handleAddNewOrganizationClick}>Add New Organization</Button>
 
                 {/* Dialog box for editing organization */}
                 <dialog
@@ -243,11 +324,18 @@ class AdminMain extends Component {
     }
 }
 
+AdminMain.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+
 const mapStateToProps = reduxState => ({
     reduxState,
 });
 
 const adminMainRouter = withRouter(AdminMain);
 
-export default connect(mapStateToProps)(adminMainRouter);
+const adminMainRouterStyles = connect(mapStateToProps)(adminMainRouter);
+
+export default withStyles(styles)(adminMainRouterStyles);
+
 

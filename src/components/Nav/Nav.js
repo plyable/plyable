@@ -24,7 +24,7 @@ const styles = {
     marginRight: 20,
   },
   appBar: {
-    backgroundColor: "rgb(82, 132, 196, 1)",
+    backgroundColor: "rgb(82, 132, 196)",
     textAlign: "center",
   }
 };
@@ -41,7 +41,7 @@ class Nav extends Component {
                 className="nav-title" 
                 to={this.props.user.security_level === securityLevel.ADMIN_ROLE ? "/adminmain" : "/main"}
               >
-                Plyable
+                P l y a b l e
               </Link>
             </Typography>
             <div className="nav-right">
