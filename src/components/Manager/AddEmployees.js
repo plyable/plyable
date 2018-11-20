@@ -2,7 +2,19 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import securityLevel from '../../constants/securityLevel';
 import FullList from './FullList';
+import { Button, withStyles } from '@material-ui/core';
 
+const styles = () => ({
+  buttons: {
+    background: 'linear-gradient(45deg, #a640fb 40%, #aaa 90%)',
+    borderRadius: 5,
+    border: 0,
+    color: 'white',
+    height: 24,
+    padding: '0 10px',
+    boxShadow: '0 3px 5px 2px rgba(255, 105, 185, .3)',
+  },
+})
 class AddEmployees extends Component {
   state = {
     emailList: []
@@ -37,7 +49,7 @@ class AddEmployees extends Component {
   }
 
   render() {
-
+    const { classes } = this.props;
     return (
       <div>
         <h2>Add Employees</h2>
@@ -51,7 +63,10 @@ class AddEmployees extends Component {
         </textarea>
 
         {/* OnClick rather than submit, to allow enter for new line */}
-        <button onClick={this.sendInvitationEmails}>Send Invitations</button>
+        <Button onClick={this.sendInvitationEmails}
+          classes={{
+            root: classes.buttons,
+          }}>Send Invitations</Button>
         <FullList />
 
       </div>
@@ -63,4 +78,4 @@ const mapStateToProps = (reduxState) => {
   return { reduxState };
 }
 
-export default connect(mapStateToProps)(AddEmployees);
+export default connect(mapStateToProps)(withStyles(styles)(AddEmployees));

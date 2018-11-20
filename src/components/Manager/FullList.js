@@ -1,6 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Button, withStyles } from '@material-ui/core';
 
+const styles = () => ({
+    buttons: {
+        background: 'linear-gradient(45deg, #a640fb 40%, #aaa 90%)',
+        borderRadius: 5,
+        border: 0,
+        color: 'white',
+        height: 24,
+        padding: '0 10px',
+        boxShadow: '0 3px 5px 2px rgba(255, 105, 185, .3)',
+    },
+})
 class FullList extends Component {
 
     state = {
@@ -8,6 +20,7 @@ class FullList extends Component {
         newEmail: '',
         editBox: false,
     }
+    
 
     componentDidMount() {
         const id = this.props.reduxState.user.org_id
@@ -49,14 +62,21 @@ class FullList extends Component {
     }
 
     render() {
+        const { classes } = this.props;
         let employees = this.props.reduxState.participationReducer;
         return (
             <div>
                 <h4>{employees.length} registered {employees.length > 1 ? 'employees' : 'employee'}:</h4>
                 <ul>
                     {employees.map(employee => <li key={employee.email}>{employee.email + ' '}
-                        <button onClick={() => this.handleClick(employee.email)}>resend invite</button>
-                        <button onClick={this.handleEdit(employee)}>edit</button>
+                        <Button onClick={() => this.handleClick(employee.email)}
+                        classes={{
+                            root: classes.buttons,
+                        }}>resend invite</Button>
+                        <Button onClick={this.handleEdit(employee)}
+                        classes={{
+                            root: classes.buttons,
+                        }}>edit</Button>
                     </li>)}
                 </ul>
                 <dialog open={this.state.editBox}>
@@ -65,7 +85,10 @@ class FullList extends Component {
                         <input type="email" onChange={this.handleChange} value={this.state.newEmail} />
                         <input type="submit" value="send" />
                     </form>
-                    <button onClick={this.handleCancel}>cancel</button>
+                    <Button onClick={this.handleCancel}
+                    classes={{
+                        root: classes.buttons,
+                    }}>cancel</Button>
                 </dialog>
             </div >
         );
@@ -77,5 +100,5 @@ const mapStateToProps = reduxState => ({
 });
 
 
-export default connect(mapStateToProps)(FullList);
+export default connect(mapStateToProps)(withStyles(styles)(FullList));
 

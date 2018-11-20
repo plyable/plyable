@@ -3,9 +3,23 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import CompletedFeedback from '../CompletedFeedback/CompletedFeedback';
+import { Button, withStyles } from '@material-ui/core';
+
 
 let arr = window.location.hash.split('/');
 let id = arr[arr.length - 1] === '' ? arr[arr.length - 2] : arr[arr.length - 1];
+
+const styles = () => ({
+    buttons: {
+        background: 'linear-gradient(45deg, #4680fb 40%, #aaa 90%)',
+        borderRadius: 5,
+        border: 0,
+        color: 'white',
+        height: 24,
+        padding: '0 10px',
+        boxShadow: '0 3px 5px 2px rgba(255, 105, 185, .3)',
+    },
+})
 
 class AdminOrgMain extends Component {
 
@@ -52,23 +66,23 @@ class AdminOrgMain extends Component {
     downloadCSV = keyword => () => {
         let data, link, csv = '', valueList = [];
 
-        if(keyword === 'behaviors') {
+        if (keyword === 'behaviors') {
             const dataList = this.props.downloadBehaviorData.map(data => ({
-                value: data.value, 
-                "Time_in_weeks": data.week, 
-                "Avg_Score": data.avg, 
+                value: data.value,
+                "Time_in_weeks": data.week,
+                "Avg_Score": data.avg,
                 "#_of_responses": data.user_count,
                 "Total_Users": data.total_count,
                 "%_of_Responses": data.percent
             }));
-    
+
             for (let data of this.props.downloadBehaviorData) {
                 let str = data.value;
                 if (valueList.indexOf(str) < 0) {
                     valueList.push(data.value);
                 }
             }
-    
+
             for (let value of valueList) {
                 csv += this.convertArrayOfObjectsToCSV({
                     title: value,
@@ -76,12 +90,12 @@ class AdminOrgMain extends Component {
                     keyword: keyword
                 });
             }
-        } else if(keyword === 'average') {
+        } else if (keyword === 'average') {
             const dataList = this.props.downloadAverageData.map(data => ({
                 value: 'Behavior Average Data',
-                "Time_in_Weeks": data.week, 
-                "Positive_Avg_Score": data.positive, 
-                "Negative_Avg_Score": data.negative, 
+                "Time_in_Weeks": data.week,
+                "Positive_Avg_Score": data.positive,
+                "Negative_Avg_Score": data.negative,
                 "#_of_Responses": data.user_count,
                 "Total_Users": data.total_count,
                 "%_of_Responses": data.percent
@@ -110,9 +124,9 @@ class AdminOrgMain extends Component {
     getFileName = keyword => {
         let filename = 'noname.csv';
 
-        if(keyword === 'behaviors') {
+        if (keyword === 'behaviors') {
             filename = 'behavior_specific_' + Date.now() + '.csv';
-        } else if(keyword === 'average') {
+        } else if (keyword === 'average') {
             filename = 'behavior_average_' + Date.now() + '.csv';
         }
 
@@ -137,17 +151,28 @@ class AdminOrgMain extends Component {
     render() {
         arr = window.location.hash.split('/');
         id = arr[arr.length - 1] === '' ? arr[arr.length - 2] : arr[arr.length - 1];
+        const { classes } = this.props;
         return (
             <div>
                 <div>
-                    <button onClick={this.goBack}>Back</button>
+                    <Button
+                        onClick={this.goBack}
+                        classes={{
+                            root: classes.buttons,
+                        }}>
+                        Back
+                    </Button>
                 </div>
                 <CompletedFeedback />
                 <div style={{ width: '70vw' }}>
                     <canvas id="adminAverageChart"></canvas>
                 </div>
                 <div className="downloadCsv" style={{ textAlign: 'right' }}>
-                    <button onClick={this.downloadCSV('average')}>Download CSV</button>
+                    <Button
+                    onClick={this.downloadCSV('average')}
+                    classes={{
+                        root: classes.buttons,
+                    }}>Download CSV</Button>
                 </div>
                 <div style={{ width: '70vw', textAlign: 'center' }}>
                     <select onChange={this.handleChangeBehavior} style={{ width: '70%', height: '50px', fontSize: '30px' }}>
@@ -156,7 +181,11 @@ class AdminOrgMain extends Component {
                     <canvas id="adminSpecificChart"></canvas>
                 </div>
                 <div className="downloadCsv" style={{ textAlign: 'right' }}>
-                    <button onClick={this.downloadCSV('behaviors')}>Download CSV</button>
+                    <Button
+                    onClick={this.downloadCSV('behaviors')}
+                    classes={{
+                        root: classes.buttons,
+                    }}>Download CSV</Button>
                 </div>
             </div>
         );
@@ -171,4 +200,4 @@ const mapStateToProps = ({ adminChartData }) => ({
     downloadAverageData: adminChartData.downloadAverageData,
 });
 
-export default connect(mapStateToProps)(withRouter(AdminOrgMain));
+export default connect(mapStateToProps)(withStyles(styles)(withRouter(AdminOrgMain)));
