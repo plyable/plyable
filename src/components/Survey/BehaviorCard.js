@@ -16,21 +16,31 @@ import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
     root: {
-        margin: '0 5px',
-        font: 'Calibri',
+        margin: '0 1px',
     },
     card: {
-      maxWidth: 700,
-      margin: '0 auto',
+        maxWidth: '700px',
+        margin: '0 auto',
+        borderRadius: '18px',
     },
     value: {
         fontSize: '20px',
         margin: '15px 0',
         textAlign: 'left',
     },
-    radioGroup: {
+    subTitle: {
+        marginLeft: '10px',
+    },
+    formDiv: {
         textAlign: 'center',
         marginBottom: '15px',
+    },
+    formControl: {
+        width: '100%',
+    },
+    radioLabel: {
+        margin: '0',
+        width: '25%',
     },
     grow: {
         flexGrow: 1,
@@ -77,13 +87,13 @@ class BehaviorCard extends Component {
                             {this.props.cardNumber + 1} of 6
                         </Typography>
                         <Typography gutterBottom className={classes.value} variant="h4" component="h2">
-                            How often do you experience or observe {this.props.card.value}?
+                            How often do you experience or observe <b>{this.props.card.value}</b>?
                         </Typography>
-                        <Typography component="p">
+                        <Typography className={classes.subTitle} component="p">
                             &gt; Now?
                         </Typography>
-                        <div className={classes.radioGroup}>
-                            <FormControl>
+                        <div className={classes.formDiv}>
+                            <FormControl className={classes.formControl}>
                                 <RadioGroup
                                     aria-label="Behavior"
                                     name="behavior"
@@ -91,18 +101,18 @@ class BehaviorCard extends Component {
                                     onChange={this.handleChange('score')}
                                     row
                                 >
-                                    <FormControlLabel value="0" control={<Radio color="primary" />} labelPlacement="bottom" label="Rarely" />
-                                    <FormControlLabel value="1" control={<Radio color="primary" />} labelPlacement="bottom" label="Sometimes" />
-                                    <FormControlLabel value="2" control={<Radio color="primary" />} labelPlacement="bottom" label="Weekly" />
-                                    <FormControlLabel value="3" control={<Radio color="primary" />} labelPlacement="bottom" label="Daily" />
+                                    <FormControlLabel className={classes.radioLabel} value="0" control={<Radio color="primary" />} labelPlacement="bottom" label="Rarely" />
+                                    <FormControlLabel className={classes.radioLabel} value="1" control={<Radio color="primary" />} labelPlacement="bottom" label="Sometimes" />
+                                    <FormControlLabel className={classes.radioLabel} value="2" control={<Radio color="primary" />} labelPlacement="bottom" label="Weekly" />
+                                    <FormControlLabel className={classes.radioLabel} value="3" control={<Radio color="primary" />} labelPlacement="bottom" label="Daily" />
                                 </RadioGroup>
                             </FormControl>
                         </div>
-                        <Typography component="p">
+                        <Typography className={classes.subTitle} component="p">
                             &gt; Future?
                         </Typography>
-                        <div className={classes.radioGroup}>
-                            <FormControl>
+                        <div className={classes.formDiv}>
+                            <FormControl className={classes.formControl}>
                                 <RadioGroup
                                     aria-label="Expection Behavior"
                                     name="expectationBehavior"
@@ -110,10 +120,10 @@ class BehaviorCard extends Component {
                                     onChange={this.handleChange('expectationScore')}
                                     row
                                 >
-                                    <FormControlLabel value="0" control={<Radio color="primary" />} labelPlacement="bottom" label="Rarely" />
-                                    <FormControlLabel value="1" control={<Radio color="primary" />} labelPlacement="bottom" label="Sometimes" />
-                                    <FormControlLabel value="2" control={<Radio color="primary" />} labelPlacement="bottom" label="Weekly" />
-                                    <FormControlLabel value="3" control={<Radio color="primary" />} labelPlacement="bottom" label="Daily" />
+                                    <FormControlLabel className={classes.radioLabel} value="0" control={<Radio color="primary" />} labelPlacement="bottom" label="Rarely" />
+                                    <FormControlLabel className={classes.radioLabel} value="1" control={<Radio color="primary" />} labelPlacement="bottom" label="Sometimes" />
+                                    <FormControlLabel className={classes.radioLabel} value="2" control={<Radio color="primary" />} labelPlacement="bottom" label="Weekly" />
+                                    <FormControlLabel className={classes.radioLabel} value="3" control={<Radio color="primary" />} labelPlacement="bottom" label="Daily" />
                                 </RadioGroup>
                             </FormControl>
                         </div>
@@ -133,13 +143,13 @@ class BehaviorCard extends Component {
                                 number={this.props.current + 1}
                                 switchCard={this.props.switchCard}
                                 handleSubmit={this.handleSubmit}
-                                disabled={this.state.score!==null && this.state.expectationScore!==null ? false : true}
+                                disabled={this.state.score !== null && this.state.expectationScore !== null ? false : true}
                             /> :
                             <SubmitButton
                                 lastCard={this.props.card}
                                 score={this.state.score}
                                 expectationScore={this.state.expectationScore}
-                                disabled={this.state.score!==null && this.state.expectationScore!==null ? false : true} 
+                                disabled={this.state.score !== null && this.state.expectationScore !== null ? false : true}
                             />
                         }
                     </CardActions>

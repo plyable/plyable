@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
+import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 
 class PrevButton extends Component {
 
@@ -17,7 +18,7 @@ class PrevButton extends Component {
                 onClick={this.handleClick}
                 disabled={this.props.disabled}
             >
-                Previous
+                <KeyboardArrowLeft />Back
             </Button>
         )
     }
