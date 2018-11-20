@@ -66,7 +66,8 @@ router.post('/', rejectUnauthenticated, async (req, res) => {
             from: process.env.ADMIN_EMAIL,
             to: emailInfo.email,
             subject: 'Plyable Invitation',
-            html: `<p>Click here <a href="${emailInfo.url}">${emailInfo.url}</a></p>`// plain text body
+            html: `<p><b>Welcome to Plyable</b></p>
+            <p>This link will take you to a page where you can set up your account: <a href="${emailInfo.url}">click here</a></p>`// plain text body
           };
 
           await transporter.sendMail(mailConfig); //end sendMail
@@ -113,7 +114,8 @@ router.put('/reinvite', rejectUnauthenticated, (req, res) => {
           from: process.env.ADMIN_EMAIL,
           to: emailInfo.email,
           subject: 'Plyable Invitation',
-          html: `<p>Click here <a href="${emailInfo.url}">${emailInfo.url}</a></p>`// plain text body
+          html: `<p><b>Welcome to Plyable</b></p>
+          <p>This link will take you to a page where you can set up your account: <a href="${emailInfo.url}">click here</a></p>`// plain text body
         };
         transporter.sendMail(mailConfig)
           .then(result => {
