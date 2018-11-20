@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { TablePagination, List, ListItem, Paper } from '@material-ui/core';
+import './feedback.css';
+
 
 class CompletedFeedback extends Component {
 
@@ -42,14 +44,16 @@ class CompletedFeedback extends Component {
             <div>
                 <h4>{employees.length - uncompleted.length}/{employees.length} {this.props.reduxState.adminMainReducer.name} employees have completed their survey</h4>
                 {uncompleted.length > 0 &&
-                    <div>
+                    <div className="feedbackList">
                         <Paper>
-                            <br />
-                            <h3>Awaiting Response From...</h3>
-                            <List>
-                                {uncompleted.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                    .map(employee => <ListItem key={employee.email}>{employee.email}</ListItem>)}
-                            </List>
+                            <div className="innerPaper">
+                                <br />
+                                <h3>Awaiting Response From...</h3>
+                                <List>
+                                    {uncompleted.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                        .map(employee => <ListItem key={employee.email}>{employee.email}</ListItem>)}
+                                </List>
+                            </div>
                         </Paper>
                         <TablePagination
                             rowsPerPageOptions={[6, 12, 24]}
