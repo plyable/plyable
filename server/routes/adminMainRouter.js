@@ -10,7 +10,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
         pool.query(`
             SELECT * 
             FROM "organization"
-            ORDER BY "id";
+            ORDER BY "id" DESC;
         `).then((results) => {
                 res.send(results.rows);
             }).catch((error) => {
