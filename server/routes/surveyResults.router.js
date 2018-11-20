@@ -35,12 +35,18 @@ router.post('/', rejectUnauthenticated, (req, res) => {
                 req.user.id, 
                 req.user.org_id
             ]).then((result2) => {
-                let insertScore = `INSERT INTO "response_data" ("response_id", "behavior_id", "score", "expect_score") VALUES ($1,$2,$3,$4);`;
+                let insertScore = `INSERT INTO "response_data" ("response_id", "behavior_id", "score") VALUES ($1,$2,$3);`;
+                let insertExpectationScore = `INSERT INTO "expectation_data" ("response_id", "behavior_id", "score") VALUES ($1,$2,$3);`;
                 let array = [];
 
                 for (let data of newSurveyScore) {
-                    const queryValues = [result2.rows[0].id, data.id, data.score, data.expectScore];
+                    const queryValues = [result2.rows[0].id, data.id, data.score];
                     array.push(pool.query(insertScore, queryValues));
+                };//end for/of loop
+
+                for (let data of newExpectationSurveyScore) {
+                    const queryValues = [result2.rows[0].id, data.id, data.score];
+                    array.push(pool.query(insertExpectationScore, queryValues));
                 };//end for/of loop
 
                 Promise.all(array).then(() => {

@@ -11,7 +11,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 /*----Material-UI----*/
-import Logo from '../../images/Plyable_Logo_v01_00.png';
+import Logo from '../../images/WhiteWordmark.png';
 import NavDrawer from './NavDrawer';
 
 
@@ -40,7 +40,7 @@ class Nav extends Component {
         <AppBar position="static" className={classes.appBar} >
           <Toolbar>
             <Typography variant="h5" color="inherit" className={classes.grow}>
-              <Link className="nav-title" to="/adminmain"><img src={Logo} height="145" width="375" alt="" /></Link>
+              <Link className="nav-title" to="/adminmain"><img src={Logo} height="125" width="250" alt="" /></Link>
             </Typography>
             <div className="nav-right">
               <Typography variant="h6">
