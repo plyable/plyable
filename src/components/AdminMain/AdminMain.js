@@ -5,10 +5,14 @@ import securityLevel from '../../constants/securityLevel';
 /*----Material UI---*/
 import {
     Table, TableBody, TableCell, TableHead, TableRow, TablePagination,
-    Paper, withStyles
+    Paper, Typography, TextField, withStyles
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
 /*----Material UI---*/
 
 const CustomTableCell = withStyles(theme => ({
@@ -30,7 +34,7 @@ const styles = theme => ({
         overflowX: 'auto',
     },
     buttons: {
-        background: 'linear-gradient(45deg, rgb(82, 132, 196, 1) 30%, #192343 90%)',
+        background: 'linear-gradient(45deg, #00868b 30%, #aaa 90%)',
         borderRadius: 2,
         border: 0,
         color: 'white',
@@ -287,42 +291,56 @@ class AdminMain extends Component {
                     }}>Add New Organization</Button>
 
                 {/* Dialog box for editing organization */}
-                <dialog
-                    open={this.state.editDialog}
-                >
-                    <h2>Edit Organization</h2>
-                    <label htmlFor="orgName">Name</label>
-                    <input
-                        type="text"
-                        id="orgName"
-                        value={this.state.orgName}
-                        onChange={this.handleChangeOrgName}
-                    />
+                <Dialog open={this.state.editDialog}>
+                    <DialogTitle>Edit Organization</DialogTitle>
+                    <DialogContent>
+
+                        <TextField
+                            id="orgName"
+                            label="Name"
+                            className={classes.textField}
+                            value={this.state.orgName}
+                            onChange={this.handleChangeOrgName}
+                            margin="normal"
+                            variant="outlined"
+                        />
+                    </DialogContent>
                     <br />
-                    <button onClick={this.handleUpdateOrgClick}>Update</button>
-                    <button onClick={this.handleEditCancelClick}>Cancel</button>
-                </dialog>
+                    <Button color="primary" onClick={this.handleUpdateOrgClick}>Update</Button>
+                    <Button color="secondary" onClick={this.handleEditCancelClick}>Cancel</Button>
+                </Dialog>
 
                 {/* Dialog box for deactivating */}
-                <dialog open={this.state.deactivateDialog}>
-                    <h2>Are you sure you want to deactivate this company?</h2>
-                    <button onClick={() => this.handleDeactivateConfirm(this.state.org_id)}>Yes</button>
-                    <button onClick={this.handleCancelDeactivate}>No</button>
-                </dialog>
+                <Dialog open={this.state.deactivateDialog}>
+                    <DialogTitle>Are you sure you want to deactivate this company?</DialogTitle>
+                    <Button color="primary" onClick={() => this.handleDeactivateConfirm(this.state.org_id)}>Yes</Button>
+                    <Button color="secondary" onClick={this.handleCancelDeactivate}>No</Button>
+                </Dialog>
 
                 {/* Dialog box for inviting managers */}
-                <dialog open={this.state.addManager}>
-                    <h2>Add Managers</h2>
-                    <h3>1 email per line</h3>
-                    {/* Large Input Box */}
-                    <textarea
-                        value={this.state.emailList}
-                        onChange={this.handleChange}
-                        placeholder='No Commas'
-                    ></textarea>
-                    <button onClick={this.sendInvitationEmails}>Send Invitations</button>
-                    <button onClick={this.handleCancelAddManager}>Cancel</button>
-                </dialog>
+                <Dialog open={this.state.addManager}>
+                    <DialogTitle>Add Managers</DialogTitle>
+                    <DialogContent>
+                        <Typography>1 email per line</Typography>
+                        {/* Large Input Box */}
+                        <TextField
+                            id="outlined-multiline-static"
+                            label="No Commas"
+                            multiline
+                            rows="4"
+                            placeholder='Email Addresses'
+                            className={classes.textField}
+                            value={this.state.emailList}
+                            onChange={this.handleChange}
+                            margin="normal"
+                            variant="outlined"
+                        />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button color="primary" onClick={this.sendInvitationEmails}>Send Invitations</Button>
+                        <Button color="secondary" onClick={this.handleCancelAddManager}>Cancel</Button>
+                    </DialogActions>
+                </Dialog>
             </div >
         );
     }
