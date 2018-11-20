@@ -87,7 +87,7 @@ class BehaviorCard extends Component {
                             <u>{this.props.card.value}</u> : {this.props.card.definition}
                         </Typography>
                         <Typography className={classes.subTitle} component="p">
-                            &gt; Now?
+                            &gt; How often do you observe this behavior?
                         </Typography>
                         <div className={classes.formDiv}>
                             <FormControl className={classes.formControl}>
@@ -106,7 +106,7 @@ class BehaviorCard extends Component {
                             </FormControl>
                         </div>
                         <Typography className={classes.subTitle} component="p">
-                            &gt; Future?
+                            &gt; How often would you expect to observer this behavior?
                         </Typography>
                         <div className={classes.formDiv}>
                             <FormControl className={classes.formControl}>
