@@ -55,9 +55,9 @@ rule.dayOfWeek = 0
 rule.hour = 23;
 rule.minute = 59;
 schedule.scheduleJob(rule, function () {
-  pool.query(`UPDATE "organization"
-                  SET "current_week" = "current_week" + 1
-                  WHERE "collecting_data" = true;`).then((results) => {
-      console.log(results.rows); //query will update current week by one each week until it is deactivated (as long as "collecting_data" is true)
-    });
+  // pool.query(`UPDATE "organization"
+  //                 SET "current_week" = "current_week" + 1
+  //                 WHERE "collecting_data" = true;`).then((results) => {
+  //     console.log(results.rows); //query will update current week by one each week until it is deactivated (as long as "collecting_data" is true)
+  //   });
 });
