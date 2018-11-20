@@ -21,7 +21,6 @@ const styles = theme => ({
     },
     card: {
       maxWidth: 700,
-      margin: '0 auto',
     },
     value: {
         fontSize: '20px',
@@ -60,11 +59,19 @@ class BehaviorCard extends Component {
             payload: {
                 id: this.props.card.id,
                 value: this.props.card.value,
-                score: this.state.score,
-                expectScore: this.state.expectationScore,
+                score: this.state.score
             }
         });
-        this.setState({ score: null, expectationScore: null });
+        this.props.dispatch({ 
+            type: 'SET_EXPECTATION_SCORE', 
+            payload: { 
+                id: this.props.card.id, 
+                value: this.props.card.value, 
+                score: this.state.expectationScore 
+            } 
+        });
+        this.setState({ score: null });
+        this.setState({ expectationScore: null });
     }
 
     render() {
@@ -136,9 +143,6 @@ class BehaviorCard extends Component {
                                 disabled={this.state.score!==null && this.state.expectationScore!==null ? false : true}
                             /> :
                             <SubmitButton
-                                lastCard={this.props.card}
-                                score={this.state.score}
-                                expectationScore={this.state.expectationScore}
                                 disabled={this.state.score!==null && this.state.expectationScore!==null ? false : true} 
                             />
                         }
@@ -150,7 +154,10 @@ class BehaviorCard extends Component {
 }
 
 BehaviorCard.propTypes = { classes: PropTypes.object.isRequired };
-const mapStateToProps = ({ survey }) => ({ survey: survey.surveyScore });
+const mapStateToProps = ({ survey }) => ({ 
+    survey: survey.surveyScore, 
+    expectationSurvey: survey.expectationScore 
+});
 const behaviorCardStyles = withStyles(styles)(BehaviorCard);
 
 export default connect(mapStateToProps)(behaviorCardStyles);
