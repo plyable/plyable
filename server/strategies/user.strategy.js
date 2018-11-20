@@ -12,9 +12,10 @@ passport.deserializeUser((id, done) => {
     SELECT 
       "us"."id", 
       "us"."org_id", 
+      "og"."name" AS "org_name",
       "us"."email", 
       "us"."security_level",
-        COALESCE("rs"."week", -1) AS "survey_week"
+      COALESCE("rs"."week", -1) AS "survey_week"
     FROM 
         "user" AS "us"
         LEFT JOIN "organization" AS "og"
