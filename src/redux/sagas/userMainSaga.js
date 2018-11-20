@@ -20,17 +20,24 @@ function* userOrgChart(action) {
             specificChart.destroy();
         }
 
-        let chartData = specificList.filter(data => data.percent >= MIN_PERCENT).map(data => ({ x: data.week, y: data.avg }));
+        const chartData = specificList.filter(data => data.percent >= MIN_PERCENT).map(data => ({ x: data.week, y: data.avg }));
+        const expectData = specificList.filter(data => data.percent >= MIN_PERCENT).map(data => ({ x: data.week, y: data.expect_avg }));
 
         specificChart = new Chart(document.getElementById('userViewChart'), {
             type: 'line',
             data: {
                 labels: specificList.map(data => 'week'.concat(' ', data.week)),
                 datasets: [{
-                    label: 'Data',
+                    label: 'Score',
                     data: chartData,
                     backgroundColor: 'rgba(54, 162, 235, 0.2)',
                     borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1,
+                },{
+                    label: 'Expectation',
+                    data: expectData,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
                     borderWidth: 1,
                 }]
             },

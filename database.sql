@@ -36,14 +36,8 @@ CREATE TABLE "response_data" (
 	"id" SERIAL PRIMARY KEY,
 	"behavior_id" INT REFERENCES "behavior",
 	"response_id" INT REFERENCES "response",
-	"score" INT NOT NULL
-);
-
-CREATE TABLE "expectation_data" (
-	"id" SERIAL PRIMARY KEY,
-	"behavior_id" INT REFERENCES "behavior",
-	"response_id" INT REFERENCES "response",
-	"score" INT NOT NULL
+	"score" INT NOT NULL,
+	"expect_score" INT NOT NULL
 );
 --required inserts for survey cards
 INSERT INTO "behavior" ("value", "definition", "context", "positive")
