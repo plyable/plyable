@@ -24,12 +24,15 @@ const theme = createMuiTheme({
 });
 
 const styles = () => ({
+    outFrame: {
+        margin: '0 5px',
+    },
     cardFrame: {
         border: '1px solid #00868b',
         borderRadius: '20px',
-        margin: '0 10px',
+        margin: '0 auto',
         padding: '0 0 1px 0',
-        maxWidth: 710,
+        maxWidth: '710px',
         backgroundColor: theme.palette.primary.main,
     },
     title: {
@@ -101,21 +104,18 @@ class Survey extends Component {
                         />
                     }
                 >
-                    <Step><StepLabel></StepLabel></Step>
-                    <Step><StepLabel></StepLabel></Step>
-                    <Step><StepLabel></StepLabel></Step>
-                    <Step><StepLabel></StepLabel></Step>
-                    <Step><StepLabel></StepLabel></Step>
-                    <Step><StepLabel></StepLabel></Step>
+                    {cards.map(card => <Step key={card.id}><StepLabel></StepLabel></Step>)}
                 </Stepper>
-                <div className={classes.cardFrame}>
-                    <p className={classes.title}>At <b>{this.props.user.org_name}</b>...</p>
-                    <BehaviorCard
-                        card={cards[this.state.openCard] || { value: 'Loading' }}
-                        current={this.state.openCard}
-                        switchCard={this.switchCard}
-                        cardNumber={this.state.openCard}
-                    />
+                <div className={classes.outFrame}>
+                    <div className={classes.cardFrame}>
+                        <p className={classes.title}>At <b>{this.props.user.org_name}</b>...</p>
+                        <BehaviorCard
+                            card={cards[this.state.openCard] || { value: 'Loading' }}
+                            current={this.state.openCard}
+                            switchCard={this.switchCard}
+                            cardNumber={this.state.openCard}
+                        />
+                    </div>
                 </div>
             </MuiThemeProvider>
         )

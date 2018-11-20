@@ -16,13 +16,15 @@ import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
 import ListAlt from '@material-ui/icons/ListAlt';
 import securityLevel from '../../constants/securityLevel';
 
-
 const styles = {
     list: {
         width: 250,
     },
     fullList: {
         width: 'auto',
+    },
+    menuButton: {
+        color: 'white',
     },
 };
 
@@ -146,7 +148,7 @@ class NavDrawer extends React.Component {
 
         return (
             <div>
-                <Button onClick={this.toggleDrawer('right', true)}><MenuIcon /></Button>
+                <Button onClick={this.toggleDrawer('right', true)} className={classes.menuButton}><MenuIcon /></Button>
                 <Drawer anchor="right" open={this.state.right} onClose={this.toggleDrawer('right', false)}>
                     <div
                         tabIndex={0}
