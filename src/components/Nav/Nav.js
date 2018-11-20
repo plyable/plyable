@@ -1,23 +1,24 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import LogOutButton from '../LogOutButton/LogOutButton';
-import './Nav.css';
-import securityLevel from '../../constants/securityLevel';
 /*----Material-UI----*/
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
+// import Divider from '@material-ui/core/Divider';
 /*----Material-UI----*/
-import Logo from '../../images/WhiteWordmark.png';
+import Logo from '../../images/Logo.png';
 import NavDrawer from './NavDrawer';
-
 
 const styles = {
   root: {
-    flexGrow: 1,
+    // flexGrow: 1,
+  },
+  appBar: {
+    backgroundColor: "#00868b",
+    textAlign: "center",
   },
   grow: {
     flexGrow: 1,
@@ -26,41 +27,23 @@ const styles = {
     marginLeft: -12,
     marginRight: 20,
   },
-  appBar: {
-    backgroundColor: "#00868b",
-    textAlign: "center",
-  }
 };
 
 class Nav extends Component {
   render() {
-    const { classes } = this.props
+    const { classes } = this.props;
     return (
       <div className={classes.root}>
         <AppBar position="static" className={classes.appBar} >
           <Toolbar>
             <Typography variant="h5" color="inherit" className={classes.grow}>
-              <Link className="nav-title" to="/adminmain"><img src={Logo} height="125" width="250" alt="" /></Link>
+              <Link className="nav-title" to="/adminmain">
+                <img src={Logo} height="60" alt="logo" />
+              </Link>
             </Typography>
-            <div className="nav-right">
-              <Typography variant="h6">
-                <NavDrawer />
-              </Typography>
-              {/* Show the link to the info page and the logout button if the user is logged in */}
-              {this.props.user.id && this.props.user.security_level === securityLevel.ADMIN_ROLE ? (
-                <>
-                  <LogOutButton className="nav-link" />
-                </>
-              ) : this.props.user.id && (
-                <>
-                  {this.props.user.security_level === securityLevel.MANAGER_ROLE ? (
-                    <>
-                    </>
-                  ) : null}
-                  <LogOutButton className="nav-link" />
-                </>
-              )}
-            </div>
+            <Typography variant="h6">
+              <NavDrawer />
+            </Typography>
           </Toolbar>
         </AppBar>
       </div>

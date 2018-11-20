@@ -31,6 +31,7 @@ const styles = theme => ({
     },
     subTitle: {
         marginLeft: '10px',
+        marginTop: '10px',
     },
     formDiv: {
         textAlign: 'center',
@@ -45,10 +46,6 @@ const styles = theme => ({
     },
     grow: {
         flexGrow: 1,
-    },
-    progress: {
-        textAlign: 'left',
-        margin: '0',
     },
 }); //material ui styles
 
@@ -92,11 +89,11 @@ class BehaviorCard extends Component {
             <div className={classes.root}>
                 <Card className={classes.card}>
                     <CardContent>
-                        <Typography className={classes.progress}>
-                            {this.props.cardNumber + 1} of 6
-                        </Typography>
                         <Typography gutterBottom className={classes.value} variant="h4" component="h2">
                             How often do you experience or observe <b>{this.props.card.value}</b>?
+                        </Typography>
+                        <Typography component="p">
+                            <u>{this.props.card.value}</u> : {this.props.card.definition}
                         </Typography>
                         <Typography className={classes.subTitle} component="p">
                             &gt; Now?
@@ -136,9 +133,6 @@ class BehaviorCard extends Component {
                                 </RadioGroup>
                             </FormControl>
                         </div>
-                        <Typography component="p">
-                            <u>{this.props.card.value}</u> : {this.props.card.definition}
-                        </Typography>
                     </CardContent>
                     <CardActions>
                         <PrevButton
