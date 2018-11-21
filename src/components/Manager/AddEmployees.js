@@ -3,18 +3,71 @@ import { connect } from 'react-redux';
 import securityLevel from '../../constants/securityLevel';
 import FullList from './FullList';
 import { Button, withStyles } from '@material-ui/core';
+import { createMuiTheme, MuiThemeProvider } from '@material-ui/core';
+
+const theme = createMuiTheme({
+  typography: {
+    useNextVariants: true,
+  },
+  palette: {
+    primary: {
+      main: '#00868b',
+      sub: '#009688',
+    },
+    secondary: {
+      main: '#EC407A',
+    },
+  }
+});
 
 const styles = () => ({
-  buttons: {
-    background: 'linear-gradient(45deg, #a640fb 40%, #aaa 90%)',
-    borderRadius: 5,
-    border: 0,
-    color: 'white',
-    height: 24,
-    padding: '0 10px',
-    boxShadow: '0 3px 5px 2px rgba(255, 105, 185, .3)',
+  outFrame: {
+      margin: '10px 5px',
   },
-})
+  cardFrame: {
+      border: '1px solid #00868b',
+      borderRadius: '20px',
+      margin: '0 auto',
+      maxWidth: '710px',
+      backgroundColor: theme.palette.primary.main,
+  },
+  title: {
+      textAlign: 'center',
+      color: 'white',
+      fontSize: '20px',
+      margin: '10px 0 10px 0',
+  },
+  subBackground: {
+    backgroundColor: 'white',
+    borderRadius: '19px',
+    padding: '10px',
+  },
+  textField: {
+    width: '100%',
+    borderRadius: '10px',
+    padding: '10px',
+    height: '100px',
+    boxSizing: 'border-box',
+    outline: '0',
+    border: '1px solid #00868b',
+    resize: 'none',
+  },
+  subTitle: {
+    color: 'grey',
+    marginLeft: '10px',
+    fontSize: '13px',
+  },
+  buttonDiv: {
+    textAlign: 'right',
+    marginTop: '5px',
+  },
+  button: {
+    backgroundColor: theme.palette.primary.main,
+    color: 'white',
+    borderRadius: '13px',
+  },
+});
+
 class AddEmployees extends Component {
   state = {
     emailList: []
@@ -22,28 +75,24 @@ class AddEmployees extends Component {
 
   // Button Click
   sendInvitationEmails = async () => {
-
     // If box has content, send
     if (this.state.emailList.length > 0) {
       let splitList = this.state.emailList.split('\n'); // creates comma separate array  
 
       await this.props.dispatch({ type: 'ADD_EMPLOYEES', payload: { emailList: splitList } });  // Adds Employee Emails to the DB
-
       // TO DO: alert success only if email sent
-
     } else { // alert that content is needed
       alert('Please add emails. 1 Per line. No Commas.');
     }
-
   }
 
   // Collect the data entered into the box
   handleChange = (event) => {
-    this.setState({ emailList: event.target.value })
+    this.setState({ emailList: event.target.value });
   }
 
   componentDidMount = () => {
-    if (this.props.reduxState.user.security_level === securityLevel.EMPLOYEE_ROLE) {
+    if (this.props.user.security_level === securityLevel.EMPLOYEE_ROLE) {
       this.props.history.push('/main');
     }
   }
@@ -51,31 +100,36 @@ class AddEmployees extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <div>
-        <h2>Add Employees</h2>
-        <h3>1 email per line</h3>
-        {/* Large Input Box */}
-        <textarea
-          value={this.state.emailList}
-          onChange={this.handleChange}
-          placeholder='No Commas'
-        >
-        </textarea>
-
-        {/* OnClick rather than submit, to allow enter for new line */}
-        <Button onClick={this.sendInvitationEmails}
-          classes={{
-            root: classes.buttons,
-          }}>Send Invitations</Button>
+      <MuiThemeProvider theme={theme}>
+        <div className={classes.outFrame}>
+          <div className={classes.cardFrame}>
+            <p className={classes.title}>Invite Members</p>
+            <div className={classes.subBackground}>
+              <p className={classes.subTitle}>Enter of paste email addresses here</p>
+              <textarea
+                value={this.state.emailList}
+                onChange={this.handleChange}
+                className={classes.textField}
+                placeholder='No Commas'
+              ></textarea>
+              {/* OnClick rather than submit, to allow enter for new line */}
+              <div className={classes.buttonDiv}>
+                <Button
+                  onClick={this.sendInvitationEmails}
+                  className={classes.button}
+                >
+                  Send
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
         <FullList />
-
-      </div>
+      </MuiThemeProvider>
     );
   }
 }
 
-const mapStateToProps = (reduxState) => {
-  return { reduxState };
-}
+const mapStateToProps = ({ user }) => ({ user });
 
 export default connect(mapStateToProps)(withStyles(styles)(AddEmployees));
