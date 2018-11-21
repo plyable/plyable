@@ -42,7 +42,7 @@ class Nav extends Component {
               </Link>
             </Typography>
             <Typography variant="h6">
-              <NavDrawer />
+              {this.props.user.id && <NavDrawer />}
             </Typography>
           </Toolbar>
         </AppBar>

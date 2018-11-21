@@ -261,6 +261,7 @@ router.get('/specific/all/:id', rejectUnauthenticated, (req, res) => {
                 "bh2"."value",
                 "rs2"."week",
                 ROUND(AVG("rd2"."score"), 1) AS "avg",
+            	ROUND(AVG("rd2"."expect_score"), 1) AS "expect_avg",
                 COUNT(DISTINCT "rs2"."user_id") AS "user_count",
                 "tuc"."total_count", 
                 (COUNT(DISTINCT "rs2"."user_id")*100)/"tuc"."total_count" AS "percent"
@@ -326,6 +327,7 @@ router.get('/specific/chart/:id/:behaviorId', rejectUnauthenticated, (req, res) 
             SELECT
                 "rs2"."week",
                 ROUND(AVG("rd2"."score"), 1) AS "avg",
+            	ROUND(AVG("rd2"."expect_score"), 1) AS "expect_avg",
                 COUNT(DISTINCT "rs2"."user_id") AS "user_count",
                 "tuc"."total_count", 
                 (COUNT(DISTINCT "rs2"."user_id")*100)/"tuc"."total_count" AS "percent"

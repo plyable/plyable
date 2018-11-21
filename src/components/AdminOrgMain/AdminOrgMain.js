@@ -77,6 +77,7 @@ class AdminOrgMain extends Component {
                 value: data.value,
                 "Time_in_Weeks": data.week,
                 "Avg_Score": data.avg,
+                "Expectation_Score": data.expect_avg,
                 "#_of_Responses": data.user_count,
                 "Total_Users": data.total_count,
                 "%_of_Responses": data.percent
