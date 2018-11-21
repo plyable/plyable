@@ -3,8 +3,11 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import CompletedFeedback from '../CompletedFeedback/CompletedFeedback';
-import { Button, withStyles } from '@material-ui/core';
-
+import { Button, withStyles, Typography } from '@material-ui/core';
+import Dialog from '@material-ui/core/Dialog';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 let arr = window.location.hash.split('/');
 let id = arr[arr.length - 1] === '' ? arr[arr.length - 2] : arr[arr.length - 1];
@@ -22,6 +25,9 @@ const styles = () => ({
 })
 
 class AdminOrgMain extends Component {
+    state = {
+        dialogOpen: false,
+    }
 
     convertArrayOfObjectsToCSV = (args) => {
         let result, ctr, keys, columnDelimiter, lineDelimiter, data, title;
@@ -108,7 +114,10 @@ class AdminOrgMain extends Component {
             });
         }
 
-        if (csv === '') return;
+        if (csv === '' || csv === null || csv === undefined) {
+            this.setState({ dialogOpen: true });
+            return;
+        }
 
         if (!csv.match(/^data:text\/csv/i)) {
             csv = 'data:text/csv;charset=utf-8,' + csv;
@@ -141,8 +150,13 @@ class AdminOrgMain extends Component {
         this.props.history.goBack();
     }
 
-    componentDidMount = () => {
+    handleCancel = () => {
+        this.setState({
+            dialogOpen: false,
+        });
+    }
 
+    componentDidMount = () => {
         this.props.dispatch({ type: 'AVG_DATA', payload: { id: id } });
         this.props.dispatch({ type: 'SPECIFIC_DATA', payload: { id: id, behaviorId: 0 } });
         this.props.dispatch({ type: 'DOWNLOAD_DATA', payload: { id: id } });
@@ -187,6 +201,15 @@ class AdminOrgMain extends Component {
                         root: classes.buttons,
                     }}>Download CSV</Button>
                 </div>
+                <Dialog open={this.state.dialogOpen}>
+                    <DialogTitle>No Data</DialogTitle>
+                    <DialogContent>
+                        <Typography component="p">There is no data to download.</Typography>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button color="primary" onClick={this.handleCancel}>Okay</Button>
+                    </DialogActions>
+                </Dialog>
             </div>
         );
     }

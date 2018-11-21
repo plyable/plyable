@@ -1,11 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withStyles } from '@material-ui/core';
 import { TablePagination, List, ListItem, Paper } from '@material-ui/core';
-import './feedback.css';
 
+const styles = () => ({
+    feedbackList: {
+        width: '350px',
+        margin: '25px',
+    },
+    innerPaper: {
+        padding: '10px',
+    },
+});
 
 class CompletedFeedback extends Component {
-
     state = {
         rowsPerPage: 6,
         page: 0,
@@ -27,26 +35,27 @@ class CompletedFeedback extends Component {
             ...this.state,
             rowsPerPage: event.target.value
         });
-    };
+    }
+
     handleChangePage = (event, page) => {
         this.setState({
             ...this.state,
             page,
         });
-    };
-
+    }
 
     render() {
         const { rowsPerPage, page } = this.state;
         let employees = this.props.reduxState.participationReducer;
         let uncompleted = employees.filter(employee => Number(employee.count) === 0);
+        const { classes } = this.props;
         return (
             <div>
                 <h4>{employees.length - uncompleted.length}/{employees.length} {this.props.reduxState.adminMainReducer.name} employees have completed their survey</h4>
                 {uncompleted.length > 0 &&
-                    <div className="feedbackList">
+                    <div className={classes.feedbackList}>
                         <Paper>
-                            <div className="innerPaper">
+                            <div className={classes.innerPaper}>
                                 <br />
                                 <h3>Awaiting Response From...</h3>
                                 <List>
@@ -59,6 +68,7 @@ class CompletedFeedback extends Component {
                             rowsPerPageOptions={[6, 12, 24]}
                             component="div"
                             count={uncompleted.length}
+                            labelRowsPerPage="Emails per page"
                             rowsPerPage={rowsPerPage}
                             page={page}
                             backIconButtonProps={{
@@ -76,10 +86,6 @@ class CompletedFeedback extends Component {
     }
 }
 
-const mapStateToProps = reduxState => ({
-    reduxState,
-});
+const mapStateToProps = reduxState => ({ reduxState });
 
-
-export default connect(mapStateToProps)(CompletedFeedback);
-
+export default connect(mapStateToProps)(withStyles(styles)(CompletedFeedback));
