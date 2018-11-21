@@ -106,7 +106,7 @@ class BehaviorCard extends Component {
                             </FormControl>
                         </div>
                         <Typography className={classes.subTitle} component="p">
-                            &gt; How often would you expect to observer this behavior?
+                            &gt; How often would you expect to observe this behavior?
                         </Typography>
                         <div className={classes.formDiv}>
                             <FormControl className={classes.formControl}>
