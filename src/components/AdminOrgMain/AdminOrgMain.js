@@ -75,9 +75,9 @@ class AdminOrgMain extends Component {
         if (keyword === 'behaviors') {
             const dataList = this.props.downloadBehaviorData.map(data => ({
                 value: data.value,
-                "Time_in_weeks": data.week,
+                "Time_in_Weeks": data.week,
                 "Avg_Score": data.avg,
-                "#_of_responses": data.user_count,
+                "#_of_Responses": data.user_count,
                 "Total_Users": data.total_count,
                 "%_of_Responses": data.percent
             }));

@@ -17,8 +17,6 @@ function* avgData(action) {
             avgChart.destroy();
         }
 
-        console.log(avgList);
-
         let positiveData = avgList.filter(avg => avg.percent >= MIN_PERCENT).map(avg => ({ x: avg.week, y: avg.positive }));
         let negativeData = avgList.filter(avg => avg.percent >= MIN_PERCENT).map(avg => ({ x: avg.week, y: avg.negative }));
 
@@ -28,14 +26,14 @@ function* avgData(action) {
             data: {
                 datasets: [{
                     label: 'Negative',
-                    data: positiveData,
+                    data: negativeData,
                     backgroundColor: 'rgba(255, 99, 132, 0.2)',
                     borderColor: 'rgba(255,99,132,1)',
                     borderWidth: 1,
                     lineTension: 0
                 }, {
                     label: 'Positive',
-                    data: negativeData,
+                    data: positiveData,
                     backgroundColor: 'rgba(54, 162, 235, 0.2)',
                     borderColor: 'rgba(54, 162, 235, 1)',
                     borderWidth: 1,
