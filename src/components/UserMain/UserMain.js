@@ -1,21 +1,19 @@
-// Scope: Organization Page (for user)
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core';
 import securityLevel from '../../constants/securityLevel';
 
-const styles = theme => ({
+const styles = () => ({
     title: {
         marginLeft: '15px',
-        color: 'rgba(82, 132, 196, 1)'
+        color: '#00868b',
+        textAlign: 'center',
     },
-    // WIP
     info: {
         marginLeft: '15px',
         color: 'black'
     },
-
     chartFrame: {
         width: '100vw',
         textAlign: 'center'
@@ -24,13 +22,14 @@ const styles = theme => ({
         width: '80%',
         height: '50px',
         fontSize: '20px',
-        backgroundColor: 'rgba(82, 132, 196, 0.6)',
+        backgroundColor: '#00868bbb',
         color: 'white',
+        border: '1px solid #00868b',
+        outline: 'none',
         textAlign: 'center',
         textAlignLast: 'center',
     },
 });
-
 
 class UserMain extends Component {
     componentDidMount = () => {
@@ -58,19 +57,17 @@ class UserMain extends Component {
         else if (this.props.user.survey_week >= 0) {
             return <h4>You have completed your survey for this week.</h4>
         }
-
     }
 
     render() {
         const { classes } = this.props;
         return (
             <div>
-                <h2 className={classes.title}>User Main</h2>
+                <h2 className={classes.title}>{this.props.user.org_name}</h2>
                 <div className={classes.info}>
                     {this.renderMessage()}
                     <h4>Note: Organization data will only be shown if 60% or more employees have responded.</h4>
                 </div>
-
                 <div className={classes.chartFrame}>
                     <select
                         onChange={this.handleChangeBehavior}
