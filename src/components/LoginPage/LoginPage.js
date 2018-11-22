@@ -63,14 +63,6 @@ class LoginPage extends Component {
     const { classes } = this.props;
     return (
       <div>
-        {this.props.errors.loginMessage && (
-          <h2
-            className="alert"
-            role="alert"
-          >
-            {this.props.errors.loginMessage}
-          </h2>
-        )}
         <form>
           <FormControl className={classes.container}>
             <Typography variant="h4" component="h3">

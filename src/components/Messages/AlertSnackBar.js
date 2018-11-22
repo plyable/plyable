@@ -74,6 +74,36 @@ class AlertSnackBar extends React.Component {
                         'aria-describedby': 'message-id',
                     }}
                 />
+                <Snackbar
+                    anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                    open={this.props.messagesReducer.loginMistype}
+                    autoHideDuration={2000}
+                    onClose={this.handleClose}
+                    message={"Your Email and Password didn't match"}
+                    ContentProps={{
+                        'aria-describedby': 'message-id',
+                    }}
+                />
+                <Snackbar
+                    anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                    open={this.props.messagesReducer.loginError}
+                    autoHideDuration={2000}
+                    onClose={this.handleClose}
+                    message={"Something went wrong. Check your internet connection."}
+                    ContentProps={{
+                        'aria-describedby': 'message-id',
+                    }}
+                />
+                <Snackbar
+                    anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                    open={this.props.messagesReducer.loginInputError}
+                    autoHideDuration={2000}
+                    onClose={this.handleClose}
+                    message={"Please enter your email and password"}
+                    ContentProps={{
+                        'aria-describedby': 'message-id',
+                    }}
+                />
             </div>
         );
     }

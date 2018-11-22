@@ -5,6 +5,8 @@ const messagesReducer = (state = {
     registrationCompletedSnackBar: false,
     loginSnackbar: false,
     loginError: false,
+    loginMistype: false,
+    loginInputError: false,
     deactivedOrganization: false,
     addedEmployees: false,
     addedManagers: false,
@@ -48,6 +50,21 @@ const messagesReducer = (state = {
                 sendingEmail: false,
                 emailSuccess: true,
             }
+        case 'LOGIN_MISTYPE':
+            return {
+                ...state,
+                loginMistype: true,
+            }
+        case 'LOGIN_ERROR':
+            return {
+                ...state,
+                loginError: true,
+            }
+        case 'LOGIN_INPUT_ERROR':
+            return {
+                ...state,
+                loginInputError: true
+            }
         case 'CLOSE_SNACKBAR':
             return {
                 ...state,
@@ -57,6 +74,9 @@ const messagesReducer = (state = {
                 registrationCompletedSnackBar: false,
                 loginSnackbar: false,
                 emailSuccess: false,
+                loginError: false,
+                loginMistype: false,
+                loginInputError: false,
             }//this one action handles closing all snackbars
 
         // Daniel cases above, Eli Cases below
