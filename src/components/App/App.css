@@ -8,7 +8,7 @@ body {
     margin: 50px;
 }
 
-form {
+.form {
     background-image: linear-gradient(45deg, rgb(82, 132, 196, 1) 50%, #b4bace);
     width: 45%;
     margin: 20px auto;
@@ -19,32 +19,6 @@ form {
 input {
     margin: 5px;
     margin-bottom: 10px;
-}
-
-.log-in, .log-out, .register {
-  background-color: #00acb0;
-  border-radius: 4px;
-  color: #f8f8f8;
-  min-height: 50px;
-  min-width: 100px;
-  outline:0;
-  cursor: pointer;
-}
-
-.log-in:hover, .log-out:hover, .register:hover {
-  background-color: #008183;
-}
-
-/* This line makes the "Register" and "Login" buttons look like links */
-.link-button {
-    background:none;
-    color:inherit;
-    border:none;
-    padding:0;
-    font: inherit;
-    outline:0;
-    border-bottom:1px solid #444; 
-    cursor: pointer;
 }
 
 td, th {
@@ -61,5 +35,4 @@ h1{
     margin-left: flex;
     margin-right: flex;
     width: 26%;
-
 }

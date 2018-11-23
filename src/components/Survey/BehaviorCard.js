@@ -101,7 +101,7 @@ class BehaviorCard extends Component {
                                     <FormControlLabel className={classes.radioLabel} value="0" control={<Radio color="primary" />} labelPlacement="bottom" label="Rarely" />
                                     <FormControlLabel className={classes.radioLabel} value="1" control={<Radio color="primary" />} labelPlacement="bottom" label="Sometimes" />
                                     <FormControlLabel className={classes.radioLabel} value="2" control={<Radio color="primary" />} labelPlacement="bottom" label="Weekly" />
-                                    <FormControlLabel className={classes.radioLabel} value="3" control={<Radio color="primary" />} labelPlacement="bottom" label="Daily" />
+                                    <FormControlLabel className={classes.radioLabel} value="3" control={<Radio color="primary" />} labelPlacement="bottom" label="Consistently" />
                                 </RadioGroup>
                             </FormControl>
                         </div>
@@ -120,7 +120,7 @@ class BehaviorCard extends Component {
                                     <FormControlLabel className={classes.radioLabel} value="0" control={<Radio color="primary" />} labelPlacement="bottom" label="Rarely" />
                                     <FormControlLabel className={classes.radioLabel} value="1" control={<Radio color="primary" />} labelPlacement="bottom" label="Sometimes" />
                                     <FormControlLabel className={classes.radioLabel} value="2" control={<Radio color="primary" />} labelPlacement="bottom" label="Weekly" />
-                                    <FormControlLabel className={classes.radioLabel} value="3" control={<Radio color="primary" />} labelPlacement="bottom" label="Daily" />
+                                    <FormControlLabel className={classes.radioLabel} value="3" control={<Radio color="primary" />} labelPlacement="bottom" label="Consistently" />
                                 </RadioGroup>
                             </FormControl>
                         </div>

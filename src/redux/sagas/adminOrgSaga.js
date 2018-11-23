@@ -42,8 +42,11 @@ function* avgData(action) {
             },
             options: {
                 responsive: true,
+                legend: {
+                    position: 'bottom',
+                },
                 title: {
-                    display: true,
+                    display: false,
                     text: 'Behavior Assessment Averages',
                     fontSize: 30
                 },
@@ -129,8 +132,11 @@ function* specificData(action) {
             },
             options: {
                 responsive: true,
+                legend: {
+                    position: 'bottom',
+                },
                 title: {
-                    display: true,
+                    display: false,
                     text: 'Behavior Specific Averages',
                     fontSize: 30
                 },

@@ -13,6 +13,40 @@ let arr = window.location.hash.split('/');
 let id = arr[arr.length - 1] === '' ? arr[arr.length - 2] : arr[arr.length - 1];
 
 const styles = () => ({
+    cardFrame: {
+        border: '1px solid #00868b',
+        borderRadius: '20px',
+        margin: '15px auto',
+        width: '70vw',
+        backgroundColor: '#00868b',
+    },
+    title: {
+        textAlign: 'center',
+        color: 'white',
+        fontSize: '20px',
+        margin: '10px 0 10px 0',
+    },
+    subBackground: {
+        backgroundColor: 'white',
+        borderRadius: '19px',
+        padding: '15px',
+        textAlign: 'center',
+    },
+    selectBox: {
+        width: '80%',
+        height: '50px',
+        fontSize: '20px',
+        backgroundColor: '#00868bbb',
+        color: 'white',
+        border: '1px solid #00868b',
+        outline: 'none',
+        textAlign: 'center',
+        textAlignLast: 'center',
+        marginBottom: '15px',
+    },
+    downloadButtonDiv: {
+        textAlign: 'right',
+    },
     buttons: {
         background: 'linear-gradient(45deg, #4680fb 40%, #aaa 90%)',
         borderRadius: 5,
@@ -179,28 +213,34 @@ class AdminOrgMain extends Component {
                     </Button>
                 </div>
                 <CompletedFeedback />
-                <div style={{ width: '70vw' }}>
-                    <canvas id="adminAverageChart"></canvas>
+                <div className={classes.cardFrame}>
+                    <div className={classes.title}>Behavior Assessment Averages</div>
+                    <div className={classes.subBackground}>
+                        <canvas id="adminAverageChart"></canvas>
+                        <div className={classes.downloadButtonDiv}>
+                            <Button
+                                onClick={this.downloadCSV('average')}
+                                classes={{
+                                    root: classes.buttons,
+                                }}>Download CSV</Button>
+                        </div>
+                    </div>
                 </div>
-                <div className="downloadCsv" style={{ textAlign: 'right' }}>
-                    <Button
-                    onClick={this.downloadCSV('average')}
-                    classes={{
-                        root: classes.buttons,
-                    }}>Download CSV</Button>
-                </div>
-                <div style={{ width: '70vw', textAlign: 'center' }}>
-                    <select onChange={this.handleChangeBehavior} style={{ width: '70%', height: '50px', fontSize: '30px' }}>
-                        {this.props.behaviorData.map(behavior => <option key={behavior.id} value={behavior.id}>{behavior.value}</option>)}
-                    </select>
-                    <canvas id="adminSpecificChart"></canvas>
-                </div>
-                <div className="downloadCsv" style={{ textAlign: 'right' }}>
-                    <Button
-                    onClick={this.downloadCSV('behaviors')}
-                    classes={{
-                        root: classes.buttons,
-                    }}>Download CSV</Button>
+                <div className={classes.cardFrame}>
+                    <div className={classes.title}>Behavior Specific Averages</div>
+                    <div className={classes.subBackground}>
+                        <select className={classes.selectBox} onChange={this.handleChangeBehavior}>
+                            {this.props.behaviorData.map(behavior => <option key={behavior.id} value={behavior.id}>{behavior.value}</option>)}
+                        </select>
+                        <canvas id="adminSpecificChart"></canvas>
+                        <div className={classes.downloadButtonDiv}>
+                            <Button
+                                onClick={this.downloadCSV('behaviors')}
+                                classes={{
+                                    root: classes.buttons,
+                                }}>Download CSV</Button>
+                        </div>
+                    </div>
                 </div>
                 <Dialog open={this.state.dialogOpen}>
                     <DialogTitle>No Data</DialogTitle>

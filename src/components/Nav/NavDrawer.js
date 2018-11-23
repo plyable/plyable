@@ -70,12 +70,12 @@ class NavDrawer extends React.Component {
                         </List>
                         <Divider />
                         <List>
-                            <ListItem button onClick={this.handleInfoClick}>
+                            {/* <ListItem button onClick={this.handleInfoClick}>
                                 <ListItemIcon>
                                     <InfoIcon />
                                 </ListItemIcon>
                                 <ListItemText primary="Info" />
-                            </ListItem>
+                            </ListItem> */}
                             <ListItem button onClick={() => this.props.dispatch({ type: 'LOGOUT' })}>
                                 <ListItemIcon>
                                     <VerifiedUserIcon />
@@ -112,12 +112,12 @@ class NavDrawer extends React.Component {
                         </List>
                         <Divider />
                         <List>
-                            <ListItem button onClick={this.handleInfoClick}>
+                            {/* <ListItem button onClick={this.handleInfoClick}>
                                 <ListItemIcon>
                                     <InfoIcon />
                                 </ListItemIcon>
                                 <ListItemText primary="Info" />
-                            </ListItem>
+                            </ListItem> */}
                             <ListItem button onClick={() => this.props.dispatch({ type: 'LOGOUT' })}>
                                 <ListItemIcon>
                                     <VerifiedUserIcon />

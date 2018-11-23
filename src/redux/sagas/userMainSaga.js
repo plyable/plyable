@@ -43,9 +43,12 @@ function* userOrgChart(action) {
             },
             options: {
                 responsive: true,
-                aspectRatio: 1.5,
+                aspectRatio: 1.3,
+                legend: {
+                    position: 'bottom',
+                },
                 title: {
-                    display: true,
+                    display: false,
                     text: 'Behavior Specific Averages',
                     fontSize: 20
                 },

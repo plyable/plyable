@@ -7,26 +7,72 @@ import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import { createMuiTheme, MuiThemeProvider } from '@material-ui/core';
 /*----Material UI----*/
 
+const theme = createMuiTheme({
+  typography: {
+    useNextVariants: true,
+  },
+  palette: {
+    primary: {
+      main: '#00868b',
+      sub: '#009688',
+    },
+    secondary: {
+      main: '#EC407A',
+    },
+  }
+});
 
-const styles = theme => ({
-  formControl: {
-    margin: theme.spacing.unit,
-    minWidth: 120,
-    minHeight: 120,
+const styles = () => ({
+  outFrame: {
+    margin: '10px 5px',
   },
-  selectEmpty: {
-    marginTop: theme.spacing.unit * 2,
+  cardFrame: {
+    border: '1px solid #00868b',
+    borderRadius: '20px',
+    margin: '0 auto',
+    maxWidth: '400px',
+    backgroundColor: theme.palette.primary.main,
   },
-  container: {
+  title: {
+    textAlign: 'center',
+    color: 'white',
+    fontSize: '20px',
+    margin: '10px 0 10px 0',
+  },
+  subBackground: {
+    backgroundColor: 'white',
+    borderRadius: '19px',
+    padding: '15px',
+    textAlign: 'center',
+  },
+  inputDiv: {
+    width: '100%',
+    textAlign: 'left',
     display: 'flex',
-    flexWrap: 'wrap',
+    alignItems: 'center',
+  },
+  label: {
+    width: '60px',
+    textAlign: 'right',
+    fontSize: '13px',
   },
   textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: 'flex',
+    boxSizing: 'border-box',
+    margin: '15px 8px',
+    flexGrow: '1',
+    padding: '10px',
+    borderRadius: '20px',
+    outline: 0,
+    border: '1px solid grey',
+    '&:focus': {
+      borderColor: '#00868b',
+    }
+  },
+  buttonDiv: {
+    margin: '15px',
   },
 });
 
@@ -34,9 +80,9 @@ class LoginPage extends Component {
   state = {
     email: '',
     password: '',
-  };
+  }
 
-  login = (event) => {
+  login = event => {
     event.preventDefault();
 
     if (this.state.email && this.state.password) {
@@ -50,7 +96,7 @@ class LoginPage extends Component {
     } else {
       this.props.dispatch({ type: 'LOGIN_INPUT_ERROR' });
     }
-    this.props.dispatch({ type: 'LOGIN_SNACKBAR' })//this will dispatch an action type which triggers a SnackBar alert
+    this.props.dispatch({ type: 'LOGIN_SNACKBAR' }); //this will dispatch an action type which triggers a SnackBar alert
   } // end login
 
   handleInputChangeFor = propertyName => (event) => {
@@ -62,64 +108,61 @@ class LoginPage extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <div>
-        {this.props.errors.loginMessage && (
-          <h2
-            className="alert"
-            role="alert"
-          >
-            {this.props.errors.loginMessage}
-          </h2>
-        )}
-        <form>
-          <FormControl className={classes.container}>
-            <Typography variant="h4" component="h3">
-              Login
-                     </Typography>
-            <div>
-              {/* <Typography htmlFor="email"> */}
-                <TextField
-                  className={classes.textField}
-                  type="text"
-                  label="Email Address"
-                  name="Email Address"
-                  margin="normal"
-                  value={this.state.email}
-                  onChange={this.handleInputChangeFor('email')}
-                />
-              {/* </Typography> */}
-            </div>
-            <div>
-              {/* <Typography htmlFor="password"> */}
-                <TextField
-                  className={classes.textField}
-                  type="password"
-                  label="Password"
-                  name="password"
-                  margin="normal"
-                  value={this.state.password}
-                  onChange={this.handleInputChangeFor('password')}
-                />
-              {/* </Typography> */}
-            </div>
-            <Button onClick={this.login} type="submit" value='Submit' color="secondary">Login</Button>
-          </FormControl>
-        </form>
-      </div>
+      <MuiThemeProvider theme={theme}>
+        <div>
+          {this.props.errors.loginMessage && (
+            <h2 className="alert" role="alert">
+              {this.props.errors.loginMessage}
+            </h2>
+          )}
+          <div className={classes.outFrame}>
+            <form className={classes.cardFrame}>
+              <div className={classes.title}>Welcome to the Portal</div>
+              <div className={classes.subBackground}>
+                <div className={classes.inputDiv}>
+                  <div className={classes.label}>
+                    <label>Email</label>
+                  </div>
+                  <input
+                    className={classes.textField}
+                    type="text"
+                    placeholder="Email Address"
+                    name="Email Address"
+                    value={this.state.email}
+                    onChange={this.handleInputChangeFor('email')}
+                  />
+                </div>
+                <div className={classes.inputDiv}>
+                  <div className={classes.label}>
+                    <label>Password</label>
+                  </div>
+                  <input
+                    className={classes.textField}
+                    type="password"
+                    placeholder="Password"
+                    name="password"
+                    value={this.state.password}
+                    onChange={this.handleInputChangeFor('password')}
+                  />
+                </div>
+                <div className={classes.buttonDiv}>
+                  <Button onClick={this.login} variant="contained" type="submit" color="primary">Log In</Button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </MuiThemeProvider>
     );
   }
 }
-LoginPage.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
+
+LoginPage.propTypes = { classes: PropTypes.object.isRequired };
 
 // Instead of taking everything from state, we just want the error messages.
 // if you wanted you could write this code like this:
 // const mapStateToProps = ({errors}) => ({ errors });
-const mapStateToProps = state => ({
-  errors: state.errors,
-});
-
+const mapStateToProps = ({ errors }) => ({ errors });
 const logInPageStyles = withStyles(styles)(LoginPage)
 
 export default connect(mapStateToProps)(logInPageStyles);

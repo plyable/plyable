@@ -15,12 +15,30 @@ const styles = () => ({
         color: 'black'
     },
     chartFrame: {
-        width: '100vw',
-        textAlign: 'center'
+        margin: '0 10px',
+    },
+    cardFrame: {
+        border: '1px solid #00868b',
+        borderRadius: '20px',
+        margin: '15px auto',
+        maxWidth: '700px',
+        backgroundColor: '#00868b',
+    },
+    chartTitle: {
+        textAlign: 'center',
+        color: 'white',
+        fontSize: '20px',
+        margin: '10px 0 10px 0',
+    },
+    subBackground: {
+        backgroundColor: 'white',
+        borderRadius: '19px',
+        padding: '15px',
+        textAlign: 'center',
     },
     selectBox: {
         width: '80%',
-        height: '50px',
+        height: '35px',
         fontSize: '20px',
         backgroundColor: '#00868bbb',
         color: 'white',
@@ -28,6 +46,7 @@ const styles = () => ({
         outline: 'none',
         textAlign: 'center',
         textAlignLast: 'center',
+        marginBottom: '15px',
     },
 });
 
@@ -69,13 +88,18 @@ class UserMain extends Component {
                     <h4>Note: Organization data will only be shown if 60% or more employees have responded.</h4>
                 </div>
                 <div className={classes.chartFrame}>
-                    <select
-                        onChange={this.handleChangeBehavior}
-                        className={classes.selectBox}
-                    >
-                        {this.props.behaviors.map(behavior => <option key={behavior.id} value={behavior.id}>{behavior.value}</option>)}
-                    </select>
-                    <canvas id="userViewChart"></canvas>
+                    <div className={classes.cardFrame}>
+                        <div className={classes.chartTitle}>Behavior Specific Averages</div>
+                        <div className={classes.subBackground}>
+                            <select
+                                onChange={this.handleChangeBehavior}
+                                className={classes.selectBox}
+                            >
+                                {this.props.behaviors.map(behavior => <option key={behavior.id} value={behavior.id}>{behavior.value}</option>)}
+                            </select>
+                            <canvas id="userViewChart"></canvas>
+                        </div>
+                    </div>
                 </div>
             </div>
         );
