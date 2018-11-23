@@ -107,7 +107,7 @@ class NavDrawer extends React.Component {
                                 <ListItemIcon>
                                     <ListAlt />
                                 </ListItemIcon>
-                                <ListItemText primary="Add Employees" />
+                                <ListItemText primary="Invite Employees" />
                             </ListItem>
                         </List>
                         <Divider />
