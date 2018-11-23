@@ -73,7 +73,7 @@ function* userOrgChart(action) {
                             fontSize: 10,
                             callback: function (dataLabel, index) {
                                 if (dataLabel === 3) {
-                                    return 'Daily';
+                                    return 'Consistently';
                                 } else if (dataLabel === 0) {
                                     return 'Rarely'
                                 } else {
