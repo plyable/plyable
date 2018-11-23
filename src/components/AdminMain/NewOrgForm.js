@@ -64,7 +64,7 @@ class NewOrgForm extends Component {
         return (
             <div >
                 <h1>Add a New Organization</h1>
-                <form>
+                <form className="form">
                     <FormControl className={classes.container} noValidate autoComplete="off">
                         <TextField
                             id="standard-name"
