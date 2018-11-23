@@ -59,8 +59,6 @@ const messagesReducer = (state = {
                 emailSuccess: false,
             }//this one action handles closing all snackbars
 
-        // Daniel cases above, Eli Cases below
-
         case 'SENDING_EMAILS':
             return {
                 ...state,
@@ -92,6 +90,4 @@ const messagesReducer = (state = {
     }
 };
 
-// user will be on the redux state at:
-// state.user
 export default messagesReducer;

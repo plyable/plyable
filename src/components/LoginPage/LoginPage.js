@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 /*----Material UI----*/
-import FormControl from '@material-ui/core/FormControl';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core';
 /*----Material UI----*/
 
@@ -159,9 +156,6 @@ class LoginPage extends Component {
 
 LoginPage.propTypes = { classes: PropTypes.object.isRequired };
 
-// Instead of taking everything from state, we just want the error messages.
-// if you wanted you could write this code like this:
-// const mapStateToProps = ({errors}) => ({ errors });
 const mapStateToProps = ({ errors }) => ({ errors });
 const logInPageStyles = withStyles(styles)(LoginPage)
 

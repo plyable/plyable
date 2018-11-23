@@ -11,7 +11,6 @@ import Button from '@material-ui/core/Button';
 import Drawer from '@material-ui/core/Drawer';
 import MenuIcon from '@material-ui/icons/Menu';
 import Divider from '@material-ui/core/Divider';
-import InfoIcon from '@material-ui/icons/Info';
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
 import ListAlt from '@material-ui/icons/ListAlt';
 import securityLevel from '../../constants/securityLevel';
@@ -70,12 +69,6 @@ class NavDrawer extends React.Component {
                         </List>
                         <Divider />
                         <List>
-                            {/* <ListItem button onClick={this.handleInfoClick}>
-                                <ListItemIcon>
-                                    <InfoIcon />
-                                </ListItemIcon>
-                                <ListItemText primary="Info" />
-                            </ListItem> */}
                             <ListItem button onClick={() => this.props.dispatch({ type: 'LOGOUT' })}>
                                 <ListItemIcon>
                                     <VerifiedUserIcon />
@@ -112,12 +105,6 @@ class NavDrawer extends React.Component {
                         </List>
                         <Divider />
                         <List>
-                            {/* <ListItem button onClick={this.handleInfoClick}>
-                                <ListItemIcon>
-                                    <InfoIcon />
-                                </ListItemIcon>
-                                <ListItemText primary="Info" />
-                            </ListItem> */}
                             <ListItem button onClick={() => this.props.dispatch({ type: 'LOGOUT' })}>
                                 <ListItemIcon>
                                     <VerifiedUserIcon />

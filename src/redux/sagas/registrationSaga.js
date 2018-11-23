@@ -1,8 +1,6 @@
 import { put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 
-// TO DO: set up for our registration to login automatically // 
-
 // worker Saga: will be fired on "REGISTER" actions
 function* registerUser(action) {
   try {

@@ -3,8 +3,6 @@ import axios from 'axios';
 
 function* addNewOrganization(action) {
     try {
-
-        console.log('NEWORGANIZATION action.payload:', action.payload);
         yield call(axios.post, '/adminmain', action.payload);
         yield put({ type: 'FETCH_ORGANIZATIONS' })
     } catch (error) {
