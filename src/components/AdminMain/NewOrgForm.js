@@ -36,7 +36,6 @@ class NewOrgForm extends Component {
     };//this is the local state for creating new organizations
 
     handleChangeFor = propertyName => event => {
-        console.log('event logging');
         this.setState({
             newOrganization: {
                 ...this.state.newOrganization,
@@ -52,8 +51,6 @@ class NewOrgForm extends Component {
             ...this.state.newOrganization,
             newOrganization: {
                 name: '',
-                // managerName: '',
-                // managerEmail: '',
             }
         });//spread operator holds former state, setState alters state to make a new organization
         this.props.dispatch({ type: 'ADD_NEW_ORGANIZATION_SNACKBAR' })//this will dispatch an action type which triggers a SnackBar alert

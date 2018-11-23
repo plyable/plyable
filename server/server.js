@@ -12,10 +12,10 @@ const passport = require('./strategies/user.strategy');
 
 // Route includes
 const userRouter = require('./routes/user.router');
-const adminMainRouter = require('./routes/adminMainRouter')
+const adminMainRouter = require('./routes/admin.main.router');
 const employeeRouter = require('./routes/employee.router');
-const surveyResultsRouter = require('./routes/surveyResults.router');
-const adminOrgRouter = require('./routes/admin.org.main');
+const surveyResultsRouter = require('./routes/survey.results.router');
+const adminOrgRouter = require('./routes/admin.org.router');
 const userMainRouter = require('./routes/user.main.router');
 
 // Body parser middleware
@@ -33,8 +33,7 @@ app.use(passport.session());
 app.use('/api/user', userRouter);
 app.use('/adminmain', adminMainRouter);
 app.use('/api/employee', employeeRouter);
-app.use('/api/surveyresults', surveyResultsRouter)
-
+app.use('/api/surveyresults', surveyResultsRouter);
 app.use('/api/adminorg', adminOrgRouter);
 app.use('/api/main', userMainRouter);
 

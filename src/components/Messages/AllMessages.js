@@ -1,6 +1,5 @@
 import React from 'react';
 import AlertSnackBar from './AlertSnackBar';
-//Daniel Imports Above, Eli Imports Below
 import SendingEmails from './SendingEmails';
 import EmailError from './EmailError';
 import RedundantEmail from './RedundantEmail';
@@ -14,7 +13,6 @@ const AllMessages = () => {
     return (
         <div>
             <AlertSnackBar />
-            {/* Daniel Toasts Above, Eli Dialogs Below */}
             <SendingEmails />
             <EmailError />
             <RedundantEmail />

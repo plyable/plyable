@@ -9,7 +9,6 @@ const behaviors = (state = [], action) => {
   }
 };
 
-
 export default combineReducers({
   behaviors,
 });//stores behaviors in the database

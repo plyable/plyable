@@ -1,4 +1,3 @@
-// Eli will make this 1 card with props 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';

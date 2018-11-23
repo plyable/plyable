@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dialog } from '@material-ui/core';
+
 const SendingEmails = props => {
     return (
         <div>

@@ -12,9 +12,7 @@ import messagesReducer from './messagesReducer';
 // This is imported in index.js as rootSaga
 import adminChartData from './adminOrgReducer';
 import behaviorReducer from './behaviorsReducer';
-//daniel start
 import addNewOrgReducer from './addNewOrgReducer';
-//daniel end
 
 const rootReducer = combineReducers({
   errors, // contains registrationMessage and loginMessage
