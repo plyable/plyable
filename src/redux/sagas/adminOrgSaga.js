@@ -42,8 +42,11 @@ function* avgData(action) {
             },
             options: {
                 responsive: true,
+                legend: {
+                    position: 'bottom',
+                },
                 title: {
-                    display: true,
+                    display: false,
                     text: 'Behavior Assessment Averages',
                     fontSize: 30
                 },
@@ -71,7 +74,7 @@ function* avgData(action) {
                             max: 3,
                             callback: function (dataLabel, index) {
                                 if (dataLabel === 3) {
-                                    return 'Consistently';
+                                    return 'Daily';
                                 } else if (dataLabel === 0) {
                                     return 'Rarely'
                                 } else {
@@ -129,8 +132,11 @@ function* specificData(action) {
             },
             options: {
                 responsive: true,
+                legend: {
+                    position: 'bottom',
+                },
                 title: {
-                    display: true,
+                    display: false,
                     text: 'Behavior Specific Averages',
                     fontSize: 30
                 },
@@ -158,7 +164,7 @@ function* specificData(action) {
                             max: 3,
                             callback: function (dataLabel, index) {
                                 if (dataLabel === 3) {
-                                    return 'Consistently';
+                                    return 'Daily';
                                 } else if (dataLabel === 0) {
                                     return 'Rarely'
                                 } else {
