@@ -5,7 +5,7 @@ import axios from 'axios';
 function* loginUser(action) {
   try {
     // clear any existing error on the login page
-    yield put({ type: 'CLEAR_LOGIN_ERROR' });
+    yield put({ type: 'CLOSE_SNACKBAR' });
 
     const config = {
       headers: { 'Content-Type': 'application/json' },
@@ -26,11 +26,11 @@ function* loginUser(action) {
       // The 401 is the error status sent from passport
       // if user isn't in the database or
       // if the username and password don't match in the database
-      yield put({ type: 'LOGIN_FAILED' });
+      yield put({ type: 'LOGIN_MISTYPE' });
     } else {
       // Got an error that wasn't a 401
       // Could be anything, but most common cause is the server is not started
-      yield put({ type: 'LOGIN_FAILED_NO_CODE' });
+      yield put({ type: 'LOGIN_ERROR' });
     }
   }
 }

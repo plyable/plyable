@@ -107,11 +107,6 @@ class LoginPage extends Component {
     return (
       <MuiThemeProvider theme={theme}>
         <div>
-          {this.props.errors.loginMessage && (
-            <h2 className="alert" role="alert">
-              {this.props.errors.loginMessage}
-            </h2>
-          )}
           <div className={classes.outFrame}>
             <form className={classes.cardFrame}>
               <div className={classes.title}>Welcome to the Portal</div>
@@ -156,7 +151,6 @@ class LoginPage extends Component {
 
 LoginPage.propTypes = { classes: PropTypes.object.isRequired };
 
-const mapStateToProps = ({ errors }) => ({ errors });
 const logInPageStyles = withStyles(styles)(LoginPage)
 
-export default connect(mapStateToProps)(logInPageStyles);
+export default connect()(logInPageStyles);
