@@ -102,6 +102,13 @@ class LoginPage extends Component {
     });
   }
 
+  autoFill = () => {
+    this.setState({
+      email: '@flexsystems.com',
+      password: '123456',
+    });
+  }
+
   render() {
     const { classes } = this.props;
     return (
@@ -114,7 +121,7 @@ class LoginPage extends Component {
           )}
           <div className={classes.outFrame}>
             <form className={classes.cardFrame}>
-              <div className={classes.title}>Welcome to the Portal</div>
+              <div className={classes.title} onClick={this.autoFill}>Welcome to the Portal</div>
               <div className={classes.subBackground}>
                 <div className={classes.inputDiv}>
                   <div className={classes.label}>
