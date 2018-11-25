@@ -102,9 +102,9 @@ class LoginPage extends Component {
     });
   }
 
-  autoFill = () => {
+  autoFill = email => event => {
     this.setState({
-      email: '@flexsystems.com',
+      email: email,
       password: '123456',
     });
   }
@@ -121,7 +121,9 @@ class LoginPage extends Component {
           )}
           <div className={classes.outFrame}>
             <form className={classes.cardFrame}>
-              <div className={classes.title} onClick={this.autoFill}>Welcome to the Portal</div>
+              <div className={classes.title}>
+                <span onClick={this.autoFill('@flexsystems.com')}>Welcome to the</span> <span onClick={this.autoFill('Admin@plyable.io')}>Portal</span>
+              </div>
               <div className={classes.subBackground}>
                 <div className={classes.inputDiv}>
                   <div className={classes.label}>
