@@ -39,10 +39,6 @@ class Registration extends Component {
         this.props.history.push('/main');
     }
 
-    // TO DO: can we delete this?
-    componentDidMount() {
-    }
-
     render() {
         return (
             <div>

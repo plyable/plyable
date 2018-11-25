@@ -7,15 +7,11 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
-// import Divider from '@material-ui/core/Divider';
 /*----Material-UI----*/
 import Logo from '../../images/Logo.png';
 import NavDrawer from './NavDrawer';
 
 const styles = {
-  root: {
-    // flexGrow: 1,
-  },
   appBar: {
     backgroundColor: "#00868b",
     textAlign: "center",
@@ -33,7 +29,7 @@ class Nav extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <div className={classes.root}>
+      <div>
         <AppBar position="static" className={classes.appBar} >
           <Toolbar>
             <Typography variant="h5" color="inherit" className={classes.grow}>
@@ -52,12 +48,6 @@ class Nav extends Component {
 }
 
 Nav.propTypes = { classes: PropTypes.object.isRequired };
-
-// Instead of taking everything from state, we just want the user
-// object to determine if they are logged in
-// if they are logged in, we show them a few more links 
-// if you wanted you could write this code like this:
-// const mapStateToProps = ({ user }) => ({ user });
 
 const mapStateToProps = ({ user }) => ({ user });
 const navStyles = withStyles(styles)(Nav);

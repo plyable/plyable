@@ -80,7 +80,6 @@ class AddEmployees extends Component {
       let splitList = this.state.emailList.split('\n'); // creates comma separate array  
 
       await this.props.dispatch({ type: 'ADD_EMPLOYEES', payload: { emailList: splitList } });  // Adds Employee Emails to the DB
-      // TO DO: alert success only if email sent
     } else { // alert that content is needed
       alert('Please add emails. 1 Per line. No Commas.');
     }

@@ -28,13 +28,13 @@ function* userOrgChart(action) {
             data: {
                 labels: specificList.map(data => 'week'.concat(' ', data.week)),
                 datasets: [{
-                    label: 'Score',
+                    label: 'Observed',
                     data: chartData,
                     backgroundColor: 'rgba(54, 162, 235, 0.2)',
                     borderColor: 'rgba(54, 162, 235, 1)',
                     borderWidth: 1,
                 },{
-                    label: 'Expectation',
+                    label: 'Expected',
                     data: expectData,
                     backgroundColor: 'rgba(75, 192, 192, 0.2)',
                     borderColor: 'rgba(75, 192, 192, 1)',
@@ -43,9 +43,12 @@ function* userOrgChart(action) {
             },
             options: {
                 responsive: true,
-                aspectRatio: 1.5,
+                aspectRatio: 1.3,
+                legend: {
+                    position: 'bottom',
+                },
                 title: {
-                    display: true,
+                    display: false,
                     text: 'Behavior Specific Averages',
                     fontSize: 20
                 },

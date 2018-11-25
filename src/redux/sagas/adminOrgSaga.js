@@ -25,14 +25,14 @@ function* avgData(action) {
             type: 'line',
             data: {
                 datasets: [{
-                    label: 'Negative',
+                    label: 'Complacent',
                     data: negativeData,
                     backgroundColor: 'rgba(255, 99, 132, 0.2)',
                     borderColor: 'rgba(255,99,132,1)',
                     borderWidth: 1,
                     lineTension: 0
                 }, {
-                    label: 'Positive',
+                    label: 'Healthy',
                     data: positiveData,
                     backgroundColor: 'rgba(54, 162, 235, 0.2)',
                     borderColor: 'rgba(54, 162, 235, 1)',
@@ -42,8 +42,11 @@ function* avgData(action) {
             },
             options: {
                 responsive: true,
+                legend: {
+                    position: 'bottom',
+                },
                 title: {
-                    display: true,
+                    display: false,
                     text: 'Behavior Assessment Averages',
                     fontSize: 30
                 },
@@ -114,13 +117,13 @@ function* specificData(action) {
             data: {
                 labels: specificList.map(data => 'week'.concat(' ', data.week)),
                 datasets: [{
-                    label: 'Score',
+                    label: 'Observed',
                     data: chartData,
                     backgroundColor: 'rgba(54, 162, 235, 0.2)',
                     borderColor: 'rgba(54, 162, 235, 1)',
                     borderWidth: 1,
                 },{
-                    label: 'Expectation',
+                    label: 'Expected',
                     data: expectData,
                     backgroundColor: 'rgba(75, 192, 192, 0.2)',
                     borderColor: 'rgba(75, 192, 192, 1)',
@@ -129,8 +132,11 @@ function* specificData(action) {
             },
             options: {
                 responsive: true,
+                legend: {
+                    position: 'bottom',
+                },
                 title: {
-                    display: true,
+                    display: false,
                     text: 'Behavior Specific Averages',
                     fontSize: 30
                 },

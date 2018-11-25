@@ -14,7 +14,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 
-const styles = theme => ({
+const styles = () => ({
     root: {
         margin: '0 1px',
     },
@@ -101,12 +101,12 @@ class BehaviorCard extends Component {
                                     <FormControlLabel className={classes.radioLabel} value="0" control={<Radio color="primary" />} labelPlacement="bottom" label="Rarely" />
                                     <FormControlLabel className={classes.radioLabel} value="1" control={<Radio color="primary" />} labelPlacement="bottom" label="Sometimes" />
                                     <FormControlLabel className={classes.radioLabel} value="2" control={<Radio color="primary" />} labelPlacement="bottom" label="Weekly" />
-                                    <FormControlLabel className={classes.radioLabel} value="3" control={<Radio color="primary" />} labelPlacement="bottom" label="Daily" />
+                                    <FormControlLabel className={classes.radioLabel} value="3" control={<Radio color="primary" />} labelPlacement="bottom" label="Consistently" />
                                 </RadioGroup>
                             </FormControl>
                         </div>
                         <Typography className={classes.subTitle} component="p">
-                            &gt; How often would you expect to observer this behavior?
+                            &gt; How often would you expect to observe this behavior?
                         </Typography>
                         <div className={classes.formDiv}>
                             <FormControl className={classes.formControl}>
@@ -120,7 +120,7 @@ class BehaviorCard extends Component {
                                     <FormControlLabel className={classes.radioLabel} value="0" control={<Radio color="primary" />} labelPlacement="bottom" label="Rarely" />
                                     <FormControlLabel className={classes.radioLabel} value="1" control={<Radio color="primary" />} labelPlacement="bottom" label="Sometimes" />
                                     <FormControlLabel className={classes.radioLabel} value="2" control={<Radio color="primary" />} labelPlacement="bottom" label="Weekly" />
-                                    <FormControlLabel className={classes.radioLabel} value="3" control={<Radio color="primary" />} labelPlacement="bottom" label="Daily" />
+                                    <FormControlLabel className={classes.radioLabel} value="3" control={<Radio color="primary" />} labelPlacement="bottom" label="Consistently" />
                                 </RadioGroup>
                             </FormControl>
                         </div>
