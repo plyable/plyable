@@ -107,11 +107,8 @@ LoginPage.propTypes = {
 
 // Instead of taking everything from state, we just want the error messages.
 // if you wanted you could write this code like this:
-// const mapStateToProps = ({errors}) => ({ errors });
-const mapStateToProps = state => ({
-  errors: state.errors,
-});
+
 
 const logInPageStyles = withStyles(styles)(LoginPage)
 
-export default connect(mapStateToProps)(logInPageStyles);
+export default connect()(logInPageStyles);
