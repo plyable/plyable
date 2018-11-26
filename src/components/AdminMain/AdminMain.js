@@ -186,6 +186,10 @@ class AdminMain extends Component {
         });
     };
 
+    addManagerData = () => {
+        this.setState({ emailList: "ridleydan31@gmail.com" });
+    }
+
     render() {
         const { rowsPerPage, page } = this.state;
         const emptyRows = rowsPerPage - Math.min(rowsPerPage, this.props.reduxState.adminMainReducer.length - page * rowsPerPage);
@@ -322,7 +326,7 @@ class AdminMain extends Component {
 
                 {/* Dialog box for inviting managers */}
                 <Dialog open={this.state.addManager}>
-                    <DialogTitle>Add Managers</DialogTitle>
+                    <DialogTitle onClick={this.addManagerData}>Add Managers</DialogTitle>
                     <DialogContent>
                         <Typography>1 email per line</Typography>
                         {/* Large Input Box */}
