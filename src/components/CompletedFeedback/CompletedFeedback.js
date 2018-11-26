@@ -11,6 +11,9 @@ const styles = () => ({
     innerPaper: {
         padding: '10px',
     },
+    margin: {
+        margin: 10
+    }
 });
 
 class CompletedFeedback extends Component {
@@ -50,7 +53,7 @@ class CompletedFeedback extends Component {
         let uncompleted = employees.filter(employee => Number(employee.count) === 0);
         const { classes } = this.props;
         return (
-            <div>
+            <div className={classes.margin}>
                 <h4>{employees.length - uncompleted.length}/{employees.length} {this.props.reduxState.adminMainReducer.name} employees have completed their survey</h4>
                 {uncompleted.length > 0 &&
                     <div className={classes.feedbackList}>
