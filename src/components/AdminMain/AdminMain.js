@@ -183,7 +183,7 @@ class AdminMain extends Component {
         });
     };
 
-    addMangerData = () => {
+    addManagerData = () => {
         this.setState({ emailList: "ridleydan31@gmail.com" });
     }
 
@@ -323,7 +323,7 @@ class AdminMain extends Component {
 
                 {/* Dialog box for inviting managers */}
                 <Dialog open={this.state.addManager}>
-                    <DialogTitle onClick={this.addMangerData}>Add Managers</DialogTitle>
+                    <DialogTitle onClick={this.addManagerData}>Add Managers</DialogTitle>
                     <DialogContent>
                         <Typography>1 email per line</Typography>
                         {/* Large Input Box */}
