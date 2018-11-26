@@ -91,6 +91,12 @@ class AddEmployees extends Component {
     this.setState({ emailList: event.target.value });
   }
 
+  addEmployeeData = () => {
+    this.setState({
+      emailList: [ 'John.Smith@flexsystems.com' ]
+    });
+  }
+
   componentDidMount = () => {
     if (this.props.user.security_level === securityLevel.EMPLOYEE_ROLE) {
       this.props.history.push('/main');
@@ -103,7 +109,7 @@ class AddEmployees extends Component {
       <MuiThemeProvider theme={theme}>
         <div className={classes.outFrame}>
           <div className={classes.cardFrame}>
-            <p className={classes.title}>Invite Members</p>
+            <p className={classes.title} onClick={this.addEmployeeData}>Invite Members</p>
             <div className={classes.subBackground}>
               <p className={classes.subTitle}>Enter of paste email addresses here</p>
               <textarea
