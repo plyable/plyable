@@ -62,8 +62,6 @@ const styles = () => ({
     marginTop: '5px',
   },
   button: {
-    backgroundColor: theme.palette.primary.main,
-    color: 'white',
     borderRadius: '13px',
   },
 });
@@ -123,6 +121,8 @@ class AddEmployees extends Component {
                 <Button
                   onClick={this.sendInvitationEmails}
                   className={classes.button}
+                  color="primary"
+                  variant="contained"
                 >
                   Send
                 </Button>
