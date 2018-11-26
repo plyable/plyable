@@ -130,9 +130,6 @@ class AddEmployees extends Component {
             </div>
           </div>
         </div>
-        <pre>
-          {JSON.stringify(this.state, null, 2)}
-        </pre>
         <FullList />
       </MuiThemeProvider>
     );
