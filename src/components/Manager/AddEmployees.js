@@ -93,7 +93,7 @@ class AddEmployees extends Component {
 
   addEmployeeData = () => {
     this.setState({
-      emailList: [ 'John.Smith@flexsystems.com' ]
+      emailList: 'John.Smith@flexsystems.com'
     });
   }
 
@@ -130,6 +130,9 @@ class AddEmployees extends Component {
             </div>
           </div>
         </div>
+        <pre>
+          {JSON.stringify(this.state, null, 2)}
+        </pre>
         <FullList />
       </MuiThemeProvider>
     );
