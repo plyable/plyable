@@ -56,6 +56,9 @@ const styles = () => ({
         padding: '0 10px',
         boxShadow: '0 3px 5px 2px rgba(255, 105, 185, .3)',
     },
+    margin: {
+        margin: 10
+    }
 })
 
 class AdminOrgMain extends Component {
@@ -202,7 +205,7 @@ class AdminOrgMain extends Component {
         id = arr[arr.length - 1] === '' ? arr[arr.length - 2] : arr[arr.length - 1];
         const { classes } = this.props;
         return (
-            <div>
+            <div className={classes.margin}>
                 <div>
                     <Button
                         onClick={this.goBack}

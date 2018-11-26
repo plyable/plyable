@@ -63,6 +63,9 @@ const styles = theme => ({
             backgroundColor: theme.palette.background.default,
         },
     },
+    margin: {
+        margin: 15
+    }
 });
 
 
@@ -188,7 +191,7 @@ class AdminMain extends Component {
         const emptyRows = rowsPerPage - Math.min(rowsPerPage, this.props.reduxState.adminMainReducer.length - page * rowsPerPage);
         const { classes } = this.props;
         return (
-            <div>
+            <div className={classes.margin}>
                 <h1>Welcome, {this.props.reduxState.user.email}!</h1>
                 <Paper className={classes.root}>
                     <Table className={classes.table}>
