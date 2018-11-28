@@ -3,7 +3,6 @@ const messagesReducer = (state = {
     surveyCompletedSnackBar: false,
     confirmDeactivateSnackBar: false,
     registrationCompletedSnackBar: false,
-    loginSnackbar: false,
     loginError: false,
     loginMistype: false,
     loginInputError: false,
@@ -39,11 +38,6 @@ const messagesReducer = (state = {
                 ...state,
                 registrationCompletedSnackBar: true,
             }
-        case 'LOGIN_SNACKBAR':
-            return {
-                ...state,
-                loginSnackbar: true,
-            }
         case 'FINISH_EMAILS':
             return {
                 ...state,
@@ -72,7 +66,6 @@ const messagesReducer = (state = {
                 surveyCompletedSnackBar: false,
                 confirmDeactivateSnackBar: false,
                 registrationCompletedSnackBar: false,
-                loginSnackbar: false,
                 emailSuccess: false,
                 loginError: false,
                 loginMistype: false,
