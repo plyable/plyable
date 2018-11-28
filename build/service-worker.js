@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "http://localhost:3000/precache-manifest.a09b92859ed99893aa839081f7bdfc79.js"
+  "https://plyable-duallynoted.herokuapp.com/precache-manifest.0e1b5e01932d1e79ae77196d392f53c8.js"
 );
 
 workbox.clientsClaim();
@@ -28,7 +28,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute("http://localhost:3000/index.html", {
+workbox.routing.registerNavigationRoute("https://plyable-duallynoted.herokuapp.com/index.html", {
   
   blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
 });
