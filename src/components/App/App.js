@@ -49,7 +49,7 @@ class App extends Component {
             <Switch>
               {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
               <Redirect exact from="/" to="/main" />
-              <ProtectedRoute
+              <Route
                 exact
                 path="/register"
                 component={Registration}
