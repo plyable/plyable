@@ -8,80 +8,44 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
+This project is a node ES6 project. Insure that your browser can run ES6 before opening this program. If you don't have node, you can find it here: https://nodejs.org/en/download/. You will also need postgreSQL. We installed it with HomeBrew, using the line
+```
+brew install postgresql
+```
+followed by
+```
+brew services start postgresql
+```
 
-```
-Give examples
-```
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
+Once you have node, you can get this repository, by forking and cloning or by downloading this zip.
 
 ```
-Give the example
+git clone *forked repository*.git
 ```
 
-And repeat
+Next, move into the project directory and install the dependencies with
 
 ```
-until finished
+npm install
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
+Create a .env file and set the value of SERVER_SESSION_SECRET to some long, random string. You also need to create values for MAIL_PW and ADMIN_EMAIL.
+For the time being include
 ```
-Give an example
+PUBLIC_URL = http://localhost:3000
 ```
 
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
+You will need to set an email and password to these values. This is the email the application will use to send template emails.
 
 ## Deployment
 
-Add additional notes about how to deploy this on a live system
-
-## Built With
-
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+Change PUBLIC_URL to your site's domain.
 
 ## Authors
-
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
