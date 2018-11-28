@@ -3,6 +3,7 @@ import AlertSnackBar from './AlertSnackBar';
 import SendingEmails from './SendingEmails';
 import EmailError from './EmailError';
 import RedundantEmail from './RedundantEmail';
+import RegisterError from './RegisterError';
 import './messages.css';
 
 //sort of like an index.js, all the dialogues are put here, and opened when needed
@@ -16,6 +17,7 @@ const AllMessages = () => {
             <SendingEmails />
             <EmailError />
             <RedundantEmail />
+            <RegisterError />
         </div>
     );
 }

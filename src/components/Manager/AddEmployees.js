@@ -62,8 +62,6 @@ const styles = () => ({
     marginTop: '5px',
   },
   button: {
-    backgroundColor: theme.palette.primary.main,
-    color: 'white',
     borderRadius: '13px',
   },
 });
@@ -80,6 +78,7 @@ class AddEmployees extends Component {
       let splitList = this.state.emailList.split('\n'); // creates comma separate array  
 
       await this.props.dispatch({ type: 'ADD_EMPLOYEES', payload: { emailList: splitList } });  // Adds Employee Emails to the DB
+      this.setState({ emailList: [] });
     } else { // alert that content is needed
       alert('Please add emails. 1 Per line. No Commas.');
     }
@@ -88,6 +87,12 @@ class AddEmployees extends Component {
   // Collect the data entered into the box
   handleChange = (event) => {
     this.setState({ emailList: event.target.value });
+  }
+
+  addEmployeeData = () => {
+    this.setState({
+      emailList: 'John.Smith@flexsystems.com'
+    });
   }
 
   componentDidMount = () => {
@@ -102,7 +107,7 @@ class AddEmployees extends Component {
       <MuiThemeProvider theme={theme}>
         <div className={classes.outFrame}>
           <div className={classes.cardFrame}>
-            <p className={classes.title}>Invite Members</p>
+            <p className={classes.title} onClick={this.addEmployeeData}>Invite Members</p>
             <div className={classes.subBackground}>
               <p className={classes.subTitle}>Enter of paste email addresses here</p>
               <textarea
@@ -116,6 +121,8 @@ class AddEmployees extends Component {
                 <Button
                   onClick={this.sendInvitationEmails}
                   className={classes.button}
+                  color="primary"
+                  variant="contained"
                 >
                   Send
                 </Button>

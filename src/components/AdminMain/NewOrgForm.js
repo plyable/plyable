@@ -26,6 +26,9 @@ const styles = theme => ({
         marginRight: theme.spacing.unit,
         width: 'flex',
     },
+    margin:  {
+        margin: 10
+    }
 });
 
 class NewOrgForm extends Component {
@@ -59,7 +62,7 @@ class NewOrgForm extends Component {
     render() {
         const { classes } = this.props;
         return (
-            <div >
+            <div className={classes.margin}>
                 <h1>Add a New Organization</h1>
                 <form className="form">
                     <FormControl className={classes.container} noValidate autoComplete="off">

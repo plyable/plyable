@@ -46,7 +46,7 @@ router.post('/', rejectUnauthenticated, async (req, res) => {
   ON CONFLICT ("email")
   do nothing
   RETURNING "id";`;
-    req.body.emailList.forEach(async email => {
+    req.body.emailList.filter(email => email !== '').forEach(async email => {
       try {
         let newPassword = randomString();
         let newKey = randomString();

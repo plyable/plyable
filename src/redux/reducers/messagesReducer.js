@@ -3,7 +3,6 @@ const messagesReducer = (state = {
     surveyCompletedSnackBar: false,
     confirmDeactivateSnackBar: false,
     registrationCompletedSnackBar: false,
-    loginSnackbar: false,
     loginError: false,
     loginMistype: false,
     loginInputError: false,
@@ -15,6 +14,7 @@ const messagesReducer = (state = {
     emailSuccess: false,
     emailError: false,
     emailRedundant: false,
+    registerError: false,
 }, action) => {
     //each component of state corresponds to a dialog that lives on app.js
     //on actions that trigger this reducer open or close one of these dialogs
@@ -38,11 +38,6 @@ const messagesReducer = (state = {
             return {
                 ...state,
                 registrationCompletedSnackBar: true,
-            }
-        case 'LOGIN_SNACKBAR':
-            return {
-                ...state,
-                loginSnackbar: true,
             }
         case 'FINISH_EMAILS':
             return {
@@ -72,7 +67,6 @@ const messagesReducer = (state = {
                 surveyCompletedSnackBar: false,
                 confirmDeactivateSnackBar: false,
                 registrationCompletedSnackBar: false,
-                loginSnackbar: false,
                 emailSuccess: false,
                 loginError: false,
                 loginMistype: false,
@@ -103,6 +97,16 @@ const messagesReducer = (state = {
                 ...state,
                 emailRedundant: false,
                 emailError: false,
+            }
+        case 'REGISTER_ERROR':
+            return {
+                ...state,
+                registerError: true,
+            }
+        case 'CONFIRM_REGISTER_ERROR':
+            return {
+                ...state,
+                registerError: false,
             }
 
         default:
