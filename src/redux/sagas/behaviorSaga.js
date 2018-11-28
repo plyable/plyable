@@ -1,6 +1,9 @@
 import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 
+//behaviors are the 6 items in the survey which a user judges
+//this component gets only behavior information
+
 
 function* fetchBehaviors(action) {
     try {

@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Dialog, Button, withStyles } from '@material-ui/core';
 
+//this component will handle errors in sending emails in Nodemailer
+
 const styles = () => ({
     buttons: {
         background: 'linear-gradient(45deg, #86008b 40%, #aaa 90%)',

@@ -6,12 +6,13 @@ import survey from './surveyReducer';
 import addEmployeeReducer from './addEmployeeReducer';
 import participationReducer from './participationReducer';
 import messagesReducer from './messagesReducer';
-// rootReducer is the primary reducer for our entire project
-// It bundles up all of the other reducers so our project can use them.
-// This is imported in index.js as rootSaga
 import adminChartData from './adminOrgReducer';
 import behaviorReducer from './behaviorsReducer';
 import addNewOrgReducer from './addNewOrgReducer';
+
+// rootReducer is the primary reducer for our entire project
+// it bundles up all of the other reducers so our project can use them
+// This is imported in index.js as rootSaga
 
 const rootReducer = combineReducers({
   loginMode, // will have a value of 'login' or 'registration' to control which screen is shown

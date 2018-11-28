@@ -75,6 +75,7 @@ const styles = () => ({
 function stringToParams(string) {
     let objectToSend = {};
     let paramArray;
+    //takes a query string and breaks it out into local parameters
     string.replace('?', '').split('&')
         .forEach(param => {
             paramArray = param.split('=');

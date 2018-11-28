@@ -48,10 +48,13 @@ const styles = () => ({
         textAlignLast: 'center',
         marginBottom: '15px',
     },
-});
+});//Material UI styles
 
 class UserMain extends Component {
     componentDidMount = () => {
+        //this will fetch and display data dependent upon the user's security level
+        //for admin, it will show AdminMain, for users it will take them to the survey
+        //if they haven't completed it for the week or the org chart if they have
         if (this.props.user.security_level === securityLevel.ADMIN_ROLE) {
             this.props.history.push('/adminmain');
         } else {

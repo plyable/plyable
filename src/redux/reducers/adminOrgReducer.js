@@ -1,5 +1,7 @@
 import { combineReducers } from 'redux';
 
+//this contains all reducers for organization-specific data used to fill the charts
+
 const avgData = (state = [], action) => {
     switch (action.type) {
         case 'GET_AVG_DATA':
