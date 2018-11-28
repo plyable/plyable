@@ -1,14 +1,14 @@
 {
-  "main.css": "https://plyable-duallynoted.herokuapp.com/static/css/main.c47863b9.chunk.css",
-  "main.js": "https://plyable-duallynoted.herokuapp.com/static/js/main.075163b3.chunk.js",
-  "main.js.map": "https://plyable-duallynoted.herokuapp.com/static/js/main.075163b3.chunk.js.map",
-  "static/js/1.1b152bdc.chunk.js": "https://plyable-duallynoted.herokuapp.com/static/js/1.1b152bdc.chunk.js",
-  "static/js/1.1b152bdc.chunk.js.map": "https://plyable-duallynoted.herokuapp.com/static/js/1.1b152bdc.chunk.js.map",
-  "runtime~main.js": "https://plyable-duallynoted.herokuapp.com/static/js/runtime~main.1257050f.js",
-  "runtime~main.js.map": "https://plyable-duallynoted.herokuapp.com/static/js/runtime~main.1257050f.js.map",
-  "static/media/Logo.png": "https://plyable-duallynoted.herokuapp.com/static/media/Logo.261b1894.png",
-  "static/css/main.c47863b9.chunk.css.map": "https://plyable-duallynoted.herokuapp.com/static/css/main.c47863b9.chunk.css.map",
-  "index.html": "https://plyable-duallynoted.herokuapp.com/index.html",
-  "precache-manifest.0e1b5e01932d1e79ae77196d392f53c8.js": "https://plyable-duallynoted.herokuapp.com/precache-manifest.0e1b5e01932d1e79ae77196d392f53c8.js",
-  "service-worker.js": "https://plyable-duallynoted.herokuapp.com/service-worker.js"
+  "main.css": "https://plyable.herokuapp.com/static/css/main.56e3a7d0.chunk.css",
+  "main.js": "https://plyable.herokuapp.com/static/js/main.0b2704c8.chunk.js",
+  "main.js.map": "https://plyable.herokuapp.com/static/js/main.0b2704c8.chunk.js.map",
+  "static/js/1.1b152bdc.chunk.js": "https://plyable.herokuapp.com/static/js/1.1b152bdc.chunk.js",
+  "static/js/1.1b152bdc.chunk.js.map": "https://plyable.herokuapp.com/static/js/1.1b152bdc.chunk.js.map",
+  "runtime~main.js": "https://plyable.herokuapp.com/static/js/runtime~main.2186a62f.js",
+  "runtime~main.js.map": "https://plyable.herokuapp.com/static/js/runtime~main.2186a62f.js.map",
+  "static/media/Logo.png": "https://plyable.herokuapp.com/static/media/Logo.261b1894.png",
+  "static/css/main.56e3a7d0.chunk.css.map": "https://plyable.herokuapp.com/static/css/main.56e3a7d0.chunk.css.map",
+  "index.html": "https://plyable.herokuapp.com/index.html",
+  "precache-manifest.8330f62711e1432b8b50e74d26fa1da2.js": "https://plyable.herokuapp.com/precache-manifest.8330f62711e1432b8b50e74d26fa1da2.js",
+  "service-worker.js": "https://plyable.herokuapp.com/service-worker.js"
 }
