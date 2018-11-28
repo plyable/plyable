@@ -15,6 +15,7 @@ const messagesReducer = (state = {
     emailSuccess: false,
     emailError: false,
     emailRedundant: false,
+    registerError: false,
 }, action) => {
     //each component of state corresponds to a dialog that lives on app.js
     //on actions that trigger this reducer open or close one of these dialogs
@@ -103,6 +104,16 @@ const messagesReducer = (state = {
                 ...state,
                 emailRedundant: false,
                 emailError: false,
+            }
+        case 'REGISTER_ERROR':
+            return {
+                ...state,
+                registerError: true,
+            }
+        case 'CONFIRM_REGISTER_ERROR':
+            return {
+                ...state,
+                registerError: false,
             }
 
         default:
