@@ -2,8 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import securityLevel from '../../constants/securityLevel';
 import FullList from './FullList';
-import { Button, withStyles } from '@material-ui/core';
+import { Button, withStyles, Typography } from '@material-ui/core';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core';
+import Dialog from '@material-ui/core/Dialog';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 const theme = createMuiTheme({
   typography: {
@@ -12,30 +16,26 @@ const theme = createMuiTheme({
   palette: {
     primary: {
       main: '#00868b',
-      sub: '#009688',
-    },
-    secondary: {
-      main: '#EC407A',
     },
   }
 });
 
 const styles = () => ({
   outFrame: {
-      margin: '10px 5px',
+    margin: '10px 5px',
   },
   cardFrame: {
-      border: '1px solid #00868b',
-      borderRadius: '20px',
-      margin: '0 auto',
-      maxWidth: '710px',
-      backgroundColor: theme.palette.primary.main,
+    border: '1px solid #00868b',
+    borderRadius: '20px',
+    margin: '0 auto',
+    maxWidth: '710px',
+    backgroundColor: theme.palette.primary.main,
   },
   title: {
-      textAlign: 'center',
-      color: 'white',
-      fontSize: '20px',
-      margin: '10px 0 10px 0',
+    textAlign: 'center',
+    color: 'white',
+    fontSize: '20px',
+    margin: '10px 0 10px 0',
   },
   subBackground: {
     backgroundColor: 'white',
@@ -68,7 +68,8 @@ const styles = () => ({
 
 class AddEmployees extends Component {
   state = {
-    emailList: []
+    emailList: [],
+    dialogOpen: false,
   }
 
   // Button Click
@@ -80,7 +81,7 @@ class AddEmployees extends Component {
       await this.props.dispatch({ type: 'ADD_EMPLOYEES', payload: { emailList: splitList } });  // Adds Employee Emails to the DB
       this.setState({ emailList: [] });
     } else { // alert that content is needed
-      alert('Please add emails. 1 Per line. No Commas.');
+      this.setState({ dialogOpen: true });
     }
   }
 
@@ -89,10 +90,8 @@ class AddEmployees extends Component {
     this.setState({ emailList: event.target.value });
   }
 
-  addEmployeeData = () => {
-    this.setState({
-      emailList: 'John.Smith@flexsystems.com'
-    });
+  handleCancel = () => {
+    this.setState({ dialogOpen: false });
   }
 
   componentDidMount = () => {
@@ -107,7 +106,7 @@ class AddEmployees extends Component {
       <MuiThemeProvider theme={theme}>
         <div className={classes.outFrame}>
           <div className={classes.cardFrame}>
-            <p className={classes.title} onClick={this.addEmployeeData}>Invite Members</p>
+            <p className={classes.title}>Invite Members</p>
             <div className={classes.subBackground}>
               <p className={classes.subTitle}>Enter of paste email addresses here</p>
               <textarea
@@ -131,6 +130,15 @@ class AddEmployees extends Component {
           </div>
         </div>
         <FullList />
+        <Dialog open={this.state.dialogOpen}>
+          <DialogTitle>Error</DialogTitle>
+          <DialogContent>
+            <Typography component="p">Please add emails. 1 Per line. No Commas.</Typography>
+          </DialogContent>
+          <DialogActions>
+            <Button color="primary" onClick={this.handleCancel}>Okay</Button>
+          </DialogActions>
+        </Dialog>
       </MuiThemeProvider>
     );
   }
