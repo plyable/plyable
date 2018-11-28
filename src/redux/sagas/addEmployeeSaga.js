@@ -25,7 +25,7 @@ function* reinviteEmployee(action) {
       url: '/api/employee/reinvite',
       params: {email: action.payload}
     });
-    yield put({ type: 'EMPLOYEE_REINVITED' });
+    yield put({ type: 'FINISH_EMAILS' });
   } catch (error) {
     console.log('ERROR in reinviteEmployee saga:', error);
   }
