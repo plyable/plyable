@@ -14,6 +14,8 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 
+//main component for actual survey
+
 const styles = () => ({
     root: {
         margin: '0 1px',

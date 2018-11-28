@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Dialog } from '@material-ui/core';
 
+//keeps user form spam-clicking "send"
+
 const SendingEmails = props => {
     return (
         <div>

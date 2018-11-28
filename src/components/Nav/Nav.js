@@ -11,6 +11,8 @@ import { withStyles } from '@material-ui/core/styles';
 import Logo from '../../images/Logo.png';
 import NavDrawer from './NavDrawer';
 
+//top nav bar component with logo
+
 const styles = {
   appBar: {
     backgroundColor: "#00868b",

@@ -5,6 +5,6 @@ const participationReducer = (state = [], action) => {
         default:
             return state;
     }
-};
+};//holds a list of all users of a specific organization and whether or not they've completed their survey
 
 export default participationReducer;

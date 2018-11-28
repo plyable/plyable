@@ -15,6 +15,10 @@ import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
 import ListAlt from '@material-ui/icons/ListAlt';
 import securityLevel from '../../constants/securityLevel';
 
+//this component adds the Material UI NavDrawer to the application
+//the NavDrawer will display different protected links depending on 
+//the user's security level
+
 const styles = {
     list: {
         width: 250,

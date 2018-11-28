@@ -140,7 +140,7 @@ class AdminMain extends Component {
             }
         });
     }
-
+    //this is the same code for adding employees
     handleAddManagers = id => () => {
         this.setState({
             ...this.state,
@@ -163,19 +163,21 @@ class AdminMain extends Component {
         this.props.dispatch({ type: 'ADD_EMPLOYEES', payload: { ...this.state, emailList: splitList } });
         this.handleCancelAddManager();
     }
-
+    //currying for adding emails
     handleChange = event => {
         this.setState({
             ...this.state,
             emailList: event.target.value,
         });
     }
+    //pagination
     handleChangeRowsPerPage = event => {
         this.setState({
             ...this.state,
             rowsPerPage: event.target.value
         });
     };
+    //pagination
     handleChangePage = (event, page) => {
         this.setState({
             ...this.state,
@@ -202,6 +204,8 @@ class AdminMain extends Component {
                             </TableRow>
                         </TableHead>
                         <TableBody>
+                            {/*this for each loop will map through available organizations in the database and display them 
+                            on the DOM in a table*/}
                             {this.props.reduxState.adminMainReducer.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 .map(organization => (
                                     <TableRow key={organization.id} organization={organization}>
@@ -258,8 +262,7 @@ class AdminMain extends Component {
                                     </Button>
                                         </CustomTableCell>
                                     </TableRow>
-                                    //this for each loop will map through available organizations in the database and display them 
-                                    //on the DOM in a table
+
                                 ))}
                             {emptyRows > 0 && (
                                 <TableRow style={{ height: 49 * emptyRows }}>

@@ -81,7 +81,7 @@ class LoginPage extends Component {
 
   login = event => {
     event.preventDefault();
-
+    //user authentication
     if (this.state.email && this.state.password) {
       this.props.dispatch({
         type: 'LOGIN',
@@ -93,19 +93,11 @@ class LoginPage extends Component {
     } else {
       this.props.dispatch({ type: 'LOGIN_INPUT_ERROR' });
     }
-    this.props.dispatch({ type: 'LOGIN_SNACKBAR' }); //this will dispatch an action type which triggers a SnackBar alert
   } // end login
 
   handleInputChangeFor = propertyName => (event) => {
     this.setState({
       [propertyName]: event.target.value,
-    });
-  }
-
-  autoFill = email => event => {
-    this.setState({
-      email: email,
-      password: '123456',
     });
   }
 
@@ -117,7 +109,7 @@ class LoginPage extends Component {
           <div className={classes.outFrame}>
             <form className={classes.cardFrame}>
               <div className={classes.title}>
-                <span onClick={this.autoFill('@flexsystems.com')}>Welcome to the</span> <span onClick={this.autoFill('Admin@plyable.io')}>Portal</span>
+                <span>Welcome to the Portal</span>
               </div>
               <div className={classes.subBackground}>
                 <div className={classes.inputDiv}>

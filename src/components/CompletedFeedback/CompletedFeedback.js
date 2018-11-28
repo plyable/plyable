@@ -30,13 +30,14 @@ class CompletedFeedback extends Component {
         this.props.dispatch({ type: 'FETCH_PARTICIPATION', payload: id });
     }
 
+    //pagination
     handleChangeRowsPerPage = event => {
         this.setState({
             ...this.state,
             rowsPerPage: event.target.value
         });
     }
-
+    //pagination
     handleChangePage = (event, page) => {
         this.setState({
             ...this.state,
@@ -51,6 +52,7 @@ class CompletedFeedback extends Component {
         const { classes } = this.props;
         return (
             <div>
+                {/*Iterates through total employees in organization, checks those who have completed their surveys and subtracts it from the total*/}
                 <h4>{employees.length - uncompleted.length}/{employees.length} {this.props.reduxState.adminMainReducer.name} employees have completed their survey</h4>
                 {uncompleted.length > 0 &&
                     <div className={classes.feedbackList}>

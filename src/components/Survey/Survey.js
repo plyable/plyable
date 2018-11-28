@@ -45,22 +45,22 @@ const styles = () => ({
         backgroundColor: theme.palette.primary.main,
     },
     connectorActive: {
-      '& $connectorLine': {
-        borderColor: theme.palette.primary.sub,
-      },
+        '& $connectorLine': {
+            borderColor: theme.palette.primary.sub,
+        },
     },
     connectorCompleted: {
-      '& $connectorLine': {
-        borderColor: theme.palette.primary.main,
-      },
+        '& $connectorLine': {
+            borderColor: theme.palette.primary.main,
+        },
     },
     connectorDisabled: {
-      '& $connectorLine': {
-        borderColor: theme.palette.grey[100],
-      },
+        '& $connectorLine': {
+            borderColor: theme.palette.grey[100],
+        },
     },
     connectorLine: {
-      transition: theme.transitions.create('border-color'),
+        transition: theme.transitions.create('border-color'),
     },
 });
 
@@ -70,7 +70,7 @@ class Survey extends Component {
     }
 
     componentDidMount = () => {
-        //on mount, fetch data reguarding this weeks survey
+        //on mount, fetch data regarding this week's survey
         this.props.dispatch({ type: 'FETCH_BEHAVIORS' });
     }
 
@@ -91,16 +91,16 @@ class Survey extends Component {
         const { classes } = this.props;
         return (
             <MuiThemeProvider theme={theme}>
-                <Stepper 
+                <Stepper
                     activeStep={this.state.openCard}
                     connector={
-                        <StepConnector 
+                        <StepConnector
                             classes={{
                                 active: classes.connectorActive,
                                 completed: classes.connectorCompleted,
                                 disabled: classes.connectorDisabled,
                                 line: classes.connectorLine,
-                            }} 
+                            }}
                         />
                     }
                 >
