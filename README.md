@@ -63,7 +63,7 @@ You will need to set an email and password to these values. This is the email th
 
 To set up the database, create a new local database named "plyable". In plyable, run the queries listed in database.sql.
 
-> NOTE: There is route dedicated to setting up the admin user. To use this, when the program is running, go to `/api/newAdmin/:newPassword`. This will automatically create the user with a login of "admin" and a password of "newPassword", or whatever you put in the url. This will only work if there are no users in the database. 
+> NOTE: There is route dedicated to setting up the admin user. To use this, when the program is running, go to `/api/employee/newAdmin/:newPassword`. This will automatically create the user with a login of "admin" and a password of "newPassword", or whatever you put in the url. This will only work if there are no users in the database. 
 
 ## Deployment
 
